@@ -1,7 +1,7 @@
 hooks:
   post-checkout:
     cmd: 'npm install'
-  build: 
+  build:
     cmd: 'npm run build'
 
 daemons:
