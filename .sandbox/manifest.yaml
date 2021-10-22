@@ -1,0 +1,10 @@
+hooks:
+  post-checkout:
+    cmd: 'npm install'
+  build:
+    cmd: 'npm run build'
+
+daemons:
+  app:
+    run:
+      cmd: 'npm start'
