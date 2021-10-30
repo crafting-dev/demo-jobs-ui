@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import { Redirect, Route, RouteProps, useLocation } from "react-router";
+import { Redirect, Route, RouteProps, useLocation } from "react-router-dom";
 
 type ProtectedRouteProps = {
   isAuthenticated: boolean;
@@ -21,12 +21,10 @@ function ProtectedRoute({
     }
   }, [isAuthenticated, setRedirectPath, currentLocation]);
 
-  if (isAuthenticated && redirectPath === currentLocation.pathname) {
+  if (isAuthenticated) {
     return <Route {...routeProps} />;
   } else {
-    return (
-      <Redirect to={{ pathname: isAuthenticated ? redirectPath : "/login" }} />
-    );
+    return <Redirect to={{ pathname: "/login" }} />;
   }
 }
 

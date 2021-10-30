@@ -1,5 +1,6 @@
 import { createContext, FC, useContext, useState } from "react";
-import Auth, { unauthenticated } from "../models/auth";
+import getUser from "../adapters/Store";
+import Auth, { unauthenticated } from "../models/Auth";
 
 const authContext = createContext<[Auth, (auth: Auth) => void]>([
   unauthenticated,
@@ -9,7 +10,10 @@ const authContext = createContext<[Auth, (auth: Auth) => void]>([
 const useAuth = () => useContext(authContext);
 
 const ProvideAuth: FC = (props) => {
-  const [authState, setAuthState] = useState(unauthenticated);
+  const [authState, setAuthState] = useState(() => {
+    const loggedInUser = getUser();
+    return loggedInUser ? loggedInUser : unauthenticated;
+  });
   const defaultAuthContext: [Auth, typeof setAuthState] = [
     authState,
     setAuthState,

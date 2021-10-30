@@ -1,8 +1,8 @@
 import { FC } from "react";
-import Dashboard from "../pages/Dashboard";
-import Home from "../pages/Home";
-import Login from "../pages/Login";
-import Signup from "../pages/Signup";
+import Dashboard from "../containers/Dashboard";
+import Home from "../containers/Home";
+import Login from "../containers/Login";
+import Signup from "../containers/Signup";
 
 type AppRoute = {
   path: string;

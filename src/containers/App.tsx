@@ -1,10 +1,12 @@
 import React from "react";
-import { Redirect, Route, Switch } from "react-router";
+import { Redirect, Route, Switch } from "react-router-dom";
+import Footer from "../components/Footer";
+import Header from "../components/Header";
 import ProtectedRoute, {
   ProtectedRouteProps,
 } from "../components/ProtectedRoute";
 import { useAuth } from "../contexts/authContext";
-import AppRoutes from "../models/routes";
+import AppRoutes from "../models/Routes";
 
 function App() {
   const [auth, setAuth] = useAuth();
@@ -21,6 +23,7 @@ function App() {
 
   return (
     <div>
+      <Header />
       <Switch>
         {AppRoutes.map((route) => {
           if (route.private) {
@@ -45,6 +48,7 @@ function App() {
         })}
         <Redirect from="*" to="/" />
       </Switch>
+      <Footer />
     </div>
   );
 }
