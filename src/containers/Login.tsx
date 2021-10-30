@@ -29,7 +29,7 @@ function Login() {
     setAuth(user);
     setUser(user);
 
-    history.push("/dashboard");
+    history.push("/postings");
   };
 
   return <button onClick={handleSubmit}>Login</button>;

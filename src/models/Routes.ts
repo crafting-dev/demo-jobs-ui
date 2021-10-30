@@ -2,6 +2,7 @@ import { FC } from "react";
 import Dashboard from "../containers/Dashboard";
 import Home from "../containers/Home";
 import Login from "../containers/Login";
+import Postings from "../containers/Postings";
 import Signup from "../containers/Signup";
 
 type AppRoute = {
@@ -29,6 +30,11 @@ const AppRoutes: AppRoute[] = [
   {
     path: "/dashboard",
     component: Dashboard,
+    private: true,
+  },
+  {
+    path: "/postings",
+    component: Postings,
     private: true,
   },
 ];

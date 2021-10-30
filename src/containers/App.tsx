@@ -7,6 +7,7 @@ import ProtectedRoute, {
 } from "../components/ProtectedRoute";
 import { useAuth } from "../contexts/authContext";
 import AppRoutes from "../models/Routes";
+import CssBaseline from '@mui/material/CssBaseline';
 
 function App() {
   const [auth, setAuth] = useAuth();
@@ -23,6 +24,8 @@ function App() {
 
   return (
     <div>
+      <CssBaseline />
+
       <Header />
       <Switch>
         {AppRoutes.map((route) => {
