@@ -16,36 +16,33 @@ import theme from "../assets/themes/mui";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import Checkbox from "@mui/material/Checkbox";
 import Link from "@mui/material/Link";
+import Box from "@mui/material/Box";
 
 function Login() {
   const [auth, setAuth] = useAuth();
   const history = useHistory();
 
-  const [email, setEmail] = useState("");
-  const [pass, setPass] = useState({
+  const [credentials, setCredentials] = useState({
+    email: "",
     password: "",
     showPassword: false,
   });
 
-  const handleEmailChange = (e: {
-    target: { value: React.SetStateAction<string> };
-  }) => {
-    setEmail(e.target.value);
+  const handleChange = (prop: any) => (e: { target: { value: any } }) => {
+    setCredentials({ ...credentials, [prop]: e.target.value });
   };
 
-  const handlePasswordChange =
-    (prop: any) => (e: { target: { value: any } }) => {
-      setPass({ ...pass, [prop]: e.target.value });
-    };
-
   const handleClickShowPassword = () => {
-    setPass({ ...pass, showPassword: !pass.showPassword });
+    setCredentials({ ...credentials, showPassword: !credentials.showPassword });
   };
 
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
 
-    const response = await AuthenticateToken(email, pass.password);
+    const response = await AuthenticateToken(
+      credentials.email,
+      credentials.password
+    );
     const user: Auth = {
       token: response.data.attributes.token,
       id: response.data.id,
@@ -64,106 +61,106 @@ function Login() {
 
   return (
     <ThemeProvider theme={theme}>
-      <form
-        autoComplete="off"
-        onSubmit={handleSubmit}
-        style={{
+      <Box
+        sx={{
           maxWidth: "500px",
-          margin: "0 auto",
           paddingTop: "100px",
+          margin: "0 auto",
         }}
       >
-        <Stack
-          direction="column"
-          justifyContent="center"
-          alignItems="center"
-          spacing={2}
-        >
-          <Typography
-            variant="h2"
-            component="h2"
-            color="inherit"
-            sx={{
-              width: "100%",
-              marginBottom: "30px",
-            }}
-          >
-            Log In
-          </Typography>
-
-          <TextField
-            id="outlined-email"
-            label="Email"
-            name="email"
-            placeholder="batman@crafting.dev"
-            margin="normal"
-            variant="outlined"
-            fullWidth
-            onChange={handleEmailChange}
-          />
-
-          <TextField
-            label="Password"
-            variant="outlined"
-            type={pass.showPassword ? "text" : "password"}
-            value={pass.password}
-            name="password"
-            onChange={handlePasswordChange("password")}
-            fullWidth
-            InputProps={{
-              endAdornment: (
-                <InputAdornment position="end">
-                  <IconButton
-                    aria-label="toggle password visibility"
-                    onClick={handleClickShowPassword}
-                    onMouseDown={(e: React.SyntheticEvent<EventTarget>) =>
-                      e.preventDefault()
-                    }
-                  >
-                    {pass.showPassword ? (
-                      <Visibility fontSize="small" />
-                    ) : (
-                      <VisibilityOff fontSize="small" />
-                    )}
-                  </IconButton>
-                </InputAdornment>
-              ),
-            }}
-          />
-
+        <form autoComplete="off" onSubmit={handleSubmit}>
           <Stack
-            direction="row"
-            justifyContent="space-between"
+            direction="column"
+            justifyContent="center"
             alignItems="center"
-            spacing={26}
+            spacing={2}
           >
-            <FormControlLabel control={<Checkbox />} label="Remember me" />
-            <Link href="/login">Forgot password?</Link>
+            <Typography
+              variant="h2"
+              component="h2"
+              color="inherit"
+              sx={{
+                width: "100%",
+                marginBottom: "30px",
+              }}
+            >
+              Log In
+            </Typography>
+
+            <TextField
+              id="outlined-email"
+              label="Email"
+              name="email"
+              placeholder="batman@crafting.dev"
+              margin="normal"
+              variant="outlined"
+              fullWidth
+              onChange={handleChange("email")}
+            />
+
+            <TextField
+              label="Password"
+              variant="outlined"
+              type={credentials.showPassword ? "text" : "password"}
+              value={credentials.password}
+              name="password"
+              onChange={handleChange("password")}
+              fullWidth
+              InputProps={{
+                endAdornment: (
+                  <InputAdornment position="end">
+                    <IconButton
+                      aria-label="toggle password visibility"
+                      onClick={handleClickShowPassword}
+                      onMouseDown={(e: React.SyntheticEvent<EventTarget>) =>
+                        e.preventDefault()
+                      }
+                    >
+                      {credentials.showPassword ? (
+                        <Visibility fontSize="small" />
+                      ) : (
+                        <VisibilityOff fontSize="small" />
+                      )}
+                    </IconButton>
+                  </InputAdornment>
+                ),
+              }}
+            />
+
+            <Stack
+              direction="row"
+              justifyContent="space-between"
+              alignItems="center"
+              spacing={26}
+            >
+              <FormControlLabel control={<Checkbox />} label="Remember me" />
+              <Link href="/login">Forgot password?</Link>
+            </Stack>
+
+            <Button
+              variant="contained"
+              fullWidth
+              type="submit"
+              sx={{
+                lineHeight: "40px",
+              }}
+            >
+              Log In
+            </Button>
+
+            <Typography
+              variant="body1"
+              component="p"
+              color="inherit"
+              sx={{
+                width: "100%",
+              }}
+            >
+              Don't have an account? <Link href="/signup">Sign up now!</Link>
+            </Typography>
           </Stack>
-
-          <Button
-            variant="contained"
-            fullWidth
-            type="submit"
-            sx={{
-              lineHeight: "40px",
-            }}
-          >
-            Log In
-          </Button>
-
-          <Typography
-            variant="body1"
-            component="p"
-            color="inherit"
-            sx={{
-              width: "100%",
-            }}
-          >
-            Don't have an account? <Link href="/signup">Sign up now!</Link>
-          </Typography>
-        </Stack>
-      </form>
+        </form>
+      </Box>
     </ThemeProvider>
   );
 }

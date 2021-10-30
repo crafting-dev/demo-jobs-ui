@@ -13,5 +13,7 @@ const unauthenticated: Auth = {
   redirectPath: "",
 };
 
+const baseUrl = "http://localhost:3001/api/v1/";
+
 export default Auth;
-export { unauthenticated };
+export { unauthenticated, baseUrl };

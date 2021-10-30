@@ -1,9 +1,9 @@
-const authUrl = "http://localhost:3003/api/v1/authenticate";
+import { baseUrl } from "../models/Auth";
 
 const AuthenticateToken = async (email: string, password: string) => {
   const basicToken = btoa(`${email}:${password}`);
 
-  const response = await fetch(authUrl, {
+  const response = await fetch(`${baseUrl}/authenticate`, {
     method: "POST",
     headers: {
       Authorization: `Basic ${basicToken}`,
@@ -11,6 +11,12 @@ const AuthenticateToken = async (email: string, password: string) => {
     },
   });
   const data = await response.json();
+
+  if (!response.ok) {
+    const error = (data && data.message) || response.status;
+    return Promise.reject(error);
+  }
+
   return data;
 };
 
@@ -18,7 +24,7 @@ const RevokeToken = async (
   token: string | undefined,
   id: number | undefined
 ) => {
-  await fetch(`${authUrl}/${id}`, {
+  await fetch(`${baseUrl}/authenticate/${id}`, {
     method: "DELETE",
     headers: {
       Authorization: `Bearer ${token}`,
