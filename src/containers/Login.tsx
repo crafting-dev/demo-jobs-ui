@@ -79,7 +79,15 @@ function Login() {
           alignItems="center"
           spacing={2}
         >
-          <Typography variant="h2" component="h2" color="inherit">
+          <Typography
+            variant="h2"
+            component="h2"
+            color="inherit"
+            sx={{
+              width: "100%",
+              marginBottom: "30px",
+            }}
+          >
             Log In
           </Typography>
 
@@ -129,10 +137,7 @@ function Login() {
             alignItems="center"
             spacing={26}
           >
-            <FormControlLabel
-              control={<Checkbox disabled />}
-              label="Remember me"
-            />
+            <FormControlLabel control={<Checkbox />} label="Remember me" />
             <Link href="/login">Forgot password?</Link>
           </Stack>
 
