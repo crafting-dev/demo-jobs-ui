@@ -47,6 +47,7 @@ function Login() {
         const user: Auth = {
           token: response.data.attributes.token,
           id: response.data.id,
+          bearerId: response.data.attributes.bearer.id,
           name: response.data.attributes.bearer.name,
           email: response.data.attributes.bearer.email,
           type: response.data.attributes.bearer.type,
@@ -167,7 +168,7 @@ function Login() {
             {credentials.errors && (
               <Alert severity="error">
                 <AlertTitle>Error</AlertTitle>
-                Sign up was not successful — see error message below!
+                Log in was not successful — see error message below!
                 <br />
                 <br />
                 <strong>Incorrect Email/Password used</strong>

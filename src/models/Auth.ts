@@ -1,6 +1,7 @@
 type Auth = {
   token?: string;
   id?: number;
+  bearerId?: number;
   name?: string;
   email?: string;
   type?: string;
