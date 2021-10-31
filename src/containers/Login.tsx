@@ -17,6 +17,8 @@ import FormControlLabel from "@mui/material/FormControlLabel";
 import Checkbox from "@mui/material/Checkbox";
 import Link from "@mui/material/Link";
 import Box from "@mui/material/Box";
+import Alert from "@mui/material/Alert";
+import AlertTitle from "@mui/material/AlertTitle";
 
 function Login() {
   const [auth, setAuth] = useAuth();
@@ -26,6 +28,7 @@ function Login() {
     email: "",
     password: "",
     showPassword: false,
+    errors: false,
   });
 
   const handleChange = (prop: any) => (e: { target: { value: any } }) => {
@@ -39,24 +42,26 @@ function Login() {
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
 
-    const response = await AuthenticateToken(
-      credentials.email,
-      credentials.password
-    );
-    const user: Auth = {
-      token: response.data.attributes.token,
-      id: response.data.id,
-      name: response.data.attributes.bearer.name,
-      email: response.data.attributes.bearer.email,
-      type: response.data.attributes.bearer.type,
-      avatarUrl: response.data.attributes.bearer.avatar,
-      redirectPath: auth.redirectPath,
-      isAuthenticated: true,
-    };
-    setAuth(user);
-    setUser(user);
+    await AuthenticateToken(credentials.email, credentials.password)
+      .then((response) => {
+        const user: Auth = {
+          token: response.data.attributes.token,
+          id: response.data.id,
+          name: response.data.attributes.bearer.name,
+          email: response.data.attributes.bearer.email,
+          type: response.data.attributes.bearer.type,
+          avatarUrl: response.data.attributes.bearer.avatar,
+          redirectPath: auth.redirectPath,
+          isAuthenticated: true,
+        };
+        setAuth(user);
+        setUser(user);
 
-    history.push("/postings");
+        history.push("/postings");
+      })
+      .catch((error) => {
+        setCredentials({ ...credentials, errors: error.toString() });
+      });
   };
 
   return (
@@ -158,6 +163,16 @@ function Login() {
             >
               Don't have an account? <Link href="/signup">Sign up now!</Link>
             </Typography>
+
+            {credentials.errors && (
+              <Alert severity="error">
+                <AlertTitle>Error</AlertTitle>
+                Sign up was not successful — see error message below!
+                <br />
+                <br />
+                <strong>Incorrect Email/Password used</strong>
+              </Alert>
+            )}
           </Stack>
         </form>
       </Box>

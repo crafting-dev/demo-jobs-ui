@@ -1,7 +1,28 @@
 import { baseUrl } from "../models/Auth";
 
 // Fetch a resource by type from path.
-const Fetch = () => {};
+// Bearer authentication token needed.
+const Fetch = async (
+  path: string,
+  method: string,
+  token: string | undefined
+) => {
+  const response = await fetch(`${baseUrl}${path}`, {
+    method: method,
+    headers: {
+      Authorization: `Bearer ${token}`,
+      "Content-Type": "application/json",
+    },
+  });
+  const data = await response.json();
+
+  if (!response.ok) {
+    const error = (data && data.message) || response.status;
+    return Promise.reject(error);
+  }
+
+  return data;
+};
 
 // Create either Employer or Worker resources.
 // Authentication not needed.
