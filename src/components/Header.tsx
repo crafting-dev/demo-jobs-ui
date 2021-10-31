@@ -110,9 +110,15 @@ function Header() {
                   <Link href="/postings">Postings</Link>
                 </Tooltip>
 
-                <Tooltip title="My Applications">
-                  <Link href="/applications">Applications</Link>
-                </Tooltip>
+                {auth.type === "Employer" ? (
+                  <Tooltip title="Create a new job posting">
+                    <Link href="/create/posting">Create Posting</Link>
+                  </Tooltip>
+                ) : (
+                  <Tooltip title="List all my previous applications">
+                    <Link href="/applications">My Applications</Link>
+                  </Tooltip>
+                )}
 
                 <Button
                   id="basic-button"
