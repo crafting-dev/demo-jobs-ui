@@ -51,6 +51,15 @@ function Applications() {
           paddingTop: "100px",
         }}
       >
+        <Typography
+          sx={{ marginBottom: "40px", paddingLeft: "20px" }}
+          gutterBottom
+          variant="h2"
+          component="div"
+        >
+          Applications
+        </Typography>
+
         <Stack spacing={2}>
           {applications.map((obj: any) => (
             <Card

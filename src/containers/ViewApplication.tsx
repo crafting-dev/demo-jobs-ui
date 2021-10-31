@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Link, useParams, useHistory } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { useAuth } from "../contexts/authContext";
 import ThemeProvider from "@mui/material/styles/ThemeProvider";
 import theme from "../assets/themes/mui";
@@ -11,55 +11,45 @@ import Typography from "@mui/material/Typography";
 import Chip from "@mui/material/Chip";
 import { styled } from "@mui/material/styles";
 import Paper from "@mui/material/Paper";
-import Posting from "../models/Posting";
+import Application from "../models/Application";
 import Fetch from "../adapters/Fetch";
-import Button from "@mui/material/Button";
 
 const ListItem = styled("li")(({ theme }) => ({
   margin: theme.spacing(0.5),
 }));
 
-function ViewPosting() {
+function ViewApplication() {
   const auth = useAuth()[0];
-  const history = useHistory();
 
   const { id }: any = useParams();
 
-  const [posting, setPosting] = useState<Posting>({
+  const [application, setApplication] = useState<Application>({
     id: 0,
-    title: "",
     status: "",
-    description: "",
+    content: "",
     createdAt: "",
-    hours: 0,
     tags: "",
-    employer: undefined,
-    applications: undefined,
+    posting: undefined,
+    worker: undefined,
   });
 
-  const handleSubmit = () => {
-    history.push(`/postings/${id}/apply`);
-  };
-
   useEffect(() => {
-    async function getPosting() {
-      await Fetch(`/postings/${id}`, "GET", auth.token).then((response) => {
-        const posting: Posting = {
+    async function getApplication() {
+      await Fetch(`/applications/${id}`, "GET", auth.token).then((response) => {
+        const application: Application = {
           id: response.data.id,
-          title: response.data.attributes.title,
           status: response.data.attributes.status,
-          description: response.data.attributes.description,
+          content: response.data.attributes.content,
           createdAt: response.data.attributes.createdAt,
-          hours: response.data.attributes.hours,
           tags: response.data.attributes.tags,
-          employer: response.data.attributes.employer,
-          applications: response.data.attributes.applications,
+          posting: response.data.attributes.posting,
+          worker: response.data.attributes.worker,
         };
-        setPosting(posting);
+        setApplication(application);
       });
     }
 
-    getPosting();
+    getApplication();
   }, [id, auth.token]);
 
   return (
@@ -77,7 +67,7 @@ function ViewPosting() {
           variant="h2"
           component="div"
         >
-          Posting
+          Application
         </Typography>
 
         <Stack spacing={2}>
@@ -91,7 +81,7 @@ function ViewPosting() {
             <CardContent>
               <Stack spacing={0}>
                 <Typography gutterBottom variant="h5" component="div">
-                  {posting?.title}
+                  {application?.posting?.title}
                 </Typography>
 
                 <Stack
@@ -105,17 +95,22 @@ function ViewPosting() {
                     color="text.secondary"
                     sx={{ marginBottom: "10px" }}
                   >
-                    Posted{" "}
+                    Applied{" "}
                     {new Date().getDate() -
-                      new Date(posting.createdAt).getDate()}{" "}
-                    days ago by {posting?.employer?.name}
+                      new Date(application?.createdAt).getDate()}{" "}
+                    days ago by {application?.worker?.name}
                   </Typography>
 
                   <Chip
-                    label={posting?.status}
+                    label={application?.status}
                     size="small"
                     variant="outlined"
-                    color={posting?.status === "posted" ? "success" : "error"}
+                    color={
+                      application?.status === "error" ||
+                      application?.status === "rejected"
+                        ? "error"
+                        : "success"
+                    }
                   />
                 </Stack>
 
@@ -133,7 +128,7 @@ function ViewPosting() {
                   }}
                   component="ul"
                 >
-                  {posting?.tags?.split(", ").map((tag: string) => {
+                  {application?.tags?.split(", ").map((tag: string) => {
                     return (
                       <ListItem key={tag}>
                         <Chip
@@ -152,38 +147,23 @@ function ViewPosting() {
                   color="text.primary"
                   sx={{ margin: "20px 0" }}
                 >
-                  {posting?.description}
+                  {application?.content}
                 </Typography>
 
                 <Typography variant="body2" color="text.secondary">
-                  Hours: {posting?.hours}
+                  Application created by:{" "}
+                  <Link to={`/workers/${application?.worker?.id}`}>
+                    {application?.worker?.name}
+                  </Link>
                 </Typography>
 
                 <Typography variant="body2" color="text.secondary">
-                  Location: {posting?.employer?.location}
+                  Original job posting:{" "}
+                  <Link to={`/postings/${application?.posting?.id}`}>
+                    {application?.posting?.title}
+                  </Link>
                 </Typography>
               </Stack>
-
-              {posting.applications && (
-                <Stack sx={{ marginTop: "30px" }}>
-                  <Typography gutterBottom variant="h6" component="div">
-                    Applications
-                  </Typography>
-                  {posting.applications.map((app) => (
-                    <Link to={`/applications/${app.id}`}>
-                      Applicant: {app.name}, status: {app.status}
-                    </Link>
-                  ))}
-                </Stack>
-              )}
-
-              {auth.type === "Worker" && (
-                <Stack sx={{ marginTop: "30px" }}>
-                  <Button variant="contained" onClick={handleSubmit}>
-                    Apply
-                  </Button>
-                </Stack>
-              )}
             </CardContent>
           </Card>
         </Stack>
@@ -192,4 +172,4 @@ function ViewPosting() {
   );
 }
 
-export default ViewPosting;
+export default ViewApplication;

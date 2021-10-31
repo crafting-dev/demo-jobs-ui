@@ -6,6 +6,8 @@ import Signup from "../containers/Signup";
 import ViewPosting from "../containers/ViewPosting";
 import Apply from "../containers/Apply";
 import Applications from "../containers/Applications";
+import ViewApplication from "../containers/ViewApplication";
+import Create from "../containers/Create";
 
 type AppRoute = {
   path: string;
@@ -36,12 +38,7 @@ const AppRoutes: AppRoute[] = [
   },
   {
     path: "/create/posting",
-    component: Apply,
-    private: true,
-  },
-  {
-    path: "/create/application",
-    component: Apply,
+    component: Create,
     private: true,
   },
   {
@@ -57,6 +54,11 @@ const AppRoutes: AppRoute[] = [
   {
     path: "/postings",
     component: Postings,
+    private: true,
+  },
+  {
+    path: "/applications/:id",
+    component: ViewApplication,
     private: true,
   },
   {

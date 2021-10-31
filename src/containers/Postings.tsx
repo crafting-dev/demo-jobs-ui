@@ -51,6 +51,15 @@ function Postings() {
           paddingTop: "100px",
         }}
       >
+        <Typography
+          sx={{ marginBottom: "40px", paddingLeft: "20px" }}
+          gutterBottom
+          variant="h2"
+          component="div"
+        >
+          Postings
+        </Typography>
+
         <Stack spacing={2}>
           {postings.map((obj: any) => (
             <Card
