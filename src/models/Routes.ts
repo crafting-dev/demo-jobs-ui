@@ -4,6 +4,7 @@ import Login from "../containers/Login";
 import Postings from "../containers/Postings";
 import Signup from "../containers/Signup";
 import ViewPosting from "../containers/ViewPosting";
+import Apply from "../containers/Apply";
 
 type AppRoute = {
   path: string;
@@ -30,6 +31,11 @@ const AppRoutes: AppRoute[] = [
   {
     path: "/dashboard",
     component: Dashboard,
+    private: true,
+  },
+  {
+    path: "/postings/:id/apply",
+    component: Apply,
     private: true,
   },
   {
