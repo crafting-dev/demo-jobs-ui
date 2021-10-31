@@ -33,7 +33,16 @@ const ListItem = styled("li")(({ theme }) => ({
 }));
 
 function Signup() {
-  const [credentials, setCredentials] = useState({
+  const [credentials, setCredentials] = useState<{
+    name: string;
+    email: string;
+    password: string;
+    showPassword: boolean;
+    passwordConfirmation: string;
+    showPasswordConfirmation: boolean;
+    other: { key: string; value: string };
+    errors: string | false;
+  }>({
     name: "",
     email: "",
     password: "",
@@ -59,7 +68,6 @@ function Signup() {
 
   const handleNext = () => {
     setActiveStep((prevActiveStep) => prevActiveStep + 1);
-    clearErrors();
   };
 
   const handleBack = () => {
@@ -145,7 +153,7 @@ function Signup() {
       objType,
       tags.list.join(", ")
     )
-      .then((response) => {
+      .then(() => {
         handleNext();
       })
       .catch((error) => {

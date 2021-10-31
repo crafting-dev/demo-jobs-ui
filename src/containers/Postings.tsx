@@ -40,7 +40,7 @@ function Postings() {
     }
 
     populatePostings();
-  }, []);
+  }, [auth.token]);
 
   return (
     <ThemeProvider theme={theme}>
