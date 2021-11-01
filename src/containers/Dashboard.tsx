@@ -170,8 +170,8 @@ function Dashboard() {
 
               <Typography variant="body1" color="text.primary">
                 {profile?.type === "employer"
-                  ? `My current location is ${profile?.location}.`
-                  : `My current hourly rate is $${profile?.hourlyRate}/hr.`}
+                  ? `Current location is ${profile?.location}.`
+                  : `Current hourly rate is $${profile?.hourlyRate}/hr.`}
               </Typography>
             </Stack>
           </CardContent>

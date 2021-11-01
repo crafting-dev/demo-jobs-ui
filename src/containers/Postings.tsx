@@ -115,7 +115,7 @@ function Postings() {
                     }}
                     component="ul"
                   >
-                    {obj.attributes.tags.split(", ").map((tag: string) => {
+                    {obj.attributes.tags?.split(", ").map((tag: string) => {
                       return (
                         <ListItem key={tag}>
                           <Chip
