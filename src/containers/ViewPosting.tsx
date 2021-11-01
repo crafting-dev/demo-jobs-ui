@@ -1,48 +1,48 @@
-import React, { useEffect, useState } from "react";
-import { useParams, useHistory } from "react-router-dom";
-import { useAuth } from "../contexts/authContext";
-import Box from "@mui/material/Box";
-import Stack from "@mui/material/Stack";
-import Card from "@mui/material/Card";
-import CardContent from "@mui/material/CardContent";
-import Typography from "@mui/material/Typography";
-import Chip from "@mui/material/Chip";
-import { styled } from "@mui/material/styles";
-import Paper from "@mui/material/Paper";
-import Posting from "../models/Posting";
-import Fetch from "../adapters/Fetch";
-import Button from "@mui/material/Button";
+import React, { useEffect, useState } from 'react'
+import { useParams, useHistory } from 'react-router-dom'
+import Box from '@mui/material/Box'
+import Stack from '@mui/material/Stack'
+import Card from '@mui/material/Card'
+import CardContent from '@mui/material/CardContent'
+import Typography from '@mui/material/Typography'
+import Chip from '@mui/material/Chip'
+import { styled } from '@mui/material/styles'
+import Paper from '@mui/material/Paper'
+import Button from '@mui/material/Button'
+import Posting from '../models/Posting'
+import Fetch from '../adapters/Fetch'
+import { useAuth } from '../contexts/authContext'
 
-const ListItem = styled("li")(({ theme }) => ({
+const ListItem = styled('li')(({ theme }) => ({
   margin: theme.spacing(0.5),
-}));
+}))
 
 function ViewPosting() {
-  const auth = useAuth()[0];
-  const history = useHistory();
+  const auth = useAuth()[0]
+  const history = useHistory()
 
-  const { id }: any = useParams();
+  const { id }: any = useParams()
 
   const [posting, setPosting] = useState<Posting>({
     id: 0,
-    title: "",
-    status: "",
-    description: "",
-    createdAt: "",
+    title: '',
+    status: '',
+    description: '',
+    createdAt: '',
     hours: 0,
-    tags: "",
+    tags: '',
     employer: undefined,
     applications: undefined,
-  });
+  })
 
   const handleSubmit = () => {
-    history.push(`/postings/${id}/apply`);
-  };
+    history.push(`/postings/${id}/apply`)
+  }
 
   useEffect(() => {
     async function getPosting() {
-      await Fetch(`/postings/${id}`, "GET", auth.token).then((response) => {
-        const posting: Posting = {
+      await Fetch(`/postings/${id}`, 'GET', auth.token).then((response) => {
+        const newPosting: Posting = {
           id: response.data.id,
           title: response.data.attributes.title,
           status: response.data.attributes.status,
@@ -52,24 +52,24 @@ function ViewPosting() {
           tags: response.data.attributes.tags,
           employer: response.data.attributes.employer,
           applications: response.data.attributes.applications,
-        };
-        setPosting(posting);
-      });
+        }
+        setPosting(newPosting)
+      })
     }
 
-    getPosting();
-  }, [id, auth.token]);
+    getPosting()
+  }, [id, auth.token])
 
   return (
     <Box
       sx={{
-        maxWidth: "600px",
-        margin: "0 auto",
-        paddingTop: "100px",
+        maxWidth: '600px',
+        margin: '0 auto',
+        paddingTop: '100px',
       }}
     >
       <Typography
-        sx={{ marginBottom: "40px", paddingLeft: "20px" }}
+        sx={{ marginBottom: '40px', paddingLeft: '20px' }}
         gutterBottom
         variant="h2"
         component="div"
@@ -81,8 +81,8 @@ function ViewPosting() {
         <Card
           elevation={1}
           sx={{
-            background: "#FFFFFF",
-            border: "1px solid #EEEEEE",
+            background: '#FFFFFF',
+            border: '1px solid #EEEEEE',
           }}
         >
           <CardContent>
@@ -100,10 +100,10 @@ function ViewPosting() {
                 <Typography
                   variant="body2"
                   color="text.secondary"
-                  sx={{ marginBottom: "10px" }}
+                  sx={{ marginBottom: '10px' }}
                 >
-                  Posted{" "}
-                  {new Date(posting.createdAt).getDate() - new Date().getDate()}{" "}
+                  Posted{' '}
+                  {new Date(posting.createdAt).getDate() - new Date().getDate()}{' '}
                   days ago by {posting?.employer?.name}
                 </Typography>
 
@@ -111,25 +111,25 @@ function ViewPosting() {
                   label={posting?.status}
                   size="small"
                   variant="outlined"
-                  color={posting?.status === "posted" ? "success" : "error"}
+                  color={posting?.status === 'posted' ? 'success' : 'error'}
                 />
               </Stack>
 
               <Paper
                 elevation={0}
                 sx={{
-                  display: "flex",
-                  justifyContent: "left",
-                  flexWrap: "wrap",
-                  listStyle: "none",
+                  display: 'flex',
+                  justifyContent: 'left',
+                  flexWrap: 'wrap',
+                  listStyle: 'none',
                   paddingLeft: 0,
                   p: 0.5,
                   m: 0,
-                  backgroundColor: "transparent",
+                  backgroundColor: 'transparent',
                 }}
                 component="ul"
               >
-                {posting?.tags?.split(", ").map((tag: string) => {
+                {posting?.tags?.split(', ').map((tag: string) => {
                   return (
                     <ListItem key={tag}>
                       <Chip
@@ -139,14 +139,14 @@ function ViewPosting() {
                         color="primary"
                       />
                     </ListItem>
-                  );
+                  )
                 })}
               </Paper>
 
               <Typography
                 paragraph
                 color="text.primary"
-                sx={{ margin: "20px 0" }}
+                sx={{ margin: '20px 0' }}
               >
                 {posting?.description}
               </Typography>
@@ -161,7 +161,7 @@ function ViewPosting() {
             </Stack>
 
             {!!posting.applications?.length && (
-              <Stack sx={{ marginTop: "30px" }}>
+              <Stack sx={{ marginTop: '30px' }}>
                 <Typography gutterBottom variant="h6" component="div">
                   Applications
                 </Typography>
@@ -170,7 +170,7 @@ function ViewPosting() {
                     key={app.id}
                     variant="text"
                     component="a"
-                    style={{ display: "block" }}
+                    style={{ display: 'block' }}
                     href={`/applications/${app.id}`}
                   >
                     [{app.status}] {app.name}
@@ -179,10 +179,10 @@ function ViewPosting() {
               </Stack>
             )}
 
-            {auth.type === "Worker" && (
-              <Stack sx={{ marginTop: "30px" }}>
+            {auth.type === 'Worker' && (
+              <Stack sx={{ marginTop: '30px' }}>
                 <Button
-                  style={{ maxWidth: "200px" }}
+                  style={{ maxWidth: '200px' }}
                   variant="contained"
                   onClick={handleSubmit}
                 >
@@ -194,7 +194,7 @@ function ViewPosting() {
         </Card>
       </Stack>
     </Box>
-  );
+  )
 }
 
-export default ViewPosting;
+export default ViewPosting

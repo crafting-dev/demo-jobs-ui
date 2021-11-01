@@ -1,83 +1,83 @@
-import React, { useEffect, useState } from "react";
-import { useHistory } from "react-router-dom";
-import { useAuth } from "../contexts/authContext";
-import Fetch from "../adapters/Fetch";
-import Box from "@mui/material/Box";
-import Stack from "@mui/material/Stack";
-import Card from "@mui/material/Card";
-import CardContent from "@mui/material/CardContent";
-import Typography from "@mui/material/Typography";
-import { CardActionArea } from "@mui/material";
-import Chip from "@mui/material/Chip";
-import { styled } from "@mui/material/styles";
-import Paper from "@mui/material/Paper";
-import Skeleton from "@mui/material/Skeleton";
-import InputBase from "@mui/material/InputBase";
-import Divider from "@mui/material/Divider";
-import IconButton from "@mui/material/IconButton";
-import MenuIcon from "@mui/icons-material/Menu";
-import SearchIcon from "@mui/icons-material/Search";
-import GitHubIcon from "@mui/icons-material/GitHub";
+import React, { useEffect, useState } from 'react'
+import { useHistory } from 'react-router-dom'
+import Box from '@mui/material/Box'
+import Stack from '@mui/material/Stack'
+import Card from '@mui/material/Card'
+import CardContent from '@mui/material/CardContent'
+import Typography from '@mui/material/Typography'
+import { CardActionArea } from '@mui/material'
+import Chip from '@mui/material/Chip'
+import { styled } from '@mui/material/styles'
+import Paper from '@mui/material/Paper'
+import Skeleton from '@mui/material/Skeleton'
+import InputBase from '@mui/material/InputBase'
+import Divider from '@mui/material/Divider'
+import IconButton from '@mui/material/IconButton'
+import MenuIcon from '@mui/icons-material/Menu'
+import SearchIcon from '@mui/icons-material/Search'
+import GitHubIcon from '@mui/icons-material/GitHub'
+import Fetch from '../adapters/Fetch'
+import { useAuth } from '../contexts/authContext'
 
-const ListItem = styled("li")(({ theme }) => ({
+const ListItem = styled('li')(({ theme }) => ({
   margin: theme.spacing(0.5),
-}));
+}))
 
 function Postings() {
-  const auth = useAuth()[0];
-  const history = useHistory();
+  const auth = useAuth()[0]
+  const history = useHistory()
 
-  const [postings, setPostings] = useState<any[]>([]);
+  const [postings, setPostings] = useState<any[]>([])
 
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(true)
 
   const handleFollowPathLink = (id: number) => () => {
-    history.push(`/postings/${id}`);
-  };
+    history.push(`/postings/${id}`)
+  }
 
   useEffect(() => {
     async function populatePostings() {
-      await Fetch("/postings", "GET", auth.token)
+      await Fetch('/postings', 'GET', auth.token)
         .then((response) => {
-          setPostings(response.data);
+          setPostings(response.data)
         })
         .catch((error) => {
-          console.log(error);
-        });
+          console.log(error)
+        })
     }
 
     populatePostings().then(() => {
-      setLoading(false);
-    });
-  }, [auth.token]);
+      setLoading(false)
+    })
+  }, [auth.token])
 
   return (
     <Box
       sx={{
-        maxWidth: "600px",
-        margin: "0 auto",
-        paddingTop: "100px",
+        maxWidth: '600px',
+        margin: '0 auto',
+        paddingTop: '100px',
       }}
     >
       <Paper
         component="form"
         sx={{
-          p: "2px 4px",
-          display: "flex",
-          alignItems: "center",
-          width: "100%",
-          marginBottom: "50px",
+          p: '2px 4px',
+          display: 'flex',
+          alignItems: 'center',
+          width: '100%',
+          marginBottom: '50px',
         }}
       >
-        <IconButton sx={{ p: "10px" }} aria-label="menu">
+        <IconButton sx={{ p: '10px' }} aria-label="menu">
           <MenuIcon />
         </IconButton>
         <InputBase
           sx={{ ml: 1, flex: 1 }}
           placeholder="Search jobs"
-          inputProps={{ "aria-label": "search google maps" }}
+          inputProps={{ 'aria-label': 'search google maps' }}
         />
-        <IconButton type="submit" sx={{ p: "10px" }} aria-label="search">
+        <IconButton type="submit" sx={{ p: '10px' }} aria-label="search">
           <SearchIcon />
         </IconButton>
         <Divider sx={{ height: 28, m: 0.5 }} orientation="vertical" />
@@ -86,7 +86,7 @@ function Postings() {
           href="https://github.com/crafting-dev/demo-jobs-ui"
           target="_blank"
           color="primary"
-          sx={{ p: "10px" }}
+          sx={{ p: '10px' }}
           aria-label="directions"
         >
           <GitHubIcon />
@@ -98,8 +98,8 @@ function Postings() {
           <Card
             elevation={1}
             sx={{
-              background: "#FFFFFF",
-              border: "1px solid #EEEEEE",
+              background: '#FFFFFF',
+              border: '1px solid #EEEEEE',
             }}
           >
             <CardActionArea>
@@ -118,7 +118,7 @@ function Postings() {
                     <Typography
                       variant="body2"
                       color="text.secondary"
-                      sx={{ marginBottom: "10px" }}
+                      sx={{ marginBottom: '10px' }}
                     >
                       <Skeleton />
                     </Typography>
@@ -133,14 +133,14 @@ function Postings() {
                   <Paper
                     elevation={0}
                     sx={{
-                      display: "flex",
-                      justifyContent: "left",
-                      flexWrap: "wrap",
-                      listStyle: "none",
+                      display: 'flex',
+                      justifyContent: 'left',
+                      flexWrap: 'wrap',
+                      listStyle: 'none',
                       paddingLeft: 0,
                       p: 0.5,
                       m: 0,
-                      backgroundColor: "transparent",
+                      backgroundColor: 'transparent',
                     }}
                     component="ul"
                   >
@@ -150,7 +150,7 @@ function Postings() {
                   <Typography
                     variant="body2"
                     color="text.primary"
-                    sx={{ margin: "20px 0" }}
+                    sx={{ margin: '20px 0' }}
                   >
                     <Skeleton />
                   </Typography>
@@ -174,8 +174,8 @@ function Postings() {
               elevation={1}
               key={obj.id}
               sx={{
-                background: "#FFFFFF",
-                border: "1px solid #EEEEEE",
+                background: '#FFFFFF',
+                border: '1px solid #EEEEEE',
               }}
             >
               <CardActionArea onClick={handleFollowPathLink(obj.id)}>
@@ -194,11 +194,11 @@ function Postings() {
                       <Typography
                         variant="body2"
                         color="text.secondary"
-                        sx={{ marginBottom: "10px" }}
+                        sx={{ marginBottom: '10px' }}
                       >
-                        Posted{" "}
+                        Posted{' '}
                         {new Date(obj.attributes.createdAt).getDate() -
-                          new Date().getDate()}{" "}
+                          new Date().getDate()}{' '}
                         days ago by {obj.attributes.employer.name}
                       </Typography>
 
@@ -207,9 +207,9 @@ function Postings() {
                         size="small"
                         variant="outlined"
                         color={
-                          obj.attributes.status === "posted"
-                            ? "success"
-                            : "error"
+                          obj.attributes.status === 'posted'
+                            ? 'success'
+                            : 'error'
                         }
                       />
                     </Stack>
@@ -217,18 +217,18 @@ function Postings() {
                     <Paper
                       elevation={0}
                       sx={{
-                        display: "flex",
-                        justifyContent: "left",
-                        flexWrap: "wrap",
-                        listStyle: "none",
+                        display: 'flex',
+                        justifyContent: 'left',
+                        flexWrap: 'wrap',
+                        listStyle: 'none',
                         paddingLeft: 0,
                         p: 0.5,
                         m: 0,
-                        backgroundColor: "transparent",
+                        backgroundColor: 'transparent',
                       }}
                       component="ul"
                     >
-                      {obj.attributes.tags?.split(", ").map((tag: string) => {
+                      {obj.attributes.tags?.split(', ').map((tag: string) => {
                         return (
                           <ListItem key={tag}>
                             <Chip
@@ -238,14 +238,14 @@ function Postings() {
                               color="primary"
                             />
                           </ListItem>
-                        );
+                        )
                       })}
                     </Paper>
 
                     <Typography
                       variant="body2"
                       color="text.primary"
-                      sx={{ margin: "20px 0" }}
+                      sx={{ margin: '20px 0' }}
                     >
                       {obj.attributes.description}
                     </Typography>
@@ -265,7 +265,7 @@ function Postings() {
         </Stack>
       )}
     </Box>
-  );
+  )
 }
 
-export default Postings;
+export default Postings

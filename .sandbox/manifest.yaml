@@ -1,10 +1,10 @@
 hooks:
   post-checkout:
-    cmd: "npm install"
+    cmd: 'npm install'
   build:
-    cmd: "npm run build"
+    cmd: 'npm run build'
 
 daemons:
   app:
     run:
-      cmd: "HOST=0.0.0.0 PORT=3000 npm start"
+      cmd: 'HOST=0.0.0.0 PORT=3000 npm start'

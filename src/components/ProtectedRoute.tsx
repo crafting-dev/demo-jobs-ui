@@ -1,11 +1,11 @@
-import { useEffect } from "react";
-import { Redirect, Route, RouteProps, useLocation } from "react-router-dom";
+import React, { useEffect } from 'react'
+import { Redirect, Route, RouteProps, useLocation } from 'react-router-dom'
 
 type ProtectedRouteProps = {
-  isAuthenticated: boolean;
-  redirectPath: string;
-  setRedirectPath: (path: string) => void;
-} & RouteProps;
+  isAuthenticated: boolean
+  redirectPath: string
+  setRedirectPath: (path: string) => void
+} & RouteProps
 
 function ProtectedRoute({
   isAuthenticated,
@@ -13,20 +13,19 @@ function ProtectedRoute({
   setRedirectPath,
   ...routeProps
 }: ProtectedRouteProps) {
-  const currentLocation = useLocation();
+  const currentLocation = useLocation()
 
   useEffect(() => {
     if (!isAuthenticated) {
-      setRedirectPath(currentLocation.pathname);
+      setRedirectPath(currentLocation.pathname)
     }
-  }, [isAuthenticated, setRedirectPath, currentLocation]);
+  }, [isAuthenticated, setRedirectPath, currentLocation])
 
   if (isAuthenticated) {
-    return <Route {...routeProps} />;
-  } else {
-    return <Redirect to={{ pathname: "/login" }} />;
+    return <Route {...routeProps} />
   }
+  return <Redirect to={{ pathname: '/login' }} />
 }
 
-export default ProtectedRoute;
-export type { ProtectedRouteProps };
+export default ProtectedRoute
+export type { ProtectedRouteProps }

@@ -1,60 +1,56 @@
-import React, { useEffect, useState } from "react";
-import { Link, useHistory } from "react-router-dom";
-import { useAuth } from "../contexts/authContext";
-import Fetch from "../adapters/Fetch";
-import Box from "@mui/material/Box";
-import Stack from "@mui/material/Stack";
-import Card from "@mui/material/Card";
-import CardContent from "@mui/material/CardContent";
-import Typography from "@mui/material/Typography";
-import { CardActionArea } from "@mui/material";
-import Chip from "@mui/material/Chip";
-import { styled } from "@mui/material/styles";
-import Paper from "@mui/material/Paper";
-import Skeleton from "@mui/material/Skeleton";
+import React, { useEffect, useState } from 'react'
+import { Link, useHistory } from 'react-router-dom'
+import Box from '@mui/material/Box'
+import Stack from '@mui/material/Stack'
+import Card from '@mui/material/Card'
+import CardContent from '@mui/material/CardContent'
+import Typography from '@mui/material/Typography'
+import { CardActionArea } from '@mui/material'
+import Chip from '@mui/material/Chip'
+import { styled } from '@mui/material/styles'
+import Paper from '@mui/material/Paper'
+import Skeleton from '@mui/material/Skeleton'
+import Fetch from '../adapters/Fetch'
+import { useAuth } from '../contexts/authContext'
 
-const ListItem = styled("li")(({ theme }) => ({
+const ListItem = styled('li')(({ theme }) => ({
   margin: theme.spacing(0.5),
-}));
+}))
 
 function Applications() {
-  const auth = useAuth()[0];
-  const history = useHistory();
+  const auth = useAuth()[0]
+  const history = useHistory()
 
-  const [applications, setApplications] = useState<any[]>([]);
+  const [applications, setApplications] = useState<any[]>([])
 
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(true)
 
   const handleFollowPathLink = (id: number) => () => {
-    history.push(`/applications/${id}`);
-  };
+    history.push(`/applications/${id}`)
+  }
 
   useEffect(() => {
     async function populateApplications() {
-      await Fetch("/applications", "GET", auth.token)
-        .then((response) => {
-          setApplications(response.data);
-        })
-        .catch((error) => {
-          console.log(error);
-        });
+      await Fetch('/applications', 'GET', auth.token).then((response) => {
+        setApplications(response.data)
+      })
     }
 
     populateApplications().then(() => {
-      setLoading(false);
-    });
-  }, [auth.token]);
+      setLoading(false)
+    })
+  }, [auth.token])
 
   return (
     <Box
       sx={{
-        maxWidth: "600px",
-        margin: "0 auto",
-        paddingTop: "100px",
+        maxWidth: '600px',
+        margin: '0 auto',
+        paddingTop: '100px',
       }}
     >
       <Typography
-        sx={{ marginBottom: "40px", paddingLeft: "20px" }}
+        sx={{ marginBottom: '40px', paddingLeft: '20px' }}
         gutterBottom
         variant="h2"
         component="div"
@@ -67,8 +63,8 @@ function Applications() {
           <Card
             elevation={1}
             sx={{
-              background: "#FFFFFF",
-              border: "1px solid #EEEEEE",
+              background: '#FFFFFF',
+              border: '1px solid #EEEEEE',
             }}
           >
             <CardActionArea>
@@ -87,7 +83,7 @@ function Applications() {
                     <Typography
                       variant="body2"
                       color="text.secondary"
-                      sx={{ marginBottom: "10px" }}
+                      sx={{ marginBottom: '10px' }}
                     >
                       <Skeleton />
                     </Typography>
@@ -102,14 +98,14 @@ function Applications() {
                   <Paper
                     elevation={0}
                     sx={{
-                      display: "flex",
-                      justifyContent: "left",
-                      flexWrap: "wrap",
-                      listStyle: "none",
+                      display: 'flex',
+                      justifyContent: 'left',
+                      flexWrap: 'wrap',
+                      listStyle: 'none',
                       paddingLeft: 0,
                       p: 0.5,
                       m: 0,
-                      backgroundColor: "transparent",
+                      backgroundColor: 'transparent',
                     }}
                     component="ul"
                   >
@@ -119,7 +115,7 @@ function Applications() {
                   <Typography
                     variant="body2"
                     color="text.primary"
-                    sx={{ margin: "20px 0" }}
+                    sx={{ margin: '20px 0' }}
                   >
                     <Skeleton />
                   </Typography>
@@ -143,8 +139,8 @@ function Applications() {
               elevation={1}
               key={obj.id}
               sx={{
-                background: "#FFFFFF",
-                border: "1px solid #EEEEEE",
+                background: '#FFFFFF',
+                border: '1px solid #EEEEEE',
               }}
             >
               <CardActionArea onClick={handleFollowPathLink(obj.id)}>
@@ -163,11 +159,11 @@ function Applications() {
                       <Typography
                         variant="body2"
                         color="text.secondary"
-                        sx={{ marginBottom: "10px" }}
+                        sx={{ marginBottom: '10px' }}
                       >
-                        Applied{" "}
+                        Applied{' '}
                         {new Date(obj.attributes.createdAt).getDate() -
-                          new Date().getDate()}{" "}
+                          new Date().getDate()}{' '}
                         days ago
                       </Typography>
 
@@ -176,10 +172,10 @@ function Applications() {
                         size="small"
                         variant="outlined"
                         color={
-                          obj.attributes.status === "expired" ||
-                          obj.attributes.status === "rejected"
-                            ? "error"
-                            : "success"
+                          obj.attributes.status === 'expired' ||
+                          obj.attributes.status === 'rejected'
+                            ? 'error'
+                            : 'success'
                         }
                       />
                     </Stack>
@@ -187,18 +183,18 @@ function Applications() {
                     <Paper
                       elevation={0}
                       sx={{
-                        display: "flex",
-                        justifyContent: "left",
-                        flexWrap: "wrap",
-                        listStyle: "none",
+                        display: 'flex',
+                        justifyContent: 'left',
+                        flexWrap: 'wrap',
+                        listStyle: 'none',
                         paddingLeft: 0,
                         p: 0.5,
                         m: 0,
-                        backgroundColor: "transparent",
+                        backgroundColor: 'transparent',
                       }}
                       component="ul"
                     >
-                      {obj.attributes.tags?.split(", ").map((tag: string) => {
+                      {obj.attributes.tags?.split(', ').map((tag: string) => {
                         return (
                           <ListItem key={tag}>
                             <Chip
@@ -208,27 +204,27 @@ function Applications() {
                               color="primary"
                             />
                           </ListItem>
-                        );
+                        )
                       })}
                     </Paper>
 
                     <Typography
                       variant="body2"
                       color="text.primary"
-                      sx={{ margin: "20px 0" }}
+                      sx={{ margin: '20px 0' }}
                     >
                       {obj.attributes.description}
                     </Typography>
 
                     <Typography variant="body2" color="text.secondary">
-                      Application was created by:{" "}
-                      {auth.type === "Worker"
-                        ? "me"
+                      Application was created by:{' '}
+                      {auth.type === 'Worker'
+                        ? 'me'
                         : obj.attributes.worker.name}
                     </Typography>
 
                     <Typography variant="body2" color="text.secondary">
-                      Original posting:{" "}
+                      Original posting:{' '}
                       <Link to={`/postings/${obj.attributes.posting.id}`}>
                         {obj.attributes.posting.title}
                       </Link>
@@ -241,7 +237,7 @@ function Applications() {
         </Stack>
       )}
     </Box>
-  );
+  )
 }
 
-export default Applications;
+export default Applications

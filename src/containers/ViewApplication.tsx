@@ -1,87 +1,87 @@
-import React, { useEffect, useState } from "react";
-import { Link, useParams, useHistory } from "react-router-dom";
-import { useAuth } from "../contexts/authContext";
-import Box from "@mui/material/Box";
-import Stack from "@mui/material/Stack";
-import Card from "@mui/material/Card";
-import CardContent from "@mui/material/CardContent";
-import Typography from "@mui/material/Typography";
-import Chip from "@mui/material/Chip";
-import { styled } from "@mui/material/styles";
-import Paper from "@mui/material/Paper";
-import Application from "../models/Application";
-import Fetch, { Update } from "../adapters/Fetch";
-import Button from "@mui/material/Button";
-import Collapse from "@mui/material/Collapse";
-import Radio from "@mui/material/Radio";
-import RadioGroup from "@mui/material/RadioGroup";
-import FormControlLabel from "@mui/material/FormControlLabel";
-import FormControl from "@mui/material/FormControl";
-import FormLabel from "@mui/material/FormLabel";
-import Alert from "@mui/material/Alert";
-import AlertTitle from "@mui/material/AlertTitle";
+import React, { useEffect, useState } from 'react'
+import { Link, useParams, useHistory } from 'react-router-dom'
+import Box from '@mui/material/Box'
+import Stack from '@mui/material/Stack'
+import Card from '@mui/material/Card'
+import CardContent from '@mui/material/CardContent'
+import Typography from '@mui/material/Typography'
+import Chip from '@mui/material/Chip'
+import { styled } from '@mui/material/styles'
+import Paper from '@mui/material/Paper'
+import Button from '@mui/material/Button'
+import Collapse from '@mui/material/Collapse'
+import Radio from '@mui/material/Radio'
+import RadioGroup from '@mui/material/RadioGroup'
+import FormControlLabel from '@mui/material/FormControlLabel'
+import FormControl from '@mui/material/FormControl'
+import FormLabel from '@mui/material/FormLabel'
+import Alert from '@mui/material/Alert'
+import AlertTitle from '@mui/material/AlertTitle'
+import Fetch, { Update } from '../adapters/Fetch'
+import Application from '../models/Application'
+import { useAuth } from '../contexts/authContext'
 
-const ListItem = styled("li")(({ theme }) => ({
+const ListItem = styled('li')(({ theme }) => ({
   margin: theme.spacing(0.5),
-}));
+}))
 
 function ViewApplication() {
-  const auth = useAuth()[0];
-  const history = useHistory();
+  const auth = useAuth()[0]
+  const history = useHistory()
 
-  const { id }: any = useParams();
+  const { id }: any = useParams()
 
   const [application, setApplication] = useState<Application>({
     id: 0,
-    status: "",
-    content: "",
-    createdAt: "",
-    tags: "",
+    status: '',
+    content: '',
+    createdAt: '',
+    tags: '',
     posting: undefined,
     worker: undefined,
-  });
+  })
 
-  const [expanded, setExpanded] = React.useState(false);
+  const [expanded, setExpanded] = React.useState(false)
 
   const handleExpandClick = () => {
-    setExpanded(!expanded);
-  };
+    setExpanded(!expanded)
+  }
 
-  const [status, setStatus] = useState("applied");
+  const [status, setStatus] = useState('applied')
   const [submit, setSubmit] = useState<{
-    success: Boolean;
-    errors: string | false;
+    success: boolean
+    errors: string | false
   }>({
     success: false,
     errors: false,
-  });
+  })
 
   const handleChangeStatus = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setStatus((event.target as HTMLInputElement).value);
-  };
+    setStatus((event.target as HTMLInputElement).value)
+  }
 
   const handleSubmitChangeStatus = async () => {
-    if (status === "applied") {
+    if (status === 'applied') {
       setSubmit({
         ...submit,
-        errors: "You have to make a hire/no-hire decision.",
-      });
+        errors: 'You have to make a hire/no-hire decision.',
+      })
     } else {
-      await Update(`/applications/${id}`, "PUT", auth.token, { status: status })
+      await Update(`/applications/${id}`, 'PUT', auth.token, { status })
         .then(() => {
-          setSubmit({ ...submit, success: true });
-          history.push(`/applications/${application.id}`);
+          setSubmit({ ...submit, success: true })
+          history.push(`/applications/${application.id}`)
         })
         .catch((error) => {
-          setSubmit({ ...submit, errors: error.toString() });
-        });
+          setSubmit({ ...submit, errors: error.toString() })
+        })
     }
-  };
+  }
 
   useEffect(() => {
     async function getApplication() {
-      await Fetch(`/applications/${id}`, "GET", auth.token).then((response) => {
-        const application: Application = {
+      await Fetch(`/applications/${id}`, 'GET', auth.token).then((response) => {
+        const newApplication: Application = {
           id: response.data.id,
           status: response.data.attributes.status,
           content: response.data.attributes.content,
@@ -89,24 +89,24 @@ function ViewApplication() {
           tags: response.data.attributes.tags,
           posting: response.data.attributes.posting,
           worker: response.data.attributes.worker,
-        };
-        setApplication(application);
-      });
+        }
+        setApplication(newApplication)
+      })
     }
 
-    getApplication();
-  }, [id, auth.token]);
+    getApplication()
+  }, [id, auth.token])
 
   return (
     <Box
       sx={{
-        maxWidth: "600px",
-        margin: "0 auto",
-        paddingTop: "100px",
+        maxWidth: '600px',
+        margin: '0 auto',
+        paddingTop: '100px',
       }}
     >
       <Typography
-        sx={{ marginBottom: "40px", paddingLeft: "20px" }}
+        sx={{ marginBottom: '40px', paddingLeft: '20px' }}
         gutterBottom
         variant="h2"
         component="div"
@@ -118,8 +118,8 @@ function ViewApplication() {
         <Card
           elevation={1}
           sx={{
-            background: "#FFFFFF",
-            border: "1px solid #EEEEEE",
+            background: '#FFFFFF',
+            border: '1px solid #EEEEEE',
           }}
         >
           <CardContent>
@@ -137,11 +137,11 @@ function ViewApplication() {
                 <Typography
                   variant="body2"
                   color="text.secondary"
-                  sx={{ marginBottom: "10px" }}
+                  sx={{ marginBottom: '10px' }}
                 >
-                  Applied{" "}
+                  Applied{' '}
                   {new Date(application?.createdAt).getDate() -
-                    new Date().getDate()}{" "}
+                    new Date().getDate()}{' '}
                   days ago by {application?.worker?.name}
                 </Typography>
 
@@ -150,10 +150,10 @@ function ViewApplication() {
                   size="small"
                   variant="outlined"
                   color={
-                    application?.status === "expired" ||
-                    application?.status === "rejected"
-                      ? "error"
-                      : "success"
+                    application?.status === 'expired' ||
+                    application?.status === 'rejected'
+                      ? 'error'
+                      : 'success'
                   }
                 />
               </Stack>
@@ -161,18 +161,18 @@ function ViewApplication() {
               <Paper
                 elevation={0}
                 sx={{
-                  display: "flex",
-                  justifyContent: "left",
-                  flexWrap: "wrap",
-                  listStyle: "none",
+                  display: 'flex',
+                  justifyContent: 'left',
+                  flexWrap: 'wrap',
+                  listStyle: 'none',
                   paddingLeft: 0,
                   p: 0.5,
                   m: 0,
-                  backgroundColor: "transparent",
+                  backgroundColor: 'transparent',
                 }}
                 component="ul"
               >
-                {application?.tags?.split(", ").map((tag: string) => {
+                {application?.tags?.split(', ').map((tag: string) => {
                   return (
                     <ListItem key={tag}>
                       <Chip
@@ -182,37 +182,37 @@ function ViewApplication() {
                         color="primary"
                       />
                     </ListItem>
-                  );
+                  )
                 })}
               </Paper>
 
               <Typography
                 paragraph
                 color="text.primary"
-                sx={{ margin: "20px 0" }}
+                sx={{ margin: '20px 0' }}
               >
                 {application?.content}
               </Typography>
 
               <Typography variant="body2" color="text.secondary">
-                Original job posting:{" "}
+                Original job posting:{' '}
                 <Link to={`/postings/${application?.posting?.id}`}>
                   {application?.posting?.title}
                 </Link>
               </Typography>
 
               <Typography variant="body2" color="text.secondary">
-                Applicant:{" "}
+                Applicant:{' '}
                 <Link to={`/workers/${application?.worker?.id}`}>
                   {application?.worker?.name}
                 </Link>
               </Typography>
             </Stack>
 
-            {auth.type === "Employer" && application.status === "applied" && (
-              <Stack spacing={1} sx={{ marginTop: "30px" }}>
+            {auth.type === 'Employer' && application.status === 'applied' && (
+              <Stack spacing={1} sx={{ marginTop: '30px' }}>
                 <Button
-                  style={{ maxWidth: "200px" }}
+                  style={{ maxWidth: '200px' }}
                   variant="contained"
                   onClick={handleExpandClick}
                 >
@@ -241,7 +241,7 @@ function ViewApplication() {
                         />
                       </RadioGroup>
                       <Button
-                        style={{ maxWidth: "100px", marginTop: "20px" }}
+                        style={{ maxWidth: '100px', marginTop: '20px' }}
                         variant="outlined"
                         onClick={handleSubmitChangeStatus}
                       >
@@ -272,7 +272,7 @@ function ViewApplication() {
         </Card>
       </Stack>
     </Box>
-  );
+  )
 }
 
-export default ViewApplication;
+export default ViewApplication

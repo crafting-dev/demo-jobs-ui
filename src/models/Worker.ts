@@ -1,6 +1,6 @@
 type Worker = {
-  id: number;
-  name?: string | undefined;
-};
+  id: number
+  name?: string | undefined
+}
 
-export default Worker;
+export default Worker

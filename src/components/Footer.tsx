@@ -1,7 +1,7 @@
-import React from "react";
-import Typography from "@mui/material/Typography";
-import Stack from "@mui/material/Stack";
-import Link from "@mui/material/Link";
+import React from 'react'
+import Typography from '@mui/material/Typography'
+import Stack from '@mui/material/Stack'
+import Link from '@mui/material/Link'
 
 function Footer() {
   return (
@@ -15,18 +15,18 @@ function Footer() {
         variant="body2"
         gutterBottom
         sx={{
-          borderTop: "1px solid #EEEEEE",
-          textAlign: "center",
-          height: "100px",
-          marginTop: "100px",
-          paddingTop: "40px",
+          borderTop: '1px solid #EEEEEE',
+          textAlign: 'center',
+          height: '100px',
+          marginTop: '100px',
+          paddingTop: '40px',
         }}
       >
-        Copyright &copy; {new Date().getFullYear()},{" "}
+        Copyright &copy; {new Date().getFullYear()},{' '}
         <Link href="https://github.com/crafting-dev">crafting-dev</Link>.
       </Typography>
     </Stack>
-  );
+  )
 }
 
-export default Footer;
+export default Footer

@@ -1,44 +1,44 @@
-import React, { FormEvent, useState } from "react";
-import { useHistory } from "react-router-dom";
-import AuthenticateToken from "../adapters/Authenticate";
-import { setUser } from "../adapters/Store";
-import { useAuth } from "../contexts/authContext";
-import Auth from "../models/Auth";
-import Button from "@mui/material/Button";
-import InputAdornment from "@mui/material/InputAdornment";
-import Stack from "@mui/material/Stack";
-import TextField from "@mui/material/TextField";
-import Typography from "@mui/material/Typography";
-import { Visibility, VisibilityOff } from "@mui/icons-material";
-import IconButton from "@mui/material/IconButton";
-import FormControlLabel from "@mui/material/FormControlLabel";
-import Checkbox from "@mui/material/Checkbox";
-import Link from "@mui/material/Link";
-import Box from "@mui/material/Box";
-import Alert from "@mui/material/Alert";
-import AlertTitle from "@mui/material/AlertTitle";
+import React, { FormEvent, useState } from 'react'
+import { useHistory } from 'react-router-dom'
+import Button from '@mui/material/Button'
+import InputAdornment from '@mui/material/InputAdornment'
+import Stack from '@mui/material/Stack'
+import TextField from '@mui/material/TextField'
+import Typography from '@mui/material/Typography'
+import { Visibility, VisibilityOff } from '@mui/icons-material'
+import IconButton from '@mui/material/IconButton'
+import FormControlLabel from '@mui/material/FormControlLabel'
+import Checkbox from '@mui/material/Checkbox'
+import Link from '@mui/material/Link'
+import Box from '@mui/material/Box'
+import Alert from '@mui/material/Alert'
+import AlertTitle from '@mui/material/AlertTitle'
+import Auth from '../models/Auth'
+import { useAuth } from '../contexts/authContext'
+import { setUser } from '../adapters/Store'
+import AuthenticateToken from '../adapters/Authenticate'
 
 function Login() {
-  const [auth, setAuth] = useAuth();
-  const history = useHistory();
+  const [auth, setAuth] = useAuth()
+  const history = useHistory()
 
   const [credentials, setCredentials] = useState({
-    email: "",
-    password: "",
+    email: '',
+    password: '',
     showPassword: false,
     errors: false,
-  });
+  })
 
   const handleChange = (prop: any) => (e: { target: { value: any } }) => {
-    setCredentials({ ...credentials, [prop]: e.target.value });
-  };
+    setCredentials({ ...credentials, [prop]: e.target.value })
+  }
 
   const handleClickShowPassword = () => {
-    setCredentials({ ...credentials, showPassword: !credentials.showPassword });
-  };
+    setCredentials({ ...credentials, showPassword: !credentials.showPassword })
+  }
 
   const handleSubmit = async (e: FormEvent) => {
-    e.preventDefault();
+    e.preventDefault()
 
     await AuthenticateToken(credentials.email, credentials.password)
       .then((response) => {
@@ -52,23 +52,23 @@ function Login() {
           avatarUrl: response.data.attributes.bearer.avatar,
           redirectPath: auth.redirectPath,
           isAuthenticated: true,
-        };
-        setAuth(user);
-        setUser(user);
+        }
+        setAuth(user)
+        setUser(user)
 
-        history.push("/postings");
+        history.push('/postings')
       })
       .catch((error) => {
-        setCredentials({ ...credentials, errors: error.toString() });
-      });
-  };
+        setCredentials({ ...credentials, errors: error.toString() })
+      })
+  }
 
   return (
     <Box
       sx={{
-        maxWidth: "500px",
-        paddingTop: "100px",
-        margin: "0 auto",
+        maxWidth: '500px',
+        paddingTop: '100px',
+        margin: '0 auto',
       }}
     >
       <form autoComplete="off" onSubmit={handleSubmit}>
@@ -83,8 +83,8 @@ function Login() {
             component="h2"
             color="inherit"
             sx={{
-              width: "100%",
-              marginBottom: "30px",
+              width: '100%',
+              marginBottom: '30px',
             }}
           >
             Log In
@@ -98,16 +98,16 @@ function Login() {
             margin="normal"
             variant="outlined"
             fullWidth
-            onChange={handleChange("email")}
+            onChange={handleChange('email')}
           />
 
           <TextField
             label="Password"
             variant="outlined"
-            type={credentials.showPassword ? "text" : "password"}
+            type={credentials.showPassword ? 'text' : 'password'}
             value={credentials.password}
             name="password"
-            onChange={handleChange("password")}
+            onChange={handleChange('password')}
             fullWidth
             InputProps={{
               endAdornment: (
@@ -145,7 +145,7 @@ function Login() {
             fullWidth
             type="submit"
             sx={{
-              lineHeight: "40px",
+              lineHeight: '40px',
             }}
           >
             Log In
@@ -156,10 +156,10 @@ function Login() {
             component="p"
             color="inherit"
             sx={{
-              width: "100%",
+              width: '100%',
             }}
           >
-            Don't have an account? <Link href="/signup">Sign up now!</Link>
+            Don&apos;t have an account? <Link href="/signup">Sign up now!</Link>
           </Typography>
 
           {credentials.errors && (
@@ -174,7 +174,7 @@ function Login() {
         </Stack>
       </form>
     </Box>
-  );
+  )
 }
 
-export default Login;
+export default Login

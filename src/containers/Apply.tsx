@@ -1,98 +1,98 @@
-import React, { FormEvent, useState } from "react";
-import { useHistory, useParams } from "react-router-dom";
-import { useAuth } from "../contexts/authContext";
-import Button from "@mui/material/Button";
-import Stack from "@mui/material/Stack";
-import TextField from "@mui/material/TextField";
-import Typography from "@mui/material/Typography";
-import Box from "@mui/material/Box";
-import Alert from "@mui/material/Alert";
-import AlertTitle from "@mui/material/AlertTitle";
-import { Update } from "../adapters/Fetch";
-import Paper from "@mui/material/Paper";
-import Chip from "@mui/material/Chip";
-import { styled } from "@mui/material/styles";
+import React, { FormEvent, useState } from 'react'
+import { useHistory, useParams } from 'react-router-dom'
+import Button from '@mui/material/Button'
+import Stack from '@mui/material/Stack'
+import TextField from '@mui/material/TextField'
+import Typography from '@mui/material/Typography'
+import Box from '@mui/material/Box'
+import Alert from '@mui/material/Alert'
+import AlertTitle from '@mui/material/AlertTitle'
+import Paper from '@mui/material/Paper'
+import Chip from '@mui/material/Chip'
+import { styled } from '@mui/material/styles'
+import { Update } from '../adapters/Fetch'
+import { useAuth } from '../contexts/authContext'
 
-const ListItem = styled("li")(({ theme }) => ({
+const ListItem = styled('li')(({ theme }) => ({
   margin: theme.spacing(0.5),
-}));
+}))
 
 function Apply() {
-  const auth = useAuth()[0];
-  const history = useHistory();
-  const { id }: any = useParams();
+  const auth = useAuth()[0]
+  const history = useHistory()
+  const { id }: any = useParams()
 
   const [application, setApplication] = useState<{
-    content: string;
-    status: string;
-    posting: number | undefined;
-    worker: number | undefined;
-    errors: string | false;
+    content: string
+    status: string
+    posting: number | undefined
+    worker: number | undefined
+    errors: string | false
   }>({
-    content: "",
-    status: "applied",
+    content: '',
+    status: 'applied',
     posting: id,
     worker: auth.bearerId,
     errors: false,
-  });
+  })
 
   const [tags, setTags] = useState<{ list: any; new: string }>({
     list: [],
-    new: "",
-  });
+    new: '',
+  })
 
   const handleChange = (prop: any) => (e: { target: { value: any } }) => {
-    setApplication({ ...application, [prop]: e.target.value });
-  };
+    setApplication({ ...application, [prop]: e.target.value })
+  }
 
   const handleTagsChange = (e: any) => {
-    if (e.key === " ") {
-      e.preventDefault();
-      tags.list.push(tags.new);
-      setTags({ ...tags, new: "" });
+    if (e.key === ' ') {
+      e.preventDefault()
+      tags.list.push(tags.new)
+      setTags({ ...tags, new: '' })
     } else {
-      setTags({ ...tags, new: e.target.value });
+      setTags({ ...tags, new: e.target.value })
     }
-  };
+  }
 
   const handleTagDelete = (tagToDelete: string) => (e: any) => {
-    e.preventDefault();
+    e.preventDefault()
 
     setTags({
       ...tags,
       list: tags.list.filter((tag: string) => tag !== tagToDelete),
-    });
-  };
+    })
+  }
 
   const handleSubmit = async (e: FormEvent) => {
-    e.preventDefault();
+    e.preventDefault()
 
-    await Update(`/applications`, "POST", auth.token, {
+    await Update(`/applications`, 'POST', auth.token, {
       application: {
         content: application.content,
         status: application.status,
         posting_id: application.posting,
         worker_id: application.worker,
-        tag_attributes: tags.list.join(", "),
+        tag_attributes: tags.list.join(', '),
       },
     })
       .then((response) => {
-        return response.json();
+        return response.json()
       })
       .then((response) => {
-        history.push(`/applications/${response.data.id}`);
+        history.push(`/applications/${response.data.id}`)
       })
       .catch((error) => {
-        setApplication({ ...application, errors: error.toString() });
-      });
-  };
+        setApplication({ ...application, errors: error.toString() })
+      })
+  }
 
   return (
     <Box
       sx={{
-        maxWidth: "500px",
-        paddingTop: "100px",
-        margin: "0 auto",
+        maxWidth: '500px',
+        paddingTop: '100px',
+        margin: '0 auto',
       }}
     >
       <form autoComplete="off" onSubmit={handleSubmit}>
@@ -107,15 +107,15 @@ function Apply() {
             component="h2"
             color="inherit"
             sx={{
-              width: "100%",
-              marginBottom: "30px",
+              width: '100%',
+              marginBottom: '30px',
             }}
           >
             Create Application
           </Typography>
 
           <Button
-            sx={{ display: "block", left: 0 }}
+            sx={{ display: 'block', left: 0 }}
             component="a"
             href={`/postings/${application.posting}`}
           >
@@ -129,22 +129,22 @@ function Apply() {
             margin="normal"
             variant="filled"
             fullWidth
-            multiline={true}
+            multiline
             minRows="15"
-            onChange={handleChange("content")}
+            onChange={handleChange('content')}
           />
 
           {!!tags.list.length && (
             <Paper
               elevation={0}
               sx={{
-                display: "flex",
-                justifyContent: "left",
-                flexWrap: "wrap",
-                listStyle: "none",
+                display: 'flex',
+                justifyContent: 'left',
+                flexWrap: 'wrap',
+                listStyle: 'none',
                 p: 0.5,
                 m: 0,
-                backgroundColor: "transparent",
+                backgroundColor: 'transparent',
               }}
               component="ul"
             >
@@ -158,7 +158,7 @@ function Apply() {
                       onDelete={handleTagDelete(tag)}
                     />
                   </ListItem>
-                );
+                )
               })}
             </Paper>
           )}
@@ -170,7 +170,7 @@ function Apply() {
             onChange={handleTagsChange}
             onKeyDown={handleTagsChange}
             value={tags.new}
-            sx={{ width: "100%" }}
+            sx={{ width: '100%' }}
           />
 
           <Button
@@ -178,7 +178,7 @@ function Apply() {
             fullWidth
             type="submit"
             sx={{
-              lineHeight: "40px",
+              lineHeight: '40px',
             }}
           >
             Submit Application
@@ -197,7 +197,7 @@ function Apply() {
         </Stack>
       </form>
     </Box>
-  );
+  )
 }
 
-export default Apply;
+export default Apply

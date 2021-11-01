@@ -1,47 +1,47 @@
-import React, { useEffect, useState } from "react";
-import { useAuth } from "../contexts/authContext";
-import Box from "@mui/material/Box";
-import Stack from "@mui/material/Stack";
-import Card from "@mui/material/Card";
-import CardHeader from "@mui/material/CardHeader";
-import CardMedia from "@mui/material/CardMedia";
-import CardContent from "@mui/material/CardContent";
-import Typography from "@mui/material/Typography";
-import Chip from "@mui/material/Chip";
-import { styled } from "@mui/material/styles";
-import Paper from "@mui/material/Paper";
-import Fetch from "../adapters/Fetch";
-import Profile from "../models/Profile";
-import Button from "@mui/material/Button";
+import React, { useEffect, useState } from 'react'
+import Box from '@mui/material/Box'
+import Stack from '@mui/material/Stack'
+import Card from '@mui/material/Card'
+import CardHeader from '@mui/material/CardHeader'
+import CardMedia from '@mui/material/CardMedia'
+import CardContent from '@mui/material/CardContent'
+import Typography from '@mui/material/Typography'
+import Chip from '@mui/material/Chip'
+import { styled } from '@mui/material/styles'
+import Paper from '@mui/material/Paper'
+import Button from '@mui/material/Button'
+import Fetch from '../adapters/Fetch'
+import Profile from '../models/Profile'
+import { useAuth } from '../contexts/authContext'
 
-const ListItem = styled("li")(({ theme }) => ({
+const ListItem = styled('li')(({ theme }) => ({
   margin: theme.spacing(0.5),
-}));
+}))
 
 function Dashboard() {
-  const auth = useAuth()[0];
+  const auth = useAuth()[0]
 
   const [profile, setProfile] = useState<Profile>({
     id: 0,
-    name: "",
-    email: "",
-    location: "",
+    name: '',
+    email: '',
+    location: '',
     hourlyRate: 0,
-    tags: "",
-    avatar: "",
-    type: "",
+    tags: '',
+    avatar: '',
+    type: '',
     postings: undefined,
     applications: undefined,
-  });
+  })
 
   useEffect(() => {
     async function getProfile() {
       await Fetch(
         `/${auth.type?.toLocaleLowerCase()}s/${auth.bearerId}`,
-        "GET",
+        'GET',
         auth.token
       ).then((response) => {
-        const profile: Profile = {
+        const newProfile: Profile = {
           id: response.data.id,
           name: response.data.attributes.name,
           email: response.data.attributes.email,
@@ -52,27 +52,27 @@ function Dashboard() {
           tags: response.data.attributes.tags,
           postings: response.data.attributes.postings,
           applications: response.data.attributes.applications,
-        };
-        setProfile(profile);
-      });
+        }
+        setProfile(newProfile)
+      })
     }
 
-    getProfile();
-  }, [auth.bearerId, auth.type, auth.token]);
+    getProfile()
+  }, [auth.bearerId, auth.type, auth.token])
 
   return (
     <Box
       sx={{
-        maxWidth: "600px",
-        margin: "0 auto",
-        paddingTop: "100px",
+        maxWidth: '600px',
+        margin: '0 auto',
+        paddingTop: '100px',
       }}
     >
       <Stack spacing={2}>
         <Card
           elevation={1}
           sx={{
-            background: "#FFFFFF",
+            background: '#FFFFFF',
           }}
         >
           <CardHeader title={profile?.name} subheader={profile?.email} />
@@ -87,18 +87,18 @@ function Dashboard() {
               <Paper
                 elevation={0}
                 sx={{
-                  display: "flex",
-                  justifyContent: "left",
-                  flexWrap: "wrap",
-                  listStyle: "none",
+                  display: 'flex',
+                  justifyContent: 'left',
+                  flexWrap: 'wrap',
+                  listStyle: 'none',
                   paddingLeft: 0,
                   p: 0.5,
                   m: 0,
-                  backgroundColor: "transparent",
+                  backgroundColor: 'transparent',
                 }}
                 component="ul"
               >
-                {profile?.tags?.split(", ").map((tag: string) => {
+                {profile?.tags?.split(', ').map((tag: string) => {
                   return (
                     <ListItem key={tag}>
                       <Chip
@@ -108,7 +108,7 @@ function Dashboard() {
                         color="primary"
                       />
                     </ListItem>
-                  );
+                  )
                 })}
               </Paper>
 
@@ -118,7 +118,7 @@ function Dashboard() {
                     <Typography
                       variant="h4"
                       color="text.primary"
-                      sx={{ padding: "20px 0" }}
+                      sx={{ padding: '20px 0' }}
                     >
                       My Postings
                     </Typography>
@@ -130,12 +130,12 @@ function Dashboard() {
                         key={post.id}
                         variant="text"
                         component="a"
-                        style={{ display: "block" }}
+                        style={{ display: 'block' }}
                         href={`/postings/${post.id}`}
                       >
                         [{post.status}] {post.title}
                       </Button>
-                    );
+                    )
                   })}
                 </div>
               )}
@@ -146,7 +146,7 @@ function Dashboard() {
                     <Typography
                       variant="h4"
                       color="text.primary"
-                      sx={{ padding: "20px 0" }}
+                      sx={{ padding: '20px 0' }}
                     >
                       My Applications
                     </Typography>
@@ -158,18 +158,18 @@ function Dashboard() {
                         key={app.id}
                         variant="text"
                         component="a"
-                        style={{ display: "block" }}
+                        style={{ display: 'block' }}
                         href={`/applications/${app.id}`}
                       >
                         [{app.status}] {app.title}
                       </Button>
-                    );
+                    )
                   })}
                 </div>
               )}
 
               <Typography variant="body1" color="text.primary">
-                {profile?.type === "employer"
+                {profile?.type === 'employer'
                   ? `Current location is ${profile?.location}.`
                   : `Current hourly rate is $${profile?.hourlyRate}/hr.`}
               </Typography>
@@ -178,7 +178,7 @@ function Dashboard() {
         </Card>
       </Stack>
     </Box>
-  );
+  )
 }
 
-export default Dashboard;
+export default Dashboard

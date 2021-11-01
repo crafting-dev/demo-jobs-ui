@@ -1,144 +1,144 @@
-import React, { FormEvent, useState } from "react";
-import { Create } from "../adapters/Fetch";
-import Button from "@mui/material/Button";
-import InputAdornment from "@mui/material/InputAdornment";
-import Stack from "@mui/material/Stack";
-import TextField from "@mui/material/TextField";
-import Typography from "@mui/material/Typography";
-import { Visibility, VisibilityOff } from "@mui/icons-material";
-import IconButton from "@mui/material/IconButton";
-import FormControlLabel from "@mui/material/FormControlLabel";
-import Link from "@mui/material/Link";
-import Stepper from "@mui/material/Stepper";
-import Step from "@mui/material/Step";
-import StepLabel from "@mui/material/StepLabel";
-import Paper from "@mui/material/Paper";
-import StepContent from "@mui/material/StepContent";
-import Box from "@mui/material/Box";
-import FormLabel from "@mui/material/FormLabel";
-import FormControl from "@mui/material/FormControl";
-import Radio from "@mui/material/Radio";
-import RadioGroup from "@mui/material/RadioGroup";
-import Chip from "@mui/material/Chip";
-import { styled } from "@mui/material/styles";
-import OutlinedInput from "@mui/material/OutlinedInput";
-import InputLabel from "@mui/material/InputLabel";
-import Alert from "@mui/material/Alert";
-import AlertTitle from "@mui/material/AlertTitle";
+import React, { FormEvent, useState } from 'react'
+import Button from '@mui/material/Button'
+import InputAdornment from '@mui/material/InputAdornment'
+import Stack from '@mui/material/Stack'
+import TextField from '@mui/material/TextField'
+import Typography from '@mui/material/Typography'
+import { Visibility, VisibilityOff } from '@mui/icons-material'
+import IconButton from '@mui/material/IconButton'
+import FormControlLabel from '@mui/material/FormControlLabel'
+import Link from '@mui/material/Link'
+import Stepper from '@mui/material/Stepper'
+import Step from '@mui/material/Step'
+import StepLabel from '@mui/material/StepLabel'
+import Paper from '@mui/material/Paper'
+import StepContent from '@mui/material/StepContent'
+import Box from '@mui/material/Box'
+import FormLabel from '@mui/material/FormLabel'
+import FormControl from '@mui/material/FormControl'
+import Radio from '@mui/material/Radio'
+import RadioGroup from '@mui/material/RadioGroup'
+import Chip from '@mui/material/Chip'
+import { styled } from '@mui/material/styles'
+import OutlinedInput from '@mui/material/OutlinedInput'
+import InputLabel from '@mui/material/InputLabel'
+import Alert from '@mui/material/Alert'
+import AlertTitle from '@mui/material/AlertTitle'
+import { Create } from '../adapters/Fetch'
 
-const ListItem = styled("li")(({ theme }) => ({
+const ListItem = styled('li')(({ theme }) => ({
   margin: theme.spacing(0.5),
-}));
+}))
 
 function Signup() {
   const [credentials, setCredentials] = useState<{
-    name: string;
-    email: string;
-    password: string;
-    showPassword: boolean;
-    passwordConfirmation: string;
-    showPasswordConfirmation: boolean;
-    other: { key: string; value: string };
-    errors: string | false;
+    name: string
+    email: string
+    password: string
+    showPassword: boolean
+    passwordConfirmation: string
+    showPasswordConfirmation: boolean
+    other: { key: string; value: string }
+    errors: string | false
   }>({
-    name: "",
-    email: "",
-    password: "",
+    name: '',
+    email: '',
+    password: '',
     showPassword: false,
-    passwordConfirmation: "",
+    passwordConfirmation: '',
     showPasswordConfirmation: false,
-    other: { key: "location", value: "" },
+    other: { key: 'location', value: '' },
     errors: false,
-  });
+  })
 
-  const [activeStep, setActiveStep] = React.useState(0);
+  const [activeStep, setActiveStep] = React.useState(0)
 
-  const [objType, setObjType] = useState("employer");
+  const [objType, setObjType] = useState('employer')
 
   const [tags, setTags] = useState<{ list: any; new: string }>({
     list: [],
-    new: "",
-  });
+    new: '',
+  })
 
   const clearErrors = () => {
-    setCredentials({ ...credentials, errors: false });
-  };
+    setCredentials({ ...credentials, errors: false })
+  }
 
   const handleNext = () => {
-    setActiveStep((prevActiveStep) => prevActiveStep + 1);
-  };
+    setActiveStep((prevActiveStep) => prevActiveStep + 1)
+  }
 
   const handleBack = () => {
-    setActiveStep((prevActiveStep) => prevActiveStep - 1);
-    clearErrors();
-  };
+    setActiveStep((prevActiveStep) => prevActiveStep - 1)
+    clearErrors()
+  }
 
   const handleReset = () => {
-    setActiveStep(0);
-    clearErrors();
-  };
+    setActiveStep(0)
+    clearErrors()
+  }
 
   const handleObjType = (obj: string) => () => {
-    setObjType(obj);
+    setObjType(obj)
 
-    if (obj === "employer") {
+    if (obj === 'employer') {
       setCredentials({
         ...credentials,
-        other: { key: "location", value: "" },
-      });
+        other: { key: 'location', value: '' },
+      })
     }
 
-    if (obj === "worker") {
+    if (obj === 'worker') {
       setCredentials({
         ...credentials,
-        other: { key: "hourly_rate", value: "" },
-      });
+        other: { key: 'hourly_rate', value: '' },
+      })
     }
-  };
+  }
 
   const handleTagsChange = (e: any) => {
-    if (e.key === " ") {
-      tags.list.push(tags.new);
-      setTags({ ...tags, new: "" });
-      e.preventDefault();
+    if (e.key === ' ') {
+      tags.list.push(tags.new)
+      setTags({ ...tags, new: '' })
+      e.preventDefault()
     } else {
-      setTags({ ...tags, new: e.target.value });
+      setTags({ ...tags, new: e.target.value })
     }
-  };
+  }
 
   const handleTagDelete = (tagToDelete: string) => (e: any) => {
-    e.preventDefault();
+    e.preventDefault()
 
     setTags({
       ...tags,
       list: tags.list.filter((tag: string) => tag !== tagToDelete),
-    });
-  };
+    })
+  }
 
   const handleOtherValueChange = (e: any) => {
     setCredentials({
       ...credentials,
       other: { ...credentials.other, value: e.target.value },
-    });
-  };
+    })
+  }
 
   const handleChange = (prop: any) => (e: { target: { value: any } }) => {
-    setCredentials({ ...credentials, [prop]: e.target.value });
-  };
+    setCredentials({ ...credentials, [prop]: e.target.value })
+  }
 
   const handleClickShowPassword = () => {
-    setCredentials({ ...credentials, showPassword: !credentials.showPassword });
-  };
+    setCredentials({ ...credentials, showPassword: !credentials.showPassword })
+  }
 
   const handleClickShowPasswordConfirmation = () => {
     setCredentials({
       ...credentials,
       showPasswordConfirmation: !credentials.showPasswordConfirmation,
-    });
-  };
+    })
+  }
 
   const handleSubmit = async (e: FormEvent) => {
-    e.preventDefault();
+    e.preventDefault()
 
     await Create(
       `/${objType}s`,
@@ -149,24 +149,24 @@ function Signup() {
       credentials.other.key,
       credentials.other.value,
       objType,
-      tags.list.join(", ")
+      tags.list.join(', ')
     )
       .then(() => {
-        handleNext();
+        handleNext()
       })
       .catch((error) => {
-        setCredentials({ ...credentials, errors: error.toString() });
-        handleNext();
-      });
-  };
+        setCredentials({ ...credentials, errors: error.toString() })
+        handleNext()
+      })
+  }
 
   return (
     <form autoComplete="off" onSubmit={handleSubmit}>
       <Box
         sx={{
-          maxWidth: "500px",
-          paddingTop: "100px",
-          margin: "0 auto",
+          maxWidth: '500px',
+          paddingTop: '100px',
+          margin: '0 auto',
         }}
       >
         <Typography
@@ -174,8 +174,8 @@ function Signup() {
           component="h2"
           color="inherit"
           sx={{
-            width: "100%",
-            marginBottom: "30px",
+            width: '100%',
+            marginBottom: '30px',
           }}
         >
           Sign Up
@@ -203,13 +203,13 @@ function Signup() {
                     <FormControlLabel
                       value="employer"
                       control={<Radio />}
-                      onClick={handleObjType("employer")}
+                      onClick={handleObjType('employer')}
                       label="Employer"
                     />
                     <FormControlLabel
                       value="worker"
                       control={<Radio />}
-                      onClick={handleObjType("worker")}
+                      onClick={handleObjType('worker')}
                       label="Worker"
                     />
                   </RadioGroup>
@@ -223,11 +223,7 @@ function Signup() {
                     >
                       Continue
                     </Button>
-                    <Button
-                      disabled={true}
-                      onClick={handleBack}
-                      sx={{ mt: 1, mr: 1 }}
-                    >
+                    <Button disabled onClick={handleBack} sx={{ mt: 1, mr: 1 }}>
                       Back
                     </Button>
                   </div>
@@ -250,7 +246,7 @@ function Signup() {
                   label="Full Name"
                   name="full-name"
                   placeholder="Bruce Wayne"
-                  onChange={handleChange("name")}
+                  onChange={handleChange('name')}
                   value={credentials.name}
                   margin="normal"
                   variant="outlined"
@@ -262,7 +258,7 @@ function Signup() {
                   label="Email"
                   name="email"
                   placeholder="batman@crafting.dev"
-                  onChange={handleChange("email")}
+                  onChange={handleChange('email')}
                   value={credentials.email}
                   margin="normal"
                   variant="outlined"
@@ -272,10 +268,10 @@ function Signup() {
                 <TextField
                   label="Password"
                   variant="outlined"
-                  type={credentials.showPassword ? "text" : "password"}
+                  type={credentials.showPassword ? 'text' : 'password'}
                   value={credentials.password}
                   name="password"
-                  onChange={handleChange("password")}
+                  onChange={handleChange('password')}
                   fullWidth
                   InputProps={{
                     endAdornment: (
@@ -302,11 +298,11 @@ function Signup() {
                   label="Password Confirmation"
                   variant="outlined"
                   type={
-                    credentials.showPasswordConfirmation ? "text" : "password"
+                    credentials.showPasswordConfirmation ? 'text' : 'password'
                   }
                   value={credentials.passwordConfirmation}
                   name="password-confirmation"
-                  onChange={handleChange("passwordConfirmation")}
+                  onChange={handleChange('passwordConfirmation')}
                   fullWidth
                   InputProps={{
                     endAdornment: (
@@ -329,7 +325,7 @@ function Signup() {
                   }}
                 />
 
-                {objType === "employer" ? (
+                {objType === 'employer' ? (
                   <TextField
                     id="outlined-email"
                     label="Location"
@@ -406,13 +402,13 @@ function Signup() {
                 <Paper
                   elevation={0}
                   sx={{
-                    display: "flex",
-                    justifyContent: "left",
-                    flexWrap: "wrap",
-                    listStyle: "none",
+                    display: 'flex',
+                    justifyContent: 'left',
+                    flexWrap: 'wrap',
+                    listStyle: 'none',
                     p: 0.5,
                     m: 0,
-                    backgroundColor: "transparent",
+                    backgroundColor: 'transparent',
                   }}
                   component="ul"
                 >
@@ -426,7 +422,7 @@ function Signup() {
                           onDelete={handleTagDelete(tag)}
                         />
                       </ListItem>
-                    );
+                    )
                   })}
                 </Paper>
 
@@ -465,7 +461,7 @@ function Signup() {
           <Alert severity="success">
             <AlertTitle>Success</AlertTitle>
             <strong>
-              Hurray, {credentials.name}! You've successfully signed up.
+              Hurray, {credentials.name}! You have successfully signed up.
             </strong>
             You can now go ahead and <Link href="/login">log in</Link> with your
             new credentials!
@@ -493,7 +489,7 @@ function Signup() {
         )}
       </Box>
     </form>
-  );
+  )
 }
 
-export default Signup;
+export default Signup
