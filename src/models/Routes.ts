@@ -8,7 +8,6 @@ import Apply from "../containers/Apply";
 import Applications from "../containers/Applications";
 import ViewApplication from "../containers/ViewApplication";
 import Create from "../containers/Create";
-import Home from "../containers/Home";
 
 type AppRoute = {
   path: string;
@@ -17,11 +16,6 @@ type AppRoute = {
 };
 
 const AppRoutes: AppRoute[] = [
-  {
-    path: "/",
-    component: Home,
-    private: false,
-  },
   {
     path: "/login",
     component: Login,

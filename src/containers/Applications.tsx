@@ -11,6 +11,7 @@ import { CardActionArea } from "@mui/material";
 import Chip from "@mui/material/Chip";
 import { styled } from "@mui/material/styles";
 import Paper from "@mui/material/Paper";
+import Skeleton from "@mui/material/Skeleton";
 
 const ListItem = styled("li")(({ theme }) => ({
   margin: theme.spacing(0.5),
@@ -21,6 +22,8 @@ function Applications() {
   const history = useHistory();
 
   const [applications, setApplications] = useState<any[]>([]);
+
+  const [loading, setLoading] = useState(true);
 
   const handleFollowPathLink = (id: number) => () => {
     history.push(`/applications/${id}`);
@@ -37,7 +40,9 @@ function Applications() {
         });
     }
 
-    populateApplications();
+    populateApplications().then(() => {
+      setLoading(false);
+    });
   }, [auth.token]);
 
   return (
@@ -57,21 +62,20 @@ function Applications() {
         Applications
       </Typography>
 
-      <Stack spacing={2}>
-        {applications.map((obj: any) => (
+      {loading ? (
+        <Stack spacing={2}>
           <Card
             elevation={1}
-            key={obj.id}
             sx={{
               background: "#FFFFFF",
               border: "1px solid #EEEEEE",
             }}
           >
-            <CardActionArea onClick={handleFollowPathLink(obj.id)}>
+            <CardActionArea>
               <CardContent>
                 <Stack spacing={0}>
                   <Typography gutterBottom variant="h5" component="div">
-                    {obj.attributes.posting.title}
+                    <Skeleton />
                   </Typography>
 
                   <Stack
@@ -85,22 +89,13 @@ function Applications() {
                       color="text.secondary"
                       sx={{ marginBottom: "10px" }}
                     >
-                      Applied{" "}
-                      {new Date(obj.attributes.createdAt).getDate() -
-                        new Date().getDate()}{" "}
-                      days ago
+                      <Skeleton />
                     </Typography>
 
                     <Chip
-                      label={obj.attributes.status}
+                      label={<Skeleton />}
                       size="small"
                       variant="outlined"
-                      color={
-                        obj.attributes.status === "expired" ||
-                        obj.attributes.status === "rejected"
-                          ? "error"
-                          : "success"
-                      }
                     />
                   </Stack>
 
@@ -118,18 +113,7 @@ function Applications() {
                     }}
                     component="ul"
                   >
-                    {obj.attributes.tags?.split(", ").map((tag: string) => {
-                      return (
-                        <ListItem key={tag}>
-                          <Chip
-                            label={tag}
-                            size="small"
-                            variant="outlined"
-                            color="primary"
-                          />
-                        </ListItem>
-                      );
-                    })}
+                    <Skeleton />
                   </Paper>
 
                   <Typography
@@ -137,26 +121,125 @@ function Applications() {
                     color="text.primary"
                     sx={{ margin: "20px 0" }}
                   >
-                    {obj.attributes.description}
+                    <Skeleton />
                   </Typography>
 
                   <Typography variant="body2" color="text.secondary">
-                    Application was created by:{" "}
-                    {auth.type === "Worker" ? "me" : obj.attributes.worker.name}
+                    <Skeleton />
                   </Typography>
 
                   <Typography variant="body2" color="text.secondary">
-                    Original posting:{" "}
-                    <Link to={`/postings/${obj.attributes.posting.id}`}>
-                      {obj.attributes.posting.title}
-                    </Link>
+                    <Skeleton />
                   </Typography>
                 </Stack>
               </CardContent>
             </CardActionArea>
           </Card>
-        ))}
-      </Stack>
+        </Stack>
+      ) : (
+        <Stack spacing={2}>
+          {applications.map((obj: any) => (
+            <Card
+              elevation={1}
+              key={obj.id}
+              sx={{
+                background: "#FFFFFF",
+                border: "1px solid #EEEEEE",
+              }}
+            >
+              <CardActionArea onClick={handleFollowPathLink(obj.id)}>
+                <CardContent>
+                  <Stack spacing={0}>
+                    <Typography gutterBottom variant="h5" component="div">
+                      {obj.attributes.posting.title}
+                    </Typography>
+
+                    <Stack
+                      direction="row"
+                      justifyContent="space-between"
+                      alignItems="flex-start"
+                      spacing={2}
+                    >
+                      <Typography
+                        variant="body2"
+                        color="text.secondary"
+                        sx={{ marginBottom: "10px" }}
+                      >
+                        Applied{" "}
+                        {new Date(obj.attributes.createdAt).getDate() -
+                          new Date().getDate()}{" "}
+                        days ago
+                      </Typography>
+
+                      <Chip
+                        label={obj.attributes.status}
+                        size="small"
+                        variant="outlined"
+                        color={
+                          obj.attributes.status === "expired" ||
+                          obj.attributes.status === "rejected"
+                            ? "error"
+                            : "success"
+                        }
+                      />
+                    </Stack>
+
+                    <Paper
+                      elevation={0}
+                      sx={{
+                        display: "flex",
+                        justifyContent: "left",
+                        flexWrap: "wrap",
+                        listStyle: "none",
+                        paddingLeft: 0,
+                        p: 0.5,
+                        m: 0,
+                        backgroundColor: "transparent",
+                      }}
+                      component="ul"
+                    >
+                      {obj.attributes.tags?.split(", ").map((tag: string) => {
+                        return (
+                          <ListItem key={tag}>
+                            <Chip
+                              label={tag}
+                              size="small"
+                              variant="outlined"
+                              color="primary"
+                            />
+                          </ListItem>
+                        );
+                      })}
+                    </Paper>
+
+                    <Typography
+                      variant="body2"
+                      color="text.primary"
+                      sx={{ margin: "20px 0" }}
+                    >
+                      {obj.attributes.description}
+                    </Typography>
+
+                    <Typography variant="body2" color="text.secondary">
+                      Application was created by:{" "}
+                      {auth.type === "Worker"
+                        ? "me"
+                        : obj.attributes.worker.name}
+                    </Typography>
+
+                    <Typography variant="body2" color="text.secondary">
+                      Original posting:{" "}
+                      <Link to={`/postings/${obj.attributes.posting.id}`}>
+                        {obj.attributes.posting.title}
+                      </Link>
+                    </Typography>
+                  </Stack>
+                </CardContent>
+              </CardActionArea>
+            </Card>
+          ))}
+        </Stack>
+      )}
     </Box>
   );
 }

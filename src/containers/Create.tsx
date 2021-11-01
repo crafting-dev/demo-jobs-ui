@@ -111,7 +111,7 @@ function Create() {
               marginBottom: "30px",
             }}
           >
-            Create Posting
+            Create Post
           </Typography>
 
           <TextField

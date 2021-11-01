@@ -7,18 +7,18 @@ import { unauthenticated } from "../models/Auth";
 import AppBar from "@mui/material/AppBar";
 import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
-import Link from "@mui/material/Link";
-import { styled } from "@mui/material/styles";
+import { styled, alpha } from "@mui/material/styles";
 import Badge from "@mui/material/Badge";
 import Avatar from "@mui/material/Avatar";
 import Stack from "@mui/material/Stack";
-import Tooltip from "@mui/material/Tooltip";
 import Button from "@mui/material/Button";
-import Menu from "@mui/material/Menu";
+import Menu, { MenuProps } from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
 import Lock from "@mui/icons-material/Lock";
 import Face from "@mui/icons-material/Face";
 import theme from "../assets/themes/mui";
+import TocIcon from "@mui/icons-material/Toc";
+import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 
 const StyledBadge = styled(Badge)(({ theme }) => ({
   "& .MuiBadge-badge": {
@@ -49,6 +49,49 @@ const StyledBadge = styled(Badge)(({ theme }) => ({
   },
 }));
 
+const StyledMenu = styled((props: MenuProps) => (
+  <Menu
+    elevation={0}
+    anchorOrigin={{
+      vertical: "bottom",
+      horizontal: "right",
+    }}
+    transformOrigin={{
+      vertical: "top",
+      horizontal: "right",
+    }}
+    {...props}
+  />
+))(({ theme }) => ({
+  "& .MuiPaper-root": {
+    borderRadius: 6,
+    marginTop: theme.spacing(1),
+    minWidth: 180,
+    color:
+      theme.palette.mode === "light"
+        ? "rgb(55, 65, 81)"
+        : theme.palette.grey[300],
+    boxShadow:
+      "rgb(255, 255, 255) 0px 0px 0px 0px, rgba(0, 0, 0, 0.05) 0px 0px 0px 1px, rgba(0, 0, 0, 0.1) 0px 10px 15px -3px, rgba(0, 0, 0, 0.05) 0px 4px 6px -2px",
+    "& .MuiMenu-list": {
+      padding: "4px 0",
+    },
+    "& .MuiMenuItem-root": {
+      "& .MuiSvgIcon-root": {
+        fontSize: 18,
+        color: theme.palette.text.secondary,
+        marginRight: theme.spacing(1.5),
+      },
+      "&:active": {
+        backgroundColor: alpha(
+          theme.palette.primary.main,
+          theme.palette.action.selectedOpacity
+        ),
+      },
+    },
+  },
+}));
+
 function Header() {
   const [auth, setAuth] = useAuth();
   const history = useHistory();
@@ -60,6 +103,26 @@ function Header() {
   };
   const handleClose = () => {
     setAnchorEl(null);
+  };
+
+  const [anchorDropdownEl, setAnchorDropdownEl] =
+    React.useState<null | HTMLElement>(null);
+  const dropdownOpen = Boolean(anchorDropdownEl);
+  const handleClickDropdown = (event: React.MouseEvent<HTMLElement>) => {
+    setAnchorDropdownEl(event.currentTarget);
+  };
+  const handleCloseDropdown = () => {
+    setAnchorDropdownEl(null);
+  };
+
+  const [anchorDropdownAppEl, setAnchorDropdownAppEl] =
+    React.useState<null | HTMLElement>(null);
+  const dropdownAppOpen = Boolean(anchorDropdownAppEl);
+  const handleClickDropdownApp = (event: React.MouseEvent<HTMLElement>) => {
+    setAnchorDropdownAppEl(event.currentTarget);
+  };
+  const handleCloseDropdownApp = () => {
+    setAnchorDropdownAppEl(null);
   };
 
   const handleFollowPathLink = (path: string) => (e: FormEvent) => {
@@ -111,18 +174,74 @@ function Header() {
                 alignItems="center"
                 spacing={4}
               >
-                <Tooltip title="View all job postings">
-                  <Link href="/postings">Postings</Link>
-                </Tooltip>
+                <div>
+                  <Button
+                    id="customized-postings-button"
+                    aria-controls="customized-postings-menu"
+                    aria-haspopup="true"
+                    aria-expanded={dropdownOpen ? "true" : undefined}
+                    variant="text"
+                    disableElevation
+                    onClick={handleClickDropdown}
+                    endIcon={<KeyboardArrowDownIcon />}
+                  >
+                    Postings
+                  </Button>
+                  <StyledMenu
+                    id="customized-postings-menu"
+                    MenuListProps={{
+                      "aria-labelledby": "customized-postings-button",
+                    }}
+                    anchorEl={anchorDropdownEl}
+                    open={dropdownOpen}
+                    onClose={handleCloseDropdown}
+                  >
+                    <MenuItem
+                      onClick={handleFollowPathLink("/postings")}
+                      disableRipple
+                    >
+                      <TocIcon />
+                      List postings
+                    </MenuItem>
+                  </StyledMenu>
+                </div>
 
-                {auth.type === "Employer" ? (
-                  <Tooltip title="Create a new job posting">
-                    <Link href="/create/posting">Create Posting</Link>
-                  </Tooltip>
-                ) : (
-                  <Tooltip title="List all my previous applications">
-                    <Link href="/applications">My Applications</Link>
-                  </Tooltip>
+                <div>
+                  <Button
+                    id="customized-applications-button"
+                    aria-controls="customized-applications-menu"
+                    aria-haspopup="true"
+                    aria-expanded={dropdownOpen ? "true" : undefined}
+                    variant="text"
+                    disableElevation
+                    onClick={handleClickDropdownApp}
+                    endIcon={<KeyboardArrowDownIcon />}
+                  >
+                    Applications
+                  </Button>
+                  <StyledMenu
+                    id="customized-applications-menu"
+                    MenuListProps={{
+                      "aria-labelledby": "customized-applications-button",
+                    }}
+                    anchorEl={anchorDropdownAppEl}
+                    open={dropdownAppOpen}
+                    onClose={handleCloseDropdownApp}
+                  >
+                    <MenuItem
+                      onClick={handleFollowPathLink("/applications")}
+                      disableRipple
+                    >
+                      <TocIcon />
+                      List applications
+                    </MenuItem>
+                  </StyledMenu>
+                </div>
+
+                {auth.type === "Employer" && (
+                  <Button component="a" href="/create/posting" variant="text">
+                    Create Post
+                  </Button>
                 )}
 
                 <Button
@@ -140,7 +259,7 @@ function Header() {
                     <Avatar alt={auth.name} src={auth.avatarUrl} />
                   </StyledBadge>
                 </Button>
-                <Menu
+                <StyledMenu
                   id="basic-menu"
                   anchorEl={anchorEl}
                   open={open}
@@ -165,7 +284,7 @@ function Header() {
                     />{" "}
                     Logout
                   </MenuItem>
-                </Menu>
+                </StyledMenu>
               </Stack>
             </>
           ) : (
