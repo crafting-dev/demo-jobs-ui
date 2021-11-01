@@ -6,5 +6,8 @@ hooks:
 
 daemons:
   app:
-    run:
-      cmd: 'HOST=0.0.0.0 PORT=3000 npm start'
+     run:
+       cmd: npm start
+       env:
+       - HOST=0.0.0.0
+       - PORT=3000
