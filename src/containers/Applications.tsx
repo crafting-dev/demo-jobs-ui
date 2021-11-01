@@ -64,6 +64,7 @@ function Applications() {
           {applications.map((obj: any) => (
             <Card
               elevation={0}
+              key={obj.id}
               sx={{
                 background: "transparent",
                 border: "1px solid #EEEEEE",

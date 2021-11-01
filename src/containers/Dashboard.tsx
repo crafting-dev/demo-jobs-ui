@@ -5,6 +5,8 @@ import theme from "../assets/themes/mui";
 import Box from "@mui/material/Box";
 import Stack from "@mui/material/Stack";
 import Card from "@mui/material/Card";
+import CardHeader from "@mui/material/CardHeader";
+import CardMedia from "@mui/material/CardMedia";
 import CardContent from "@mui/material/CardContent";
 import Typography from "@mui/material/Typography";
 import Chip from "@mui/material/Chip";
@@ -12,6 +14,7 @@ import { styled } from "@mui/material/styles";
 import Paper from "@mui/material/Paper";
 import Fetch from "../adapters/Fetch";
 import Profile from "../models/Profile";
+import { Link } from "react-router-dom";
 
 const ListItem = styled("li")(({ theme }) => ({
   margin: theme.spacing(0.5),
@@ -68,15 +71,6 @@ function Dashboard() {
           paddingTop: "100px",
         }}
       >
-        <Typography
-          sx={{ marginBottom: "40px", paddingLeft: "20px" }}
-          gutterBottom
-          variant="h2"
-          component="div"
-        >
-          Dashboard
-        </Typography>
-
         <Stack spacing={2}>
           <Card
             elevation={0}
@@ -85,20 +79,15 @@ function Dashboard() {
               border: "1px solid #EEEEEE",
             }}
           >
+            <CardHeader title={profile?.name} subheader={profile?.email} />
+            <CardMedia
+              component="img"
+              height="300"
+              image={`${profile?.avatar}?s=1080`}
+              alt={profile?.name}
+            />
             <CardContent>
-              <Stack spacing={0}>
-                <Typography gutterBottom variant="h5" component="div">
-                  {profile?.name}
-                </Typography>
-
-                <Typography
-                  variant="body2"
-                  color="text.secondary"
-                  sx={{ marginBottom: "10px" }}
-                >
-                  {profile?.email}
-                </Typography>
-
+              <Stack spacing={2}>
                 <Paper
                   elevation={0}
                   sx={{
@@ -127,10 +116,54 @@ function Dashboard() {
                   })}
                 </Paper>
 
-                <Typography variant="body2" color="text.secondary">
+                {profile?.postings && (
+                  <>
+                    {!!profile.postings.length && (
+                      <Typography
+                        variant="h4"
+                        color="text.primary"
+                        sx={{ paddingTop: "20px" }}
+                      >
+                        My Postings
+                      </Typography>
+                    )}
+
+                    {profile.postings.map((post: any) => {
+                      return (
+                        <Link to={`/postings/${post.id}`} key={post.id}>
+                          [{post.status}] {post.title}
+                        </Link>
+                      );
+                    })}
+                  </>
+                )}
+
+                {profile?.applications && (
+                  <>
+                    {!!profile.applications.length && (
+                      <Typography
+                        variant="h4"
+                        color="text.primary"
+                        sx={{ paddingTop: "20px" }}
+                      >
+                        My Applications
+                      </Typography>
+                    )}
+
+                    {profile.applications.map((app: any) => {
+                      return (
+                        <Link to={`/applications/${app.id}`} key={app.id}>
+                          [{app.status}] {app.title}
+                        </Link>
+                      );
+                    })}
+                  </>
+                )}
+
+                <Typography variant="body1" color="text.primary">
                   {profile?.type === "employer"
-                    ? `Location:  ${profile?.location}`
-                    : `Hourly Rate: ${profile?.hourlyRate}`}
+                    ? `My current location is ${profile?.location}.`
+                    : `My current hourly rate is $${profile?.hourlyRate}/hr.`}
                 </Typography>
               </Stack>
             </CardContent>
