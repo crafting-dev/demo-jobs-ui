@@ -62,6 +62,12 @@ function Header() {
     setAnchorEl(null);
   };
 
+  const handleFollowPathLink = (path: string) => (e: FormEvent) => {
+    e.preventDefault();
+
+    history.push(path);
+  };
+
   const handleLogout = async (e: FormEvent) => {
     e.preventDefault();
 
@@ -143,7 +149,7 @@ function Header() {
                     "aria-labelledby": "basic-button",
                   }}
                 >
-                  <MenuItem onClick={() => history.push("/dashboard")}>
+                  <MenuItem onClick={handleFollowPathLink("/dashboard")}>
                     <Face
                       sx={{
                         marginRight: 2,

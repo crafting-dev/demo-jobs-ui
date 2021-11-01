@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Link, useParams, useHistory } from "react-router-dom";
+import { useParams, useHistory } from "react-router-dom";
 import { useAuth } from "../contexts/authContext";
 import Box from "@mui/material/Box";
 import Stack from "@mui/material/Stack";
@@ -79,9 +79,9 @@ function ViewPosting() {
 
       <Stack spacing={2}>
         <Card
-          elevation={0}
+          elevation={1}
           sx={{
-            background: "transparent",
+            background: "#FFFFFF",
             border: "1px solid #EEEEEE",
           }}
         >
@@ -144,7 +144,7 @@ function ViewPosting() {
               </Paper>
 
               <Typography
-                variant="body2"
+                paragraph
                 color="text.primary"
                 sx={{ margin: "20px 0" }}
               >
@@ -160,22 +160,32 @@ function ViewPosting() {
               </Typography>
             </Stack>
 
-            {posting.applications && (
+            {!!posting.applications?.length && (
               <Stack sx={{ marginTop: "30px" }}>
                 <Typography gutterBottom variant="h6" component="div">
                   Applications
                 </Typography>
                 {posting.applications.map((app) => (
-                  <Link to={`/applications/${app.id}`}>
-                    Applicant: {app.name}, status: {app.status}
-                  </Link>
+                  <Button
+                    key={app.id}
+                    variant="text"
+                    component="a"
+                    style={{ display: "block" }}
+                    href={`/applications/${app.id}`}
+                  >
+                    [{app.status}] {app.name}
+                  </Button>
                 ))}
               </Stack>
             )}
 
             {auth.type === "Worker" && (
               <Stack sx={{ marginTop: "30px" }}>
-                <Button variant="contained" onClick={handleSubmit}>
+                <Button
+                  style={{ maxWidth: "200px" }}
+                  variant="contained"
+                  onClick={handleSubmit}
+                >
                   Apply
                 </Button>
               </Stack>

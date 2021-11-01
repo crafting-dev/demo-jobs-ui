@@ -1,7 +1,7 @@
 import { baseUrl } from "../models/Auth";
 
 // Fetch a resource by type from path.
-// Bearer authentication token needed.
+// Authentication token needed.
 const Fetch = async (
   path: string,
   method: string,
@@ -63,5 +63,29 @@ const Create = async (
   return data;
 };
 
+// Update some resource type with body parameter.
+// Authentication token needed.
+const Update = async (
+  path: string,
+  method: string,
+  token: string | undefined,
+  body: any
+) => {
+  const response = await fetch(`${baseUrl}${path}`, {
+    method: method,
+    headers: {
+      Authorization: `Bearer ${token}`,
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(body),
+  });
+
+  if (!response.ok) {
+    return Promise.reject(response);
+  }
+
+  return response;
+};
+
 export default Fetch;
-export { Create };
+export { Create, Update };

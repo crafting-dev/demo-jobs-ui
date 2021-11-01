@@ -12,7 +12,7 @@ import { styled } from "@mui/material/styles";
 import Paper from "@mui/material/Paper";
 import Fetch from "../adapters/Fetch";
 import Profile from "../models/Profile";
-import { Link } from "react-router-dom";
+import Button from "@mui/material/Button";
 
 const ListItem = styled("li")(({ theme }) => ({
   margin: theme.spacing(0.5),
@@ -113,12 +113,12 @@ function Dashboard() {
               </Paper>
 
               {profile?.postings && (
-                <>
+                <div>
                   {!!profile.postings.length && (
                     <Typography
                       variant="h4"
                       color="text.primary"
-                      sx={{ paddingTop: "20px" }}
+                      sx={{ padding: "20px 0" }}
                     >
                       My Postings
                     </Typography>
@@ -126,27 +126,27 @@ function Dashboard() {
 
                   {profile.postings.map((post: any) => {
                     return (
-                      <Link
-                        to={`/postings/${post.id}`}
+                      <Button
                         key={post.id}
-                        style={{
-                          color: `${auth.type === "Employer" ? "#eb496a" : "#5a4fcf"}`,
-                        }}
+                        variant="text"
+                        component="a"
+                        style={{ display: "block" }}
+                        href={`/postings/${post.id}`}
                       >
                         [{post.status}] {post.title}
-                      </Link>
+                      </Button>
                     );
                   })}
-                </>
+                </div>
               )}
 
               {profile?.applications && (
-                <>
+                <div>
                   {!!profile.applications.length && (
                     <Typography
                       variant="h4"
                       color="text.primary"
-                      sx={{ paddingTop: "20px" }}
+                      sx={{ padding: "20px 0" }}
                     >
                       My Applications
                     </Typography>
@@ -154,12 +154,18 @@ function Dashboard() {
 
                   {profile.applications.map((app: any) => {
                     return (
-                      <Link to={`/applications/${app.id}`} key={app.id}>
+                      <Button
+                        key={app.id}
+                        variant="text"
+                        component="a"
+                        style={{ display: "block" }}
+                        href={`/applications/${app.id}`}
+                      >
                         [{app.status}] {app.title}
-                      </Link>
+                      </Button>
                     );
                   })}
-                </>
+                </div>
               )}
 
               <Typography variant="body1" color="text.primary">

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Link, useParams } from "react-router-dom";
+import { Link, useParams, useHistory } from "react-router-dom";
 import { useAuth } from "../contexts/authContext";
 import Box from "@mui/material/Box";
 import Stack from "@mui/material/Stack";
@@ -10,7 +10,16 @@ import Chip from "@mui/material/Chip";
 import { styled } from "@mui/material/styles";
 import Paper from "@mui/material/Paper";
 import Application from "../models/Application";
-import Fetch from "../adapters/Fetch";
+import Fetch, { Update } from "../adapters/Fetch";
+import Button from "@mui/material/Button";
+import Collapse from "@mui/material/Collapse";
+import Radio from "@mui/material/Radio";
+import RadioGroup from "@mui/material/RadioGroup";
+import FormControlLabel from "@mui/material/FormControlLabel";
+import FormControl from "@mui/material/FormControl";
+import FormLabel from "@mui/material/FormLabel";
+import Alert from "@mui/material/Alert";
+import AlertTitle from "@mui/material/AlertTitle";
 
 const ListItem = styled("li")(({ theme }) => ({
   margin: theme.spacing(0.5),
@@ -18,6 +27,7 @@ const ListItem = styled("li")(({ theme }) => ({
 
 function ViewApplication() {
   const auth = useAuth()[0];
+  const history = useHistory();
 
   const { id }: any = useParams();
 
@@ -30,6 +40,43 @@ function ViewApplication() {
     posting: undefined,
     worker: undefined,
   });
+
+  const [expanded, setExpanded] = React.useState(false);
+
+  const handleExpandClick = () => {
+    setExpanded(!expanded);
+  };
+
+  const [status, setStatus] = useState("applied");
+  const [submit, setSubmit] = useState<{
+    success: Boolean;
+    errors: string | false;
+  }>({
+    success: false,
+    errors: false,
+  });
+
+  const handleChangeStatus = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setStatus((event.target as HTMLInputElement).value);
+  };
+
+  const handleSubmitChangeStatus = async () => {
+    if (status === "applied") {
+      setSubmit({
+        ...submit,
+        errors: "You have to make a hire/no-hire decision.",
+      });
+    } else {
+      await Update(`/applications/${id}`, "PUT", auth.token, { status: status })
+        .then(() => {
+          setSubmit({ ...submit, success: true });
+          history.push(`/applications/${application.id}`);
+        })
+        .catch((error) => {
+          setSubmit({ ...submit, errors: error.toString() });
+        });
+    }
+  };
 
   useEffect(() => {
     async function getApplication() {
@@ -103,7 +150,7 @@ function ViewApplication() {
                   size="small"
                   variant="outlined"
                   color={
-                    application?.status === "error" ||
+                    application?.status === "expired" ||
                     application?.status === "rejected"
                       ? "error"
                       : "success"
@@ -140,18 +187,11 @@ function ViewApplication() {
               </Paper>
 
               <Typography
-                variant="body2"
+                paragraph
                 color="text.primary"
                 sx={{ margin: "20px 0" }}
               >
                 {application?.content}
-              </Typography>
-
-              <Typography variant="body2" color="text.secondary">
-                Application created by:{" "}
-                <Link to={`/workers/${application?.worker?.id}`}>
-                  {application?.worker?.name}
-                </Link>
               </Typography>
 
               <Typography variant="body2" color="text.secondary">
@@ -160,7 +200,74 @@ function ViewApplication() {
                   {application?.posting?.title}
                 </Link>
               </Typography>
+
+              <Typography variant="body2" color="text.secondary">
+                Applicant:{" "}
+                <Link to={`/workers/${application?.worker?.id}`}>
+                  {application?.worker?.name}
+                </Link>
+              </Typography>
             </Stack>
+
+            {auth.type === "Employer" && application.status === "applied" && (
+              <Stack spacing={1} sx={{ marginTop: "30px" }}>
+                <Button
+                  style={{ maxWidth: "200px" }}
+                  variant="contained"
+                  onClick={handleExpandClick}
+                >
+                  Process Application
+                </Button>
+
+                <Collapse in={expanded} timeout="auto" unmountOnExit>
+                  <CardContent>
+                    <FormControl component="fieldset">
+                      <FormLabel component="legend">Decision</FormLabel>
+                      <RadioGroup
+                        aria-label="decision"
+                        name="controlled-radio-buttons-group"
+                        value={status}
+                        onChange={handleChangeStatus}
+                      >
+                        <FormControlLabel
+                          value="hired"
+                          control={<Radio />}
+                          label="Hire"
+                        />
+                        <FormControlLabel
+                          value="rejected"
+                          control={<Radio />}
+                          label="Reject"
+                        />
+                      </RadioGroup>
+                      <Button
+                        style={{ maxWidth: "100px", marginTop: "20px" }}
+                        variant="outlined"
+                        onClick={handleSubmitChangeStatus}
+                      >
+                        Submit
+                      </Button>
+                    </FormControl>
+                  </CardContent>
+                </Collapse>
+                {submit.success && (
+                  <Alert severity="success">
+                    <AlertTitle>Success</AlertTitle>
+                    Thank you for submitting a decision!
+                  </Alert>
+                )}
+                {submit.errors && (
+                  <Alert severity="error">
+                    <AlertTitle>Error</AlertTitle>
+                    Your decision did not submit successfully — see error
+                    message below!
+                    <br />
+                    <br />
+                    <strong>Status: {submit.errors}</strong>
+                  </Alert>
+                )}
+              </Stack>
+            )}
           </CardContent>
         </Card>
       </Stack>
