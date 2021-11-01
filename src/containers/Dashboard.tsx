@@ -1,7 +1,5 @@
 import React, { useEffect, useState } from "react";
 import { useAuth } from "../contexts/authContext";
-import ThemeProvider from "@mui/material/styles/ThemeProvider";
-import theme from "../assets/themes/mui";
 import Box from "@mui/material/Box";
 import Stack from "@mui/material/Stack";
 import Card from "@mui/material/Card";
@@ -63,114 +61,117 @@ function Dashboard() {
   }, [auth.bearerId, auth.type, auth.token]);
 
   return (
-    <ThemeProvider theme={theme}>
-      <Box
-        sx={{
-          maxWidth: "600px",
-          margin: "0 auto",
-          paddingTop: "100px",
-        }}
-      >
-        <Stack spacing={2}>
-          <Card
-            elevation={0}
-            sx={{
-              background: "transparent",
-              border: "1px solid #EEEEEE",
-            }}
-          >
-            <CardHeader title={profile?.name} subheader={profile?.email} />
-            <CardMedia
-              component="img"
-              height="300"
-              image={`${profile?.avatar}?s=1080`}
-              alt={profile?.name}
-            />
-            <CardContent>
-              <Stack spacing={2}>
-                <Paper
-                  elevation={0}
-                  sx={{
-                    display: "flex",
-                    justifyContent: "left",
-                    flexWrap: "wrap",
-                    listStyle: "none",
-                    paddingLeft: 0,
-                    p: 0.5,
-                    m: 0,
-                    backgroundColor: "transparent",
-                  }}
-                  component="ul"
-                >
-                  {profile?.tags?.split(", ").map((tag: string) => {
+    <Box
+      sx={{
+        maxWidth: "600px",
+        margin: "0 auto",
+        paddingTop: "100px",
+      }}
+    >
+      <Stack spacing={2}>
+        <Card
+          elevation={1}
+          sx={{
+            background: "#FFFFFF",
+          }}
+        >
+          <CardHeader title={profile?.name} subheader={profile?.email} />
+          <CardMedia
+            component="img"
+            height="300"
+            image={`${profile?.avatar}?s=1080`}
+            alt={profile?.name}
+          />
+          <CardContent>
+            <Stack spacing={2}>
+              <Paper
+                elevation={0}
+                sx={{
+                  display: "flex",
+                  justifyContent: "left",
+                  flexWrap: "wrap",
+                  listStyle: "none",
+                  paddingLeft: 0,
+                  p: 0.5,
+                  m: 0,
+                  backgroundColor: "transparent",
+                }}
+                component="ul"
+              >
+                {profile?.tags?.split(", ").map((tag: string) => {
+                  return (
+                    <ListItem key={tag}>
+                      <Chip
+                        label={tag}
+                        size="small"
+                        variant="outlined"
+                        color="primary"
+                      />
+                    </ListItem>
+                  );
+                })}
+              </Paper>
+
+              {profile?.postings && (
+                <>
+                  {!!profile.postings.length && (
+                    <Typography
+                      variant="h4"
+                      color="text.primary"
+                      sx={{ paddingTop: "20px" }}
+                    >
+                      My Postings
+                    </Typography>
+                  )}
+
+                  {profile.postings.map((post: any) => {
                     return (
-                      <ListItem key={tag}>
-                        <Chip
-                          label={tag}
-                          size="small"
-                          variant="outlined"
-                          color="primary"
-                        />
-                      </ListItem>
+                      <Link
+                        to={`/postings/${post.id}`}
+                        key={post.id}
+                        style={{
+                          color: `${auth.type === "Employer" ? "#eb496a" : "#5a4fcf"}`,
+                        }}
+                      >
+                        [{post.status}] {post.title}
+                      </Link>
                     );
                   })}
-                </Paper>
+                </>
+              )}
 
-                {profile?.postings && (
-                  <>
-                    {!!profile.postings.length && (
-                      <Typography
-                        variant="h4"
-                        color="text.primary"
-                        sx={{ paddingTop: "20px" }}
-                      >
-                        My Postings
-                      </Typography>
-                    )}
+              {profile?.applications && (
+                <>
+                  {!!profile.applications.length && (
+                    <Typography
+                      variant="h4"
+                      color="text.primary"
+                      sx={{ paddingTop: "20px" }}
+                    >
+                      My Applications
+                    </Typography>
+                  )}
 
-                    {profile.postings.map((post: any) => {
-                      return (
-                        <Link to={`/postings/${post.id}`} key={post.id}>
-                          [{post.status}] {post.title}
-                        </Link>
-                      );
-                    })}
-                  </>
-                )}
+                  {profile.applications.map((app: any) => {
+                    return (
+                      <Link to={`/applications/${app.id}`} key={app.id}>
+                        [{app.status}] {app.title}
+                      </Link>
+                    );
+                  })}
+                </>
+              )}
 
-                {profile?.applications && (
-                  <>
-                    {!!profile.applications.length && (
-                      <Typography
-                        variant="h4"
-                        color="text.primary"
-                        sx={{ paddingTop: "20px" }}
-                      >
-                        My Applications
-                      </Typography>
-                    )}
-
-                    {profile.applications.map((app: any) => {
-                      return (
-                        <Link to={`/applications/${app.id}`} key={app.id}>
-                          [{app.status}] {app.title}
-                        </Link>
-                      );
-                    })}
-                  </>
-                )}
-
-                <Typography variant="body1" color="text.primary">
-                  {profile?.type === "employer"
-                    ? `My current location is ${profile?.location}.`
-                    : `My current hourly rate is $${profile?.hourlyRate}/hr.`}
-                </Typography>
-              </Stack>
-            </CardContent>
-          </Card>
-        </Stack>
-      </Box>
-    </ThemeProvider>
+              <Typography variant="body1" color="text.primary">
+                {profile?.type === "employer"
+                  ? `My current location is ${profile?.location}.`
+                  : `My current hourly rate is $${profile?.hourlyRate}/hr.`}
+              </Typography>
+            </Stack>
+          </CardContent>
+        </Card>
+      </Stack>
+    </Box>
   );
 }
 

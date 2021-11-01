@@ -5,12 +5,16 @@ import App from "./containers/App";
 import reportWebVitals from "./reportWebVitals";
 import { BrowserRouter as Router } from "react-router-dom";
 import ProvideAuth from "./contexts/authContext";
+import ThemeProvider from "@mui/material/styles/ThemeProvider";
+import theme from "./assets/themes/mui";
 
 ReactDOM.render(
   <React.StrictMode>
     <Router>
       <ProvideAuth>
-        <App />
+        <ThemeProvider theme={theme}>
+          <App />
+        </ThemeProvider>
       </ProvideAuth>
     </Router>
   </React.StrictMode>,

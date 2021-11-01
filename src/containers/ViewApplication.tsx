@@ -1,8 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import { useAuth } from "../contexts/authContext";
-import ThemeProvider from "@mui/material/styles/ThemeProvider";
-import theme from "../assets/themes/mui";
 import Box from "@mui/material/Box";
 import Stack from "@mui/material/Stack";
 import Card from "@mui/material/Card";
@@ -53,122 +51,120 @@ function ViewApplication() {
   }, [id, auth.token]);
 
   return (
-    <ThemeProvider theme={theme}>
-      <Box
-        sx={{
-          maxWidth: "600px",
-          margin: "0 auto",
-          paddingTop: "100px",
-        }}
+    <Box
+      sx={{
+        maxWidth: "600px",
+        margin: "0 auto",
+        paddingTop: "100px",
+      }}
+    >
+      <Typography
+        sx={{ marginBottom: "40px", paddingLeft: "20px" }}
+        gutterBottom
+        variant="h2"
+        component="div"
       >
-        <Typography
-          sx={{ marginBottom: "40px", paddingLeft: "20px" }}
-          gutterBottom
-          variant="h2"
-          component="div"
+        Application
+      </Typography>
+
+      <Stack spacing={2}>
+        <Card
+          elevation={1}
+          sx={{
+            background: "#FFFFFF",
+            border: "1px solid #EEEEEE",
+          }}
         >
-          Application
-        </Typography>
+          <CardContent>
+            <Stack spacing={0}>
+              <Typography gutterBottom variant="h5" component="div">
+                {application?.posting?.title}
+              </Typography>
 
-        <Stack spacing={2}>
-          <Card
-            elevation={0}
-            sx={{
-              background: "transparent",
-              border: "1px solid #EEEEEE",
-            }}
-          >
-            <CardContent>
-              <Stack spacing={0}>
-                <Typography gutterBottom variant="h5" component="div">
-                  {application?.posting?.title}
-                </Typography>
-
-                <Stack
-                  direction="row"
-                  justifyContent="space-between"
-                  alignItems="flex-start"
-                  spacing={2}
-                >
-                  <Typography
-                    variant="body2"
-                    color="text.secondary"
-                    sx={{ marginBottom: "10px" }}
-                  >
-                    Applied{" "}
-                    {new Date().getDate() -
-                      new Date(application?.createdAt).getDate()}{" "}
-                    days ago by {application?.worker?.name}
-                  </Typography>
-
-                  <Chip
-                    label={application?.status}
-                    size="small"
-                    variant="outlined"
-                    color={
-                      application?.status === "error" ||
-                      application?.status === "rejected"
-                        ? "error"
-                        : "success"
-                    }
-                  />
-                </Stack>
-
-                <Paper
-                  elevation={0}
-                  sx={{
-                    display: "flex",
-                    justifyContent: "left",
-                    flexWrap: "wrap",
-                    listStyle: "none",
-                    paddingLeft: 0,
-                    p: 0.5,
-                    m: 0,
-                    backgroundColor: "transparent",
-                  }}
-                  component="ul"
-                >
-                  {application?.tags?.split(", ").map((tag: string) => {
-                    return (
-                      <ListItem key={tag}>
-                        <Chip
-                          label={tag}
-                          size="small"
-                          variant="outlined"
-                          color="primary"
-                        />
-                      </ListItem>
-                    );
-                  })}
-                </Paper>
-
+              <Stack
+                direction="row"
+                justifyContent="space-between"
+                alignItems="flex-start"
+                spacing={2}
+              >
                 <Typography
                   variant="body2"
-                  color="text.primary"
-                  sx={{ margin: "20px 0" }}
+                  color="text.secondary"
+                  sx={{ marginBottom: "10px" }}
                 >
-                  {application?.content}
+                  Applied{" "}
+                  {new Date(application?.createdAt).getDate() -
+                    new Date().getDate()}{" "}
+                  days ago by {application?.worker?.name}
                 </Typography>
 
-                <Typography variant="body2" color="text.secondary">
-                  Application created by:{" "}
-                  <Link to={`/workers/${application?.worker?.id}`}>
-                    {application?.worker?.name}
-                  </Link>
-                </Typography>
-
-                <Typography variant="body2" color="text.secondary">
-                  Original job posting:{" "}
-                  <Link to={`/postings/${application?.posting?.id}`}>
-                    {application?.posting?.title}
-                  </Link>
-                </Typography>
+                <Chip
+                  label={application?.status}
+                  size="small"
+                  variant="outlined"
+                  color={
+                    application?.status === "error" ||
+                    application?.status === "rejected"
+                      ? "error"
+                      : "success"
+                  }
+                />
               </Stack>
-            </CardContent>
-          </Card>
-        </Stack>
-      </Box>
-    </ThemeProvider>
+
+              <Paper
+                elevation={0}
+                sx={{
+                  display: "flex",
+                  justifyContent: "left",
+                  flexWrap: "wrap",
+                  listStyle: "none",
+                  paddingLeft: 0,
+                  p: 0.5,
+                  m: 0,
+                  backgroundColor: "transparent",
+                }}
+                component="ul"
+              >
+                {application?.tags?.split(", ").map((tag: string) => {
+                  return (
+                    <ListItem key={tag}>
+                      <Chip
+                        label={tag}
+                        size="small"
+                        variant="outlined"
+                        color="primary"
+                      />
+                    </ListItem>
+                  );
+                })}
+              </Paper>
+
+              <Typography
+                variant="body2"
+                color="text.primary"
+                sx={{ margin: "20px 0" }}
+              >
+                {application?.content}
+              </Typography>
+
+              <Typography variant="body2" color="text.secondary">
+                Application created by:{" "}
+                <Link to={`/workers/${application?.worker?.id}`}>
+                  {application?.worker?.name}
+                </Link>
+              </Typography>
+
+              <Typography variant="body2" color="text.secondary">
+                Original job posting:{" "}
+                <Link to={`/postings/${application?.posting?.id}`}>
+                  {application?.posting?.title}
+                </Link>
+              </Typography>
+            </Stack>
+          </CardContent>
+        </Card>
+      </Stack>
+    </Box>
   );
 }
 

@@ -7,9 +7,7 @@ import { unauthenticated } from "../models/Auth";
 import AppBar from "@mui/material/AppBar";
 import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
-import ThemeProvider from "@mui/material/styles/ThemeProvider";
 import Link from "@mui/material/Link";
-import theme from "../assets/themes/mui";
 import { styled } from "@mui/material/styles";
 import Badge from "@mui/material/Badge";
 import Avatar from "@mui/material/Avatar";
@@ -20,6 +18,7 @@ import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
 import Lock from "@mui/icons-material/Lock";
 import Face from "@mui/icons-material/Face";
+import theme from "../assets/themes/mui";
 
 const StyledBadge = styled(Badge)(({ theme }) => ({
   "& .MuiBadge-badge": {
@@ -73,7 +72,7 @@ function Header() {
   };
 
   return (
-    <ThemeProvider theme={theme}>
+    <>
       <AppBar
         position="fixed"
         elevation={0}
@@ -180,7 +179,7 @@ function Header() {
         </Toolbar>
       </AppBar>
       <Toolbar />
-    </ThemeProvider>
+    </>
   );
 }
 

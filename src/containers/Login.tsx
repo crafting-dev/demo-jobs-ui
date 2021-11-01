@@ -11,8 +11,6 @@ import TextField from "@mui/material/TextField";
 import Typography from "@mui/material/Typography";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
 import IconButton from "@mui/material/IconButton";
-import ThemeProvider from "@mui/material/styles/ThemeProvider";
-import theme from "../assets/themes/mui";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import Checkbox from "@mui/material/Checkbox";
 import Link from "@mui/material/Link";
@@ -66,118 +64,116 @@ function Login() {
   };
 
   return (
-    <ThemeProvider theme={theme}>
-      <Box
-        sx={{
-          maxWidth: "500px",
-          paddingTop: "100px",
-          margin: "0 auto",
-        }}
-      >
-        <form autoComplete="off" onSubmit={handleSubmit}>
-          <Stack
-            direction="column"
-            justifyContent="center"
-            alignItems="center"
-            spacing={2}
+    <Box
+      sx={{
+        maxWidth: "500px",
+        paddingTop: "100px",
+        margin: "0 auto",
+      }}
+    >
+      <form autoComplete="off" onSubmit={handleSubmit}>
+        <Stack
+          direction="column"
+          justifyContent="center"
+          alignItems="center"
+          spacing={2}
+        >
+          <Typography
+            variant="h2"
+            component="h2"
+            color="inherit"
+            sx={{
+              width: "100%",
+              marginBottom: "30px",
+            }}
           >
-            <Typography
-              variant="h2"
-              component="h2"
-              color="inherit"
-              sx={{
-                width: "100%",
-                marginBottom: "30px",
-              }}
-            >
-              Log In
-            </Typography>
+            Log In
+          </Typography>
 
-            <TextField
-              id="outlined-email"
-              label="Email"
-              name="email"
-              placeholder="batman@crafting.dev"
-              margin="normal"
-              variant="outlined"
-              fullWidth
-              onChange={handleChange("email")}
-            />
+          <TextField
+            id="outlined-email"
+            label="Email"
+            name="email"
+            placeholder="batman@crafting.dev"
+            margin="normal"
+            variant="outlined"
+            fullWidth
+            onChange={handleChange("email")}
+          />
 
-            <TextField
-              label="Password"
-              variant="outlined"
-              type={credentials.showPassword ? "text" : "password"}
-              value={credentials.password}
-              name="password"
-              onChange={handleChange("password")}
-              fullWidth
-              InputProps={{
-                endAdornment: (
-                  <InputAdornment position="end">
-                    <IconButton
-                      aria-label="toggle password visibility"
-                      onClick={handleClickShowPassword}
-                      onMouseDown={(e: React.SyntheticEvent<EventTarget>) =>
-                        e.preventDefault()
-                      }
-                    >
-                      {credentials.showPassword ? (
-                        <Visibility fontSize="small" />
-                      ) : (
-                        <VisibilityOff fontSize="small" />
-                      )}
-                    </IconButton>
-                  </InputAdornment>
-                ),
-              }}
-            />
+          <TextField
+            label="Password"
+            variant="outlined"
+            type={credentials.showPassword ? "text" : "password"}
+            value={credentials.password}
+            name="password"
+            onChange={handleChange("password")}
+            fullWidth
+            InputProps={{
+              endAdornment: (
+                <InputAdornment position="end">
+                  <IconButton
+                    aria-label="toggle password visibility"
+                    onClick={handleClickShowPassword}
+                    onMouseDown={(e: React.SyntheticEvent<EventTarget>) =>
+                      e.preventDefault()
+                    }
+                  >
+                    {credentials.showPassword ? (
+                      <Visibility fontSize="small" />
+                    ) : (
+                      <VisibilityOff fontSize="small" />
+                    )}
+                  </IconButton>
+                </InputAdornment>
+              ),
+            }}
+          />
 
-            <Stack
-              direction="row"
-              justifyContent="space-between"
-              alignItems="center"
-              spacing={26}
-            >
-              <FormControlLabel control={<Checkbox />} label="Remember me" />
-              <Link href="/login">Forgot password?</Link>
-            </Stack>
-
-            <Button
-              variant="contained"
-              fullWidth
-              type="submit"
-              sx={{
-                lineHeight: "40px",
-              }}
-            >
-              Log In
-            </Button>
-
-            <Typography
-              variant="body1"
-              component="p"
-              color="inherit"
-              sx={{
-                width: "100%",
-              }}
-            >
-              Don't have an account? <Link href="/signup">Sign up now!</Link>
-            </Typography>
-
-            {credentials.errors && (
-              <Alert severity="error">
-                <AlertTitle>Error</AlertTitle>
-                Log in was not successful — see error message below!
-                <br />
-                <br />
-                <strong>Incorrect Email/Password used</strong>
-              </Alert>
-            )}
+          <Stack
+            direction="row"
+            justifyContent="space-between"
+            alignItems="center"
+            spacing={26}
+          >
+            <FormControlLabel control={<Checkbox />} label="Remember me" />
+            <Link href="/login">Forgot password?</Link>
           </Stack>
-        </form>
-      </Box>
-    </ThemeProvider>
+
+          <Button
+            variant="contained"
+            fullWidth
+            type="submit"
+            sx={{
+              lineHeight: "40px",
+            }}
+          >
+            Log In
+          </Button>
+
+          <Typography
+            variant="body1"
+            component="p"
+            color="inherit"
+            sx={{
+              width: "100%",
+            }}
+          >
+            Don't have an account? <Link href="/signup">Sign up now!</Link>
+          </Typography>
+
+          {credentials.errors && (
+            <Alert severity="error">
+              <AlertTitle>Error</AlertTitle>
+              Log in was not successful — see error message below!
+              <br />
+              <br />
+              <strong>Incorrect Email/Password used</strong>
+            </Alert>
+          )}
+        </Stack>
+      </form>
+    </Box>
   );
 }
 
