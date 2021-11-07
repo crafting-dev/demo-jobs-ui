@@ -10,8 +10,8 @@ import AlertTitle from '@mui/material/AlertTitle'
 import Paper from '@mui/material/Paper'
 import Chip from '@mui/material/Chip'
 import { styled } from '@mui/material/styles'
-import { Update } from '../adapters/fetch'
-import { useAuth } from '../contexts/authContext'
+import { Update } from '../../../adapters/fetch'
+import { useAuth } from '../../../contexts/auth'
 
 const ListItem = styled('li')(({ theme }) => ({
   margin: theme.spacing(0.5),

@@ -14,9 +14,9 @@ import Box from '@mui/material/Box'
 import Alert from '@mui/material/Alert'
 import AlertTitle from '@mui/material/AlertTitle'
 import Auth from '../models/Auth'
-import { useAuth } from '../contexts/authContext'
+import { useAuth } from '../contexts/auth'
 import { setUser } from '../adapters/store'
-import { GenerateToken } from '../adapters/authenticate'
+import { GenerateToken } from '../adapters/auth'
 
 const Login = (): JSX.Element => {
   const [auth, setAuth] = useAuth()

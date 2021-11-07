@@ -17,9 +17,9 @@ import FormControl from '@mui/material/FormControl'
 import FormLabel from '@mui/material/FormLabel'
 import Alert from '@mui/material/Alert'
 import AlertTitle from '@mui/material/AlertTitle'
-import { Fetch, Update } from '../adapters/fetch'
-import Application from '../models/Application'
-import { useAuth } from '../contexts/authContext'
+import { Fetch, Update } from '../../../adapters/fetch'
+import Application from '../../../models/Application'
+import { useAuth } from '../../../contexts/auth'
 
 const ListItem = styled('li')(({ theme }) => ({
   margin: theme.spacing(0.5),

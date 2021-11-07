@@ -1,64 +1,65 @@
 import { Route } from './models/types'
-import Apply from './pages/Apply'
 import Login from './pages/Login'
 import Signup from './pages/Signup'
-import Create from './pages/Create'
-import Postings from './pages/Postings'
-import Dashboard from './pages/Dashboard'
-import ViewPosting from './pages/ViewPosting'
-import Applications from './pages/Applications'
-import ViewApplication from './pages/ViewApplication'
+import Create from './pages/protected/postings/Create'
+import Postings from './pages/protected/postings/Postings'
+import Dashboard from './pages/protected/Dashboard'
+import ViewPosting from './pages/protected/postings/ViewPosting'
+import Apply from './pages/protected/applications/Apply'
+import Applications from './pages/protected/applications/Applications'
+import ViewApplication from './pages/protected/applications/ViewApplication'
+import Home from './pages/Home'
 
 const Routes: Route[] = [
   {
     path: '/login',
     page: Login,
-    private: false,
+    protected: false,
   },
   {
     path: '/signup',
     page: Signup,
-    private: false,
+    protected: false,
   },
   {
     path: '/dashboard',
     page: Dashboard,
-    private: true,
+    protected: true,
   },
   {
     path: '/create/posting',
     page: Create,
-    private: true,
+    protected: true,
   },
   {
     path: '/postings/:id/apply',
     page: Apply,
-    private: true,
+    protected: true,
   },
   {
     path: '/postings/:id',
     page: ViewPosting,
-    private: true,
+    protected: true,
   },
   {
     path: '/postings',
     page: Postings,
-    private: true,
+    protected: true,
   },
   {
     path: '/applications/:id',
     page: ViewApplication,
-    private: true,
+    protected: true,
   },
   {
     path: '/applications',
     page: Applications,
-    private: true,
+    protected: true,
   },
   {
     path: '/',
-    page: Login,
-    private: false,
+    page: Home,
+    protected: false,
   },
 ]
 

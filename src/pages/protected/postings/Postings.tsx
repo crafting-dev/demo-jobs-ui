@@ -16,8 +16,8 @@ import IconButton from '@mui/material/IconButton'
 import MenuIcon from '@mui/icons-material/Menu'
 import SearchIcon from '@mui/icons-material/Search'
 import GitHubIcon from '@mui/icons-material/GitHub'
-import { Fetch } from '../adapters/fetch'
-import { useAuth } from '../contexts/authContext'
+import { Fetch } from '../../../adapters/fetch'
+import { useAuth } from '../../../contexts/auth'
 
 const ListItem = styled('li')(({ theme }) => ({
   margin: theme.spacing(0.5),

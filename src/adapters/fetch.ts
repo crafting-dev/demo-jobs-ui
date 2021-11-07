@@ -1,7 +1,5 @@
 import { baseUrl } from '../models/Auth'
 
-// Fetch a resource by type from path.
-// Authentication token needed.
 export const Fetch = async (
   path: string,
   method: string,
@@ -24,8 +22,6 @@ export const Fetch = async (
   return data
 }
 
-// Create either Employer or Worker resources.
-// Authentication not needed.
 export const Create = async (
   path: string,
   name: string,
@@ -63,8 +59,6 @@ export const Create = async (
   return data
 }
 
-// Update some resource type with body parameter.
-// Authentication token needed.
 export const Update = async (
   path: string,
   method: string,

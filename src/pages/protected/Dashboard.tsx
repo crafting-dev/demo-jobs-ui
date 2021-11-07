@@ -10,9 +10,9 @@ import Chip from '@mui/material/Chip'
 import { styled } from '@mui/material/styles'
 import Paper from '@mui/material/Paper'
 import Button from '@mui/material/Button'
-import { Fetch } from '../adapters/fetch'
-import Profile from '../models/Profile'
-import { useAuth } from '../contexts/authContext'
+import { Fetch } from '../../adapters/fetch'
+import Profile from '../../models/Profile'
+import { useAuth } from '../../contexts/auth'
 
 const ListItem = styled('li')(({ theme }) => ({
   margin: theme.spacing(0.5),

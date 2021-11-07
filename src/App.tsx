@@ -2,7 +2,7 @@ import React from 'react'
 import { Redirect, Route, Switch } from 'react-router-dom'
 import CssBaseline from '@mui/material/CssBaseline'
 
-import { useAuth } from './contexts/authContext'
+import { useAuth } from './contexts/auth'
 import { Routes } from './routes'
 import { ProtectedRouteProps } from './models/types'
 import ProtectedRoute from './components/ProtectedRoute'
@@ -22,42 +22,38 @@ const App = (): JSX.Element => {
     setRedirectPath,
   }
 
-  const Page = (): JSX.Element => {
-    return (
-      <Switch>
-        {Routes.map((route) => {
-          if (route.private) {
-            return (
-              <ProtectedRoute
-                {...defaultProtectedRouteProps}
-                path={route.path}
-                key={route.path}
-              >
-                <route.page />
-              </ProtectedRoute>
-            )
-          }
-
+  const Page = (): JSX.Element => (
+    <Switch>
+      {Routes.map((route) => {
+        if (route.protected) {
           return (
-            <Route exact path={route.path} key={route.path}>
+            <ProtectedRoute
+              {...defaultProtectedRouteProps}
+              path={route.path}
+              key={route.path}
+            >
               <route.page />
-            </Route>
+            </ProtectedRoute>
           )
-        })}
+        }
 
-        <Redirect from="*" to="/" />
-      </Switch>
-    )
-  }
+        return (
+          <Route exact path={route.path} key={route.path}>
+            <route.page />
+          </Route>
+        )
+      })}
+
+      <Redirect from="*" to="/" />
+    </Switch>
+  )
 
   return (
     <div>
       <CssBaseline />
 
       <Header />
-
       <Page />
-
       <Footer />
     </div>
   )

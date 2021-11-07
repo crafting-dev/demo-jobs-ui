@@ -10,5 +10,5 @@ export type ProtectedRouteProps = {
 export interface Route {
   path: string
   page: React.FunctionComponent
-  private: boolean
+  protected: boolean
 }

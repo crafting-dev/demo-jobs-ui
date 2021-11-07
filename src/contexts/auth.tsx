@@ -7,9 +7,10 @@ const authContext = createContext<[Auth, (auth: Auth) => void]>([
   () => undefined,
 ])
 
-const useAuth = (): [Auth, (auth: Auth) => void] => useContext(authContext)
+export const useAuth = (): [Auth, (auth: Auth) => void] =>
+  useContext(authContext)
 
-const ProvideAuth: React.FunctionComponent = (props) => {
+export const ProvideAuth: React.FunctionComponent = (props) => {
   const [authState, setAuthState] = useState(() => {
     const loggedInUser = getUser()
     return loggedInUser || unauthenticated
@@ -27,6 +28,3 @@ const ProvideAuth: React.FunctionComponent = (props) => {
     </authContext.Provider>
   )
 }
-
-export default ProvideAuth
-export { useAuth }
