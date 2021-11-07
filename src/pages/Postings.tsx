@@ -16,14 +16,14 @@ import IconButton from '@mui/material/IconButton'
 import MenuIcon from '@mui/icons-material/Menu'
 import SearchIcon from '@mui/icons-material/Search'
 import GitHubIcon from '@mui/icons-material/GitHub'
-import Fetch from '../adapters/Fetch'
+import { Fetch } from '../adapters/fetch'
 import { useAuth } from '../contexts/authContext'
 
 const ListItem = styled('li')(({ theme }) => ({
   margin: theme.spacing(0.5),
 }))
 
-function Postings() {
+const Postings = (): JSX.Element => {
   const auth = useAuth()[0]
   const history = useHistory()
 
@@ -36,7 +36,7 @@ function Postings() {
   }
 
   useEffect(() => {
-    async function populatePostings() {
+    async function populatePostings(): Promise<void> {
       await Fetch('/postings', 'GET', auth.token)
         .then((response) => {
           setPostings(response.data)

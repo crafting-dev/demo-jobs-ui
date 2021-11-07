@@ -1,18 +1,18 @@
 import React from 'react'
 import { Redirect, Route, Switch } from 'react-router-dom'
 import CssBaseline from '@mui/material/CssBaseline'
-import Footer from '../components/Footer'
-import Header from '../components/Header'
-import ProtectedRoute, {
-  ProtectedRouteProps,
-} from '../components/ProtectedRoute'
-import { useAuth } from '../contexts/authContext'
-import AppRoutes from '../models/Routes'
 
-function App() {
+import { useAuth } from './contexts/authContext'
+import { Routes } from './routes'
+import { ProtectedRouteProps } from './models/types'
+import ProtectedRoute from './components/ProtectedRoute'
+import Header from './Header'
+import Footer from './Footer'
+
+const App = (): JSX.Element => {
   const [auth, setAuth] = useAuth()
 
-  const setRedirectPath = (path: string) => {
+  const setRedirectPath = (path: string): void => {
     setAuth({ ...auth, redirectPath: path })
   }
 
@@ -22,34 +22,42 @@ function App() {
     setRedirectPath,
   }
 
-  return (
-    <div>
-      <CssBaseline />
-
-      <Header />
+  const Page = (): JSX.Element => {
+    return (
       <Switch>
-        {AppRoutes.map((route) => {
+        {Routes.map((route) => {
           if (route.private) {
             return (
               <ProtectedRoute
                 {...defaultProtectedRouteProps}
                 path={route.path}
-                component={route.component}
                 key={route.path}
-              />
+              >
+                <route.page />
+              </ProtectedRoute>
             )
           }
+
           return (
-            <Route
-              exact
-              path={route.path}
-              component={route.component}
-              key={route.path}
-            />
+            <Route exact path={route.path} key={route.path}>
+              <route.page />
+            </Route>
           )
         })}
-        <Redirect from="*" to="/login" />
+
+        <Redirect from="*" to="/" />
       </Switch>
+    )
+  }
+
+  return (
+    <div>
+      <CssBaseline />
+
+      <Header />
+
+      <Page />
+
       <Footer />
     </div>
   )

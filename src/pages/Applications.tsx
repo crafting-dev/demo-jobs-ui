@@ -10,14 +10,14 @@ import Chip from '@mui/material/Chip'
 import { styled } from '@mui/material/styles'
 import Paper from '@mui/material/Paper'
 import Skeleton from '@mui/material/Skeleton'
-import Fetch from '../adapters/Fetch'
+import { Fetch } from '../adapters/fetch'
 import { useAuth } from '../contexts/authContext'
 
 const ListItem = styled('li')(({ theme }) => ({
   margin: theme.spacing(0.5),
 }))
 
-function Applications() {
+const Applications = (): JSX.Element => {
   const auth = useAuth()[0]
   const history = useHistory()
 
@@ -30,7 +30,7 @@ function Applications() {
   }
 
   useEffect(() => {
-    async function populateApplications() {
+    async function populateApplications(): Promise<void> {
       await Fetch('/applications', 'GET', auth.token).then((response) => {
         setApplications(response.data)
       })

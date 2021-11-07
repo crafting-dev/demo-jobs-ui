@@ -10,14 +10,14 @@ import { styled } from '@mui/material/styles'
 import Paper from '@mui/material/Paper'
 import Button from '@mui/material/Button'
 import Posting from '../models/Posting'
-import Fetch from '../adapters/Fetch'
+import { Fetch } from '../adapters/fetch'
 import { useAuth } from '../contexts/authContext'
 
 const ListItem = styled('li')(({ theme }) => ({
   margin: theme.spacing(0.5),
 }))
 
-function ViewPosting() {
+const ViewPosting = (): JSX.Element => {
   const auth = useAuth()[0]
   const history = useHistory()
 
@@ -35,12 +35,12 @@ function ViewPosting() {
     applications: undefined,
   })
 
-  const handleSubmit = () => {
+  const handleSubmit = (): void => {
     history.push(`/postings/${id}/apply`)
   }
 
   useEffect(() => {
-    async function getPosting() {
+    async function getPosting(): Promise<void> {
       await Fetch(`/postings/${id}`, 'GET', auth.token).then((response) => {
         const newPosting: Posting = {
           id: response.data.id,

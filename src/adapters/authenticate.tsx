@@ -1,6 +1,9 @@
 import { baseUrl } from '../models/Auth'
 
-const AuthenticateToken = async (email: string, password: string) => {
+export const GenerateToken = async (
+  email: string,
+  password: string
+): Promise<any> => {
   const basicToken = btoa(`${email}:${password}`)
 
   const response = await fetch(`${baseUrl}/authenticate`, {
@@ -20,10 +23,10 @@ const AuthenticateToken = async (email: string, password: string) => {
   return data
 }
 
-const RevokeToken = async (
+export const RevokeToken = async (
   token: string | undefined,
   id: number | undefined
-) => {
+): Promise<void> => {
   await fetch(`${baseUrl}/authenticate/${id}`, {
     method: 'DELETE',
     headers: {
@@ -32,6 +35,3 @@ const RevokeToken = async (
     },
   })
 }
-
-export default AuthenticateToken
-export { RevokeToken }

@@ -1,6 +1,6 @@
 import Auth from '../models/Auth'
 
-const getUser = () => {
+export const getUser = (): any => {
   const loggedInUser = sessionStorage.getItem('CRAFTING_JOBS_AUTH')
   if (loggedInUser) {
     return JSON.parse(loggedInUser)
@@ -8,13 +8,10 @@ const getUser = () => {
   return false
 }
 
-const setUser = (user: Auth) => {
+export const setUser = (user: Auth): void => {
   sessionStorage.setItem('CRAFTING_JOBS_AUTH', JSON.stringify(user))
 }
 
-const deleteUser = () => {
+export const deleteUser = (): void => {
   sessionStorage.removeItem('CRAFTING_JOBS_AUTH')
 }
-
-export default getUser
-export { setUser, deleteUser }

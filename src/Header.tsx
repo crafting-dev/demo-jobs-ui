@@ -14,11 +14,11 @@ import Lock from '@mui/icons-material/Lock'
 import Face from '@mui/icons-material/Face'
 import TocIcon from '@mui/icons-material/Toc'
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown'
-import theme from '../assets/themes/mui'
-import { unauthenticated } from '../models/Auth'
-import { useAuth } from '../contexts/authContext'
-import { deleteUser } from '../adapters/Store'
-import { RevokeToken } from '../adapters/Authenticate'
+import theme from './styles/themes/mui'
+import { unauthenticated } from './models/Auth'
+import { useAuth } from './contexts/authContext'
+import { deleteUser } from './adapters/store'
+import { RevokeToken } from './adapters/authenticate'
 
 const StyledBadge = styled(Badge)(() => ({
   '& .MuiBadge-badge': {
@@ -92,46 +92,50 @@ const StyledMenu = styled((props: MenuProps) => (
   },
 }))
 
-function Header() {
+const Header = (): JSX.Element => {
   const [auth, setAuth] = useAuth()
   const history = useHistory()
 
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null)
   const open = Boolean(anchorEl)
-  const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
+  const handleClick = (event: React.MouseEvent<HTMLButtonElement>): void => {
     setAnchorEl(event.currentTarget)
   }
-  const handleClose = () => {
+  const handleClose = (): void => {
     setAnchorEl(null)
   }
 
   const [anchorDropdownEl, setAnchorDropdownEl] =
     React.useState<null | HTMLElement>(null)
   const dropdownOpen = Boolean(anchorDropdownEl)
-  const handleClickDropdown = (event: React.MouseEvent<HTMLElement>) => {
+  const handleClickDropdown = (event: React.MouseEvent<HTMLElement>): void => {
     setAnchorDropdownEl(event.currentTarget)
   }
-  const handleCloseDropdown = () => {
+  const handleCloseDropdown = (): void => {
     setAnchorDropdownEl(null)
   }
 
   const [anchorDropdownAppEl, setAnchorDropdownAppEl] =
     React.useState<null | HTMLElement>(null)
   const dropdownAppOpen = Boolean(anchorDropdownAppEl)
-  const handleClickDropdownApp = (event: React.MouseEvent<HTMLElement>) => {
+  const handleClickDropdownApp = (
+    event: React.MouseEvent<HTMLElement>
+  ): void => {
     setAnchorDropdownAppEl(event.currentTarget)
   }
-  const handleCloseDropdownApp = () => {
+  const handleCloseDropdownApp = (): void => {
     setAnchorDropdownAppEl(null)
   }
 
-  const handleFollowPathLink = (path: string) => (e: FormEvent) => {
-    e.preventDefault()
+  const handleFollowPathLink =
+    (path: string) =>
+    (e: FormEvent): void => {
+      e.preventDefault()
 
-    history.push(path)
-  }
+      history.push(path)
+    }
 
-  const handleLogout = async (e: FormEvent) => {
+  const handleLogout = async (e: FormEvent): Promise<void> => {
     e.preventDefault()
 
     RevokeToken(auth.token, auth.id)

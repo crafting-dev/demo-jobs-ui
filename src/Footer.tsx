@@ -3,7 +3,7 @@ import Typography from '@mui/material/Typography'
 import Stack from '@mui/material/Stack'
 import Link from '@mui/material/Link'
 
-function Footer() {
+const Footer = (): JSX.Element => {
   return (
     <Stack
       direction="row"

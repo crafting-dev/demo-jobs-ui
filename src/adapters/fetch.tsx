@@ -2,11 +2,11 @@ import { baseUrl } from '../models/Auth'
 
 // Fetch a resource by type from path.
 // Authentication token needed.
-const Fetch = async (
+export const Fetch = async (
   path: string,
   method: string,
   token: string | undefined
-) => {
+): Promise<any> => {
   const response = await fetch(`${baseUrl}${path}`, {
     method,
     headers: {
@@ -26,7 +26,7 @@ const Fetch = async (
 
 // Create either Employer or Worker resources.
 // Authentication not needed.
-const Create = async (
+export const Create = async (
   path: string,
   name: string,
   email: string,
@@ -36,7 +36,7 @@ const Create = async (
   otherValue: string,
   objType: string,
   tags: string | false
-) => {
+): Promise<any> => {
   const response = await fetch(`${baseUrl}${path}`, {
     method: 'POST',
     headers: {
@@ -65,12 +65,12 @@ const Create = async (
 
 // Update some resource type with body parameter.
 // Authentication token needed.
-const Update = async (
+export const Update = async (
   path: string,
   method: string,
   token: string | undefined,
   body: any
-) => {
+): Promise<Response> => {
   const response = await fetch(`${baseUrl}${path}`, {
     method,
     headers: {
@@ -86,6 +86,3 @@ const Update = async (
 
   return response
 }
-
-export default Fetch
-export { Create, Update }

@@ -10,7 +10,7 @@ import Chip from '@mui/material/Chip'
 import { styled } from '@mui/material/styles'
 import Paper from '@mui/material/Paper'
 import Button from '@mui/material/Button'
-import Fetch from '../adapters/Fetch'
+import { Fetch } from '../adapters/fetch'
 import Profile from '../models/Profile'
 import { useAuth } from '../contexts/authContext'
 
@@ -18,7 +18,7 @@ const ListItem = styled('li')(({ theme }) => ({
   margin: theme.spacing(0.5),
 }))
 
-function Dashboard() {
+const Dashboard = (): JSX.Element => {
   const auth = useAuth()[0]
 
   const [profile, setProfile] = useState<Profile>({
@@ -35,7 +35,7 @@ function Dashboard() {
   })
 
   useEffect(() => {
-    async function getProfile() {
+    async function getProfile(): Promise<void> {
       await Fetch(
         `/${auth.type?.toLocaleLowerCase()}s/${auth.bearerId}`,
         'GET',

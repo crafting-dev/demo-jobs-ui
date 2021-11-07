@@ -10,14 +10,14 @@ import AlertTitle from '@mui/material/AlertTitle'
 import Paper from '@mui/material/Paper'
 import Chip from '@mui/material/Chip'
 import { styled } from '@mui/material/styles'
-import { Update } from '../adapters/Fetch'
+import { Update } from '../adapters/fetch'
 import { useAuth } from '../contexts/authContext'
 
 const ListItem = styled('li')(({ theme }) => ({
   margin: theme.spacing(0.5),
 }))
 
-function Apply() {
+const Apply = (): JSX.Element => {
   const auth = useAuth()[0]
   const history = useHistory()
   const { id }: any = useParams()
@@ -45,7 +45,7 @@ function Apply() {
     setApplication({ ...application, [prop]: e.target.value })
   }
 
-  const handleTagsChange = (e: any) => {
+  const handleTagsChange = (e: any): void => {
     if (e.key === ' ') {
       e.preventDefault()
       tags.list.push(tags.new)
@@ -64,7 +64,7 @@ function Apply() {
     })
   }
 
-  const handleSubmit = async (e: FormEvent) => {
+  const handleSubmit = async (e: FormEvent): Promise<void> => {
     e.preventDefault()
 
     await Update(`/applications`, 'POST', auth.token, {

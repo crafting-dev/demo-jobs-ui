@@ -15,10 +15,10 @@ import Alert from '@mui/material/Alert'
 import AlertTitle from '@mui/material/AlertTitle'
 import Auth from '../models/Auth'
 import { useAuth } from '../contexts/authContext'
-import { setUser } from '../adapters/Store'
-import AuthenticateToken from '../adapters/Authenticate'
+import { setUser } from '../adapters/store'
+import { GenerateToken } from '../adapters/authenticate'
 
-function Login() {
+const Login = (): JSX.Element => {
   const [auth, setAuth] = useAuth()
   const history = useHistory()
 
@@ -33,14 +33,14 @@ function Login() {
     setCredentials({ ...credentials, [prop]: e.target.value })
   }
 
-  const handleClickShowPassword = () => {
+  const handleClickShowPassword = (): void => {
     setCredentials({ ...credentials, showPassword: !credentials.showPassword })
   }
 
-  const handleSubmit = async (e: FormEvent) => {
+  const handleSubmit = async (e: FormEvent): Promise<void> => {
     e.preventDefault()
 
-    await AuthenticateToken(credentials.email, credentials.password)
+    await GenerateToken(credentials.email, credentials.password)
       .then((response) => {
         const user: Auth = {
           token: response.data.attributes.token,
