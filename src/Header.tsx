@@ -53,7 +53,7 @@ const Header = (): JSX.Element => {
     setAnchorEl({ ...anchorEl, [prop]: null })
   }
 
-  const handleFollowPathLink =
+  const handleFollowLinkPath =
     (path: string) =>
     (event: React.MouseEvent<HTMLElement>): void => {
       event.preventDefault()
@@ -72,7 +72,7 @@ const Header = (): JSX.Element => {
     <Typography
       variant="h6"
       component="a"
-      onClick={handleFollowPathLink('/')}
+      onClick={handleFollowLinkPath('/')}
       color="primary"
       sx={{
         textTransform: 'uppercase',
@@ -95,7 +95,7 @@ const Header = (): JSX.Element => {
         return (
           <Button
             variant="text"
-            onClick={handleFollowPathLink(link.path)}
+            onClick={handleFollowLinkPath(link.path)}
             color="primary"
             sx={{
               textTransform: 'uppercase',
@@ -155,7 +155,7 @@ const Header = (): JSX.Element => {
                   onClose={handleClose('postings')}
                   onClick={handleClose('postings')}
                 >
-                  <MenuItem onClick={handleFollowPathLink('/postings')}>
+                  <MenuItem onClick={handleFollowLinkPath('/postings')}>
                     <ListItemIcon>
                       <ChevronRightIcon fontSize="small" />
                     </ListItemIcon>
@@ -176,7 +176,7 @@ const Header = (): JSX.Element => {
                         My Active Postings
                       </MenuItem>
                       <MenuItem
-                        onClick={handleFollowPathLink('/create/posting')}
+                        onClick={handleFollowLinkPath('/create/posting')}
                       >
                         <ListItemIcon>
                           <ChevronRightIcon fontSize="small" />
@@ -201,7 +201,7 @@ const Header = (): JSX.Element => {
                   onClose={handleClose('applications')}
                   onClick={handleClose('applications')}
                 >
-                  <MenuItem onClick={handleFollowPathLink('/applications')}>
+                  <MenuItem onClick={handleFollowLinkPath('/applications')}>
                     <ListItemIcon>
                       <ChevronRightIcon fontSize="small" />
                     </ListItemIcon>
@@ -238,7 +238,7 @@ const Header = (): JSX.Element => {
                   onClose={handleClose('account')}
                   onClick={handleClose('account')}
                 >
-                  <MenuItem onClick={handleFollowPathLink('/dashboard')}>
+                  <MenuItem onClick={handleFollowLinkPath('/dashboard')}>
                     <ListItemIcon>
                       <DashboardIcon fontSize="small" />
                     </ListItemIcon>
