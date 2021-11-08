@@ -97,6 +97,7 @@ const Header = (): JSX.Element => {
             variant="text"
             onClick={handleFollowLinkPath(link.path)}
             color="primary"
+            key={link.path}
             sx={{
               textTransform: 'uppercase',
               letterSpacing: -0.5,
