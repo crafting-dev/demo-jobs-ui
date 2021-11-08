@@ -95,7 +95,7 @@ const Header = (): JSX.Element => {
         return (
           <Button
             variant="text"
-            href={link.path}
+            onClick={handleFollowPathLink(link.path)}
             color="primary"
             sx={{
               textTransform: 'uppercase',
