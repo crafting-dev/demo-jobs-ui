@@ -1,6 +1,7 @@
 import React, { createContext, useContext, useState } from 'react'
 import { getUser } from '../adapters/store'
-import Auth, { unauthenticated } from '../models/Auth'
+import { unauthenticated } from '../models/auth'
+import { Auth } from '../models/types'
 
 const authContext = createContext<[Auth, (auth: Auth) => void]>([
   unauthenticated,

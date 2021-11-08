@@ -3,6 +3,7 @@ import { useHistory } from 'react-router-dom'
 import AppBar from '@mui/material/AppBar'
 import Toolbar from '@mui/material/Toolbar'
 import Typography from '@mui/material/Typography'
+import Grid from '@mui/material/Grid'
 import Stack from '@mui/material/Stack'
 import Button from '@mui/material/Button'
 import IconButton from '@mui/material/IconButton'
@@ -19,7 +20,7 @@ import ChevronRightIcon from '@mui/icons-material/ChevronRight'
 import { useAuth } from './contexts/auth'
 import { deleteUser } from './adapters/store'
 import { RevokeToken } from './adapters/auth'
-import { unauthenticated } from './models/Auth'
+import { unauthenticated } from './models/auth'
 import { PAGEWIDTH } from './styles/themes/defaults'
 import { WHITE } from './styles/themes/palette'
 import StyledBadge from './components/StyledBadge'
@@ -164,7 +165,7 @@ const Header = (): JSX.Element => {
                     All Postings
                   </MenuItem>
                   {auth.type === 'Employer' && (
-                    <>
+                    <Grid>
                       <MenuItem disabled>
                         <ListItemIcon>
                           <ChevronRightIcon fontSize="small" />
@@ -185,7 +186,7 @@ const Header = (): JSX.Element => {
                         </ListItemIcon>
                         Create a Posting
                       </MenuItem>
-                    </>
+                    </Grid>
                   )}
                 </StyledMenu>
 
@@ -210,14 +211,12 @@ const Header = (): JSX.Element => {
                     My Applications
                   </MenuItem>
                   {auth.type === 'Worker' && (
-                    <>
-                      <MenuItem disabled>
-                        <ListItemIcon>
-                          <ChevronRightIcon fontSize="small" />
-                        </ListItemIcon>
-                        My Active Applications
-                      </MenuItem>
-                    </>
+                    <MenuItem disabled>
+                      <ListItemIcon>
+                        <ChevronRightIcon fontSize="small" />
+                      </ListItemIcon>
+                      My Active Applications
+                    </MenuItem>
                   )}
                 </StyledMenu>
 

@@ -1,4 +1,4 @@
-import Auth from '../models/Auth'
+import { Auth } from '../models/types'
 
 export const getUser = (): any => {
   const loggedInUser = sessionStorage.getItem('CRAFTING_JOBS_AUTH')

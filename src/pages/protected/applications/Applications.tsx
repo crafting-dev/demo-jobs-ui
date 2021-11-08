@@ -134,107 +134,112 @@ const Applications = (): JSX.Element => {
         </Stack>
       ) : (
         <Stack spacing={0}>
-          {applications.map((obj: any) => (
-            <Card
-              elevation={0}
-              key={obj.id}
-              sx={{
-                background: '#FFFFFF',
-                border: '1px solid #EEEEEE',
-              }}
-            >
-              <CardActionArea onClick={handleFollowPathLink(obj.id)}>
-                <CardContent>
-                  <Stack spacing={0}>
-                    <Typography gutterBottom variant="h5" component="div">
-                      {obj.attributes.posting.title}
-                    </Typography>
-
-                    <Stack
-                      direction="row"
-                      justifyContent="space-between"
-                      alignItems="flex-start"
-                      spacing={2}
-                    >
-                      <Typography
-                        variant="body2"
-                        color="text.secondary"
-                        sx={{ marginBottom: '10px' }}
-                      >
-                        Applied{' '}
-                        {new Date(obj.attributes.createdAt).getDate() -
-                          new Date().getDate()}{' '}
-                        days ago
+          {React.Children.toArray(
+            applications.map((obj: any) => (
+              <Card
+                elevation={0}
+                sx={{
+                  background: '#FFFFFF',
+                  border: '1px solid #EEEEEE',
+                }}
+              >
+                <CardActionArea onClick={handleFollowPathLink(obj.id)}>
+                  <CardContent>
+                    <Stack spacing={0}>
+                      <Typography gutterBottom variant="h5" component="div">
+                        {obj.attributes.posting.title}
                       </Typography>
 
-                      <Chip
-                        label={obj.attributes.status}
-                        size="small"
-                        variant="outlined"
-                        color={
-                          obj.attributes.status === 'expired' ||
-                          obj.attributes.status === 'rejected'
-                            ? 'error'
-                            : 'success'
-                        }
-                      />
+                      <Stack
+                        direction="row"
+                        justifyContent="space-between"
+                        alignItems="flex-start"
+                        spacing={2}
+                      >
+                        <Typography
+                          variant="body2"
+                          color="text.secondary"
+                          sx={{ marginBottom: '10px' }}
+                        >
+                          Applied{' '}
+                          {new Date().getDate() -
+                            new Date(obj.attributes.createdAt).getDate()}{' '}
+                          days ago
+                        </Typography>
+
+                        <Chip
+                          label={obj.attributes.status}
+                          size="small"
+                          variant="outlined"
+                          color={
+                            obj.attributes.status === 'expired' ||
+                            obj.attributes.status === 'rejected'
+                              ? 'error'
+                              : 'success'
+                          }
+                        />
+                      </Stack>
+
+                      <Paper
+                        elevation={0}
+                        sx={{
+                          display: 'flex',
+                          justifyContent: 'left',
+                          flexWrap: 'wrap',
+                          listStyle: 'none',
+                          paddingLeft: 0,
+                          p: 0.5,
+                          m: 0,
+                          backgroundColor: 'transparent',
+                        }}
+                        component="ul"
+                      >
+                        {React.Children.toArray(
+                          obj.attributes.tags
+                            ?.split(', ')
+                            .map((tag: string) => {
+                              return (
+                                <ListItem>
+                                  <Chip
+                                    label={tag}
+                                    size="small"
+                                    variant="outlined"
+                                    color="primary"
+                                  />
+                                </ListItem>
+                              )
+                            })
+                        )}
+                      </Paper>
+
+                      <Typography
+                        variant="body2"
+                        color="text.primary"
+                        noWrap
+                        sx={{ margin: '20px 0' }}
+                      >
+                        {obj.attributes.description}
+                      </Typography>
+
+                      <Typography variant="body2" color="text.secondary">
+                        Application was created by:{' '}
+                        {auth.type === 'Worker'
+                          ? 'me'
+                          : obj.attributes.worker.name}
+                      </Typography>
+
+                      <Typography variant="body2" color="text.secondary">
+                        Original posting:{' '}
+                        <Link to={`/postings/${obj.attributes.posting.id}`}>
+                          {obj.attributes.posting.title}
+                        </Link>
+                      </Typography>
                     </Stack>
-
-                    <Paper
-                      elevation={0}
-                      sx={{
-                        display: 'flex',
-                        justifyContent: 'left',
-                        flexWrap: 'wrap',
-                        listStyle: 'none',
-                        paddingLeft: 0,
-                        p: 0.5,
-                        m: 0,
-                        backgroundColor: 'transparent',
-                      }}
-                      component="ul"
-                    >
-                      {obj.attributes.tags?.split(', ').map((tag: string) => {
-                        return (
-                          <ListItem key={tag}>
-                            <Chip
-                              label={tag}
-                              size="small"
-                              variant="outlined"
-                              color="primary"
-                            />
-                          </ListItem>
-                        )
-                      })}
-                    </Paper>
-
-                    <Typography
-                      variant="body2"
-                      color="text.primary"
-                      noWrap
-                      sx={{ margin: '20px 0' }}
-                    >
-                      {obj.attributes.description}
-                    </Typography>
-
-                    <Typography variant="body2" color="text.secondary">
-                      Application was created by:{' '}
-                      {auth.type === 'Worker'
-                        ? 'me'
-                        : obj.attributes.worker.name}
-                    </Typography>
-
-                    <Typography variant="body2" color="text.secondary">
-                      Original posting:{' '}
-                      <Link to={`/postings/${obj.attributes.posting.id}`}>
-                        {obj.attributes.posting.title}
-                      </Link>
-                    </Typography>
-                  </Stack>
-                </CardContent>
-              </CardActionArea>
-            </Card>
-          ))}
+                  </CardContent>
+                </CardActionArea>
+              </Card>
+            ))
+          )}
         </Stack>
       )}
     </Box>

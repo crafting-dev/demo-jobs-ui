@@ -9,7 +9,7 @@ import Chip from '@mui/material/Chip'
 import { styled } from '@mui/material/styles'
 import Paper from '@mui/material/Paper'
 import Button from '@mui/material/Button'
-import Posting from '../../../models/Posting'
+import { Posting } from '../../../models/types'
 import { Fetch } from '../../../adapters/fetch'
 import { useAuth } from '../../../contexts/auth'
 
@@ -136,18 +136,20 @@ const ViewPosting = (): JSX.Element => {
                 }}
                 component="ul"
               >
-                {posting?.tags?.split(', ').map((tag: string) => {
-                  return (
-                    <ListItem key={tag}>
-                      <Chip
-                        label={tag}
-                        size="small"
-                        variant="outlined"
-                        color="primary"
-                      />
-                    </ListItem>
-                  )
-                })}
+                {React.Children.toArray(
+                  posting?.tags?.split(', ').map((tag: string) => {
+                    return (
+                      <ListItem>
+                        <Chip
+                          label={tag}
+                          size="small"
+                          variant="outlined"
+                          color="primary"
+                        />
+                      </ListItem>
+                    )
+                  })
+                )}
               </Paper>
 
               <Typography
@@ -172,17 +174,18 @@ const ViewPosting = (): JSX.Element => {
                 <Typography gutterBottom variant="h6" component="div">
                   Applications
                 </Typography>
-                {posting.applications.map((app) => (
-                  <Button
-                    key={app.id}
-                    variant="text"
-                    component="a"
-                    style={{ display: 'block' }}
-                    onClick={handleFollowLinkPath(`/applications/${app.id}`)}
-                  >
-                    [{app.status}] {app.name}
-                  </Button>
-                ))}
+                {React.Children.toArray(
+                  posting.applications.map((app) => (
+                    <Button
+                      variant="text"
+                      component="a"
+                      style={{ display: 'block' }}
+                      onClick={handleFollowLinkPath(`/applications/${app.id}`)}
+                    >
+                      [{app.status}] {app.name}
+                    </Button>
+                  ))
+                )}
               </Stack>
             )}
 

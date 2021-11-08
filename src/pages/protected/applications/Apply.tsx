@@ -155,18 +155,20 @@ const Apply = (): JSX.Element => {
               }}
               component="ul"
             >
-              {tags.list.map((tag: string) => {
-                return (
-                  <ListItem key={tag}>
-                    <Chip
-                      label={tag}
-                      variant="outlined"
-                      color="primary"
-                      onDelete={handleTagDelete(tag)}
-                    />
-                  </ListItem>
-                )
-              })}
+              {React.Children.toArray(
+                tags.list.map((tag: string) => {
+                  return (
+                    <ListItem>
+                      <Chip
+                        label={tag}
+                        variant="outlined"
+                        color="primary"
+                        onDelete={handleTagDelete(tag)}
+                      />
+                    </ListItem>
+                  )
+                })
+              )}
             </Paper>
           )}
 

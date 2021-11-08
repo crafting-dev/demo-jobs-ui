@@ -1,11 +1,11 @@
-import { baseUrl } from '../models/Auth'
+import { baseUrl } from '../models/auth'
 
 export const Fetch = async (
   path: string,
   method: string,
   token: string | undefined
 ): Promise<any> => {
-  const response = await fetch(`${baseUrl}${path}`, {
+  const response = await fetch(`${baseUrl}/api/v1${path}`, {
     method,
     headers: {
       Authorization: `Bearer ${token}`,
@@ -33,7 +33,7 @@ export const Create = async (
   objType: string,
   tags: string | false
 ): Promise<any> => {
-  const response = await fetch(`${baseUrl}${path}`, {
+  const response = await fetch(`${baseUrl}/api/v1${path}`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
@@ -65,7 +65,7 @@ export const Update = async (
   token: string | undefined,
   body: any
 ): Promise<Response> => {
-  const response = await fetch(`${baseUrl}${path}`, {
+  const response = await fetch(`${baseUrl}/api/v1${path}`, {
     method,
     headers: {
       Authorization: `Bearer ${token}`,

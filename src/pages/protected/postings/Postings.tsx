@@ -169,102 +169,107 @@ const Postings = (): JSX.Element => {
         </Stack>
       ) : (
         <Stack spacing={0}>
-          {postings.map((obj: any) => (
-            <Card
-              elevation={0}
-              key={obj.id}
-              sx={{
-                background: '#FFFFFF',
-                border: '1px solid #EEEEEE',
-              }}
-            >
-              <CardActionArea onClick={handleFollowPathLink(obj.id)}>
-                <CardContent>
-                  <Stack spacing={0}>
-                    <Typography gutterBottom variant="h5" component="div">
-                      {obj.attributes.title}
-                    </Typography>
-
-                    <Stack
-                      direction="row"
-                      justifyContent="space-between"
-                      alignItems="flex-start"
-                      spacing={2}
-                    >
-                      <Typography
-                        variant="body2"
-                        color="text.secondary"
-                        sx={{ marginBottom: '10px' }}
-                      >
-                        Posted{' '}
-                        {new Date(obj.attributes.createdAt).getDate() -
-                          new Date().getDate()}{' '}
-                        days ago by {obj.attributes.employer.name}
+          {React.Children.toArray(
+            postings.map((obj: any) => (
+              <Card
+                elevation={0}
+                sx={{
+                  background: '#FFFFFF',
+                  border: '1px solid #EEEEEE',
+                }}
+              >
+                <CardActionArea onClick={handleFollowPathLink(obj.id)}>
+                  <CardContent>
+                    <Stack spacing={0}>
+                      <Typography gutterBottom variant="h5" component="div">
+                        {obj.attributes.title}
                       </Typography>
 
-                      <Chip
-                        label={obj.attributes.status}
-                        size="small"
-                        variant="outlined"
-                        color={
-                          obj.attributes.status === 'posted'
-                            ? 'success'
-                            : 'error'
-                        }
-                      />
+                      <Stack
+                        direction="row"
+                        justifyContent="space-between"
+                        alignItems="flex-start"
+                        spacing={2}
+                      >
+                        <Typography
+                          variant="body2"
+                          color="text.secondary"
+                          sx={{ marginBottom: '10px' }}
+                        >
+                          Posted{' '}
+                          {new Date().getDate() -
+                            new Date(obj.attributes.createdAt).getDate()}{' '}
+                          days ago by {obj.attributes.employer.name}
+                        </Typography>
+
+                        <Chip
+                          label={obj.attributes.status}
+                          size="small"
+                          variant="outlined"
+                          color={
+                            obj.attributes.status === 'posted'
+                              ? 'success'
+                              : 'error'
+                          }
+                        />
+                      </Stack>
+
+                      <Paper
+                        elevation={0}
+                        sx={{
+                          display: 'flex',
+                          justifyContent: 'left',
+                          flexWrap: 'wrap',
+                          listStyle: 'none',
+                          paddingLeft: 0,
+                          p: 0.5,
+                          m: 0,
+                          backgroundColor: 'transparent',
+                        }}
+                        component="ul"
+                      >
+                        {React.Children.toArray(
+                          obj.attributes.tags
+                            ?.split(', ')
+                            .map((tag: string, i: number) => {
+                              return (
+                                <ListItem>
+                                  <Chip
+                                    label={tag}
+                                    size="small"
+                                    variant="outlined"
+                                    color="primary"
+                                  />
+                                </ListItem>
+                              )
+                            })
+                        )}
+                      </Paper>
+
+                      <Typography
+                        variant="body2"
+                        color="text.primary"
+                        noWrap
+                        sx={{
+                          margin: '20px 0',
+                        }}
+                      >
+                        {obj.attributes.description}
+                      </Typography>
+
+                      <Typography variant="body2" color="text.secondary">
+                        Hours: {obj.attributes.hours}
+                      </Typography>
+
+                      <Typography variant="body2" color="text.secondary">
+                        Location: {obj.attributes.employer.location}
+                      </Typography>
                     </Stack>
-
-                    <Paper
-                      elevation={0}
-                      sx={{
-                        display: 'flex',
-                        justifyContent: 'left',
-                        flexWrap: 'wrap',
-                        listStyle: 'none',
-                        paddingLeft: 0,
-                        p: 0.5,
-                        m: 0,
-                        backgroundColor: 'transparent',
-                      }}
-                      component="ul"
-                    >
-                      {obj.attributes.tags?.split(', ').map((tag: string) => {
-                        return (
-                          <ListItem key={tag}>
-                            <Chip
-                              label={tag}
-                              size="small"
-                              variant="outlined"
-                              color="primary"
-                            />
-                          </ListItem>
-                        )
-                      })}
-                    </Paper>
-
-                    <Typography
-                      variant="body2"
-                      color="text.primary"
-                      noWrap
-                      sx={{
-                        margin: '20px 0',
-                      }}
-                    >
-                      {obj.attributes.description}
-                    </Typography>
-
-                    <Typography variant="body2" color="text.secondary">
-                      Hours: {obj.attributes.hours}
-                    </Typography>
-
-                    <Typography variant="body2" color="text.secondary">
-                      Location: {obj.attributes.employer.location}
-                    </Typography>
-                  </Stack>
-                </CardContent>
-              </CardActionArea>
-            </Card>
-          ))}
+                  </CardContent>
+                </CardActionArea>
+              </Card>
+            ))
+          )}
         </Stack>
       )}
     </Box>

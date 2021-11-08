@@ -18,7 +18,7 @@ import FormLabel from '@mui/material/FormLabel'
 import Alert from '@mui/material/Alert'
 import AlertTitle from '@mui/material/AlertTitle'
 import { Fetch, Update } from '../../../adapters/fetch'
-import Application from '../../../models/Application'
+import { Application } from '../../../models/types'
 import { useAuth } from '../../../contexts/auth'
 
 const ListItem = styled('li')(({ theme }) => ({
@@ -174,18 +174,20 @@ const ViewApplication = (): JSX.Element => {
                 }}
                 component="ul"
               >
-                {application?.tags?.split(', ').map((tag: string) => {
-                  return (
-                    <ListItem key={tag}>
-                      <Chip
-                        label={tag}
-                        size="small"
-                        variant="outlined"
-                        color="primary"
-                      />
-                    </ListItem>
-                  )
-                })}
+                {React.Children.toArray(
+                  application?.tags?.split(', ').map((tag: string) => {
+                    return (
+                      <ListItem>
+                        <Chip
+                          label={tag}
+                          size="small"
+                          variant="outlined"
+                          color="primary"
+                        />
+                      </ListItem>
+                    )
+                  })
+                )}
               </Paper>
 
               <Typography

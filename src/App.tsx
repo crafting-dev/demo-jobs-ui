@@ -24,25 +24,23 @@ const App = (): JSX.Element => {
 
   const Page = (): JSX.Element => (
     <Switch>
-      {Routes.map((route) => {
-        if (route.protected) {
-          return (
-            <ProtectedRoute
-              {...defaultProtectedRouteProps}
-              path={route.path}
-              key={route.path}
-            >
-              <route.page />
-            </ProtectedRoute>
-          )
-        }
+      {React.Children.toArray(
+        Routes.map((route) => {
+          if (route.protected) {
+            return (
+              <ProtectedRoute {...defaultProtectedRouteProps} path={route.path}>
+                <route.page />
+              </ProtectedRoute>
+            )
+          }
 
-        return (
-          <Route exact path={route.path} key={route.path}>
-            <route.page />
-          </Route>
-        )
-      })}
+          return (
+            <Route exact path={route.path}>
+              <route.page />
+            </Route>
+          )
+        })
+      )}
 
       <Redirect from="*" to="/" />
     </Switch>
