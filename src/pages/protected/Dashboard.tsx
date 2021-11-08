@@ -74,7 +74,7 @@ const Dashboard = (): JSX.Element => {
       sx={{
         maxWidth: '600px',
         margin: '0 auto',
-        paddingTop: '100px',
+        padding: '50px 20px',
       }}
     >
       <Stack spacing={2}>

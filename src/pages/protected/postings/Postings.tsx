@@ -56,7 +56,7 @@ const Postings = (): JSX.Element => {
       sx={{
         maxWidth: '600px',
         margin: '0 auto',
-        paddingTop: '100px',
+        padding: '50px 20px',
       }}
     >
       <Paper
@@ -245,7 +245,10 @@ const Postings = (): JSX.Element => {
                     <Typography
                       variant="body2"
                       color="text.primary"
-                      sx={{ margin: '20px 0' }}
+                      noWrap
+                      sx={{
+                        margin: '20px 0',
+                      }}
                     >
                       {obj.attributes.description}
                     </Typography>

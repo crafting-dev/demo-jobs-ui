@@ -98,7 +98,7 @@ const Apply = (): JSX.Element => {
     <Box
       sx={{
         maxWidth: '500px',
-        paddingTop: '100px',
+        padding: '50px 20px',
         margin: '0 auto',
       }}
     >

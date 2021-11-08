@@ -72,7 +72,7 @@ const ViewPosting = (): JSX.Element => {
       sx={{
         maxWidth: '600px',
         margin: '0 auto',
-        paddingTop: '100px',
+        padding: '50px 20px',
       }}
     >
       <Typography

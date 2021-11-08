@@ -46,7 +46,7 @@ const Applications = (): JSX.Element => {
       sx={{
         maxWidth: '600px',
         margin: '0 auto',
-        paddingTop: '100px',
+        padding: '50px 20px',
       }}
     >
       <Typography
@@ -211,6 +211,7 @@ const Applications = (): JSX.Element => {
                     <Typography
                       variant="body2"
                       color="text.primary"
+                      noWrap
                       sx={{ margin: '20px 0' }}
                     >
                       {obj.attributes.description}
