@@ -79,7 +79,7 @@ const Dashboard = (): JSX.Element => {
           <CardMedia
             component="img"
             height="300"
-            image={`${profile?.avatar}?s=1080`}
+            image={`${profile?.avatar}&s=1080`}
             alt={profile?.name}
           />
           <CardContent>

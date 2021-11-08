@@ -14,7 +14,7 @@ const unauthenticated: Auth = {
   redirectPath: '',
 }
 
-const baseUrl = 'http://localhost:3001/api/v1'
+const baseUrl = 'http://localhost:3003/api/v1'
 
 export default Auth
 export { unauthenticated, baseUrl }

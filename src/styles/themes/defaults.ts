@@ -1,1 +1,1 @@
-export const PAGE_WIDTH = '1000px'
+export const PAGEWIDTH = '1000px'

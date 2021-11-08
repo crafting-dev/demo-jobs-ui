@@ -51,9 +51,10 @@ const App = (): JSX.Element => {
   return (
     <div>
       <CssBaseline />
-
       <Header />
-      <Page />
+      <div style={{ minHeight: '100vh' }}>
+        <Page />
+      </div>
       <Footer />
     </div>
   )
