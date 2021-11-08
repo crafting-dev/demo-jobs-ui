@@ -45,7 +45,7 @@ export const Create = async (
         password,
         password_confirmation: passwordConfirmation,
         [otherKey]: otherValue,
-        ...(tags && { tag_attributes: tags }),
+        ...(tags && { tag_attributes: { content: tags } }),
       },
     }),
   })
