@@ -13,6 +13,7 @@ import Link from '@mui/material/Link'
 import Box from '@mui/material/Box'
 import Alert from '@mui/material/Alert'
 import AlertTitle from '@mui/material/AlertTitle'
+
 import Auth from '../models/Auth'
 import { useAuth } from '../contexts/auth'
 import { setUser } from '../adapters/store'
@@ -21,7 +22,6 @@ import { GenerateToken } from '../adapters/auth'
 const Login = (): JSX.Element => {
   const [auth, setAuth] = useAuth()
   const history = useHistory()
-
   const [credentials, setCredentials] = useState({
     email: '',
     password: '',
@@ -29,16 +29,17 @@ const Login = (): JSX.Element => {
     errors: false,
   })
 
-  const handleChange = (prop: any) => (e: { target: { value: any } }) => {
-    setCredentials({ ...credentials, [prop]: e.target.value })
-  }
+  const handleChange =
+    (prop: string) => (event: { target: { value: any } }) => {
+      setCredentials({ ...credentials, [prop]: event.target.value })
+    }
 
   const handleClickShowPassword = (): void => {
     setCredentials({ ...credentials, showPassword: !credentials.showPassword })
   }
 
-  const handleSubmit = async (e: FormEvent): Promise<void> => {
-    e.preventDefault()
+  const handleSubmit = async (event: FormEvent): Promise<void> => {
+    event.preventDefault()
 
     await GenerateToken(credentials.email, credentials.password)
       .then((response) => {
@@ -66,8 +67,8 @@ const Login = (): JSX.Element => {
   return (
     <Box
       sx={{
-        maxWidth: '500px',
-        paddingTop: '100px',
+        maxWidth: '540px',
+        padding: '100px 20px',
         margin: '0 auto',
       }}
     >
@@ -81,7 +82,7 @@ const Login = (): JSX.Element => {
           <Typography
             variant="h2"
             component="h2"
-            color="inherit"
+            color="primary"
             sx={{
               width: '100%',
               marginBottom: '30px',
@@ -115,8 +116,8 @@ const Login = (): JSX.Element => {
                   <IconButton
                     aria-label="toggle password visibility"
                     onClick={handleClickShowPassword}
-                    onMouseDown={(e: React.SyntheticEvent<EventTarget>) =>
-                      e.preventDefault()
+                    onMouseDown={(event: React.SyntheticEvent<EventTarget>) =>
+                      event.preventDefault()
                     }
                   >
                     {credentials.showPassword ? (
@@ -163,12 +164,15 @@ const Login = (): JSX.Element => {
           </Typography>
 
           {credentials.errors && (
-            <Alert severity="error">
+            <Alert
+              severity="error"
+              sx={{ width: '100%', maxWidth: '500px', margin: '0 auto' }}
+            >
               <AlertTitle>Error</AlertTitle>
               Log in was not successful — see error message below!
               <br />
               <br />
-              <strong>Incorrect Email/Password used</strong>
+              <strong>Incorrect Email/Password combination</strong>
             </Alert>
           )}
         </Stack>

@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react'
+import { useHistory } from 'react-router-dom'
 import Box from '@mui/material/Box'
 import Stack from '@mui/material/Stack'
 import Card from '@mui/material/Card'
@@ -20,6 +21,7 @@ const ListItem = styled('li')(({ theme }) => ({
 
 const Dashboard = (): JSX.Element => {
   const auth = useAuth()[0]
+  const history = useHistory()
 
   const [profile, setProfile] = useState<Profile>({
     id: 0,
@@ -33,6 +35,13 @@ const Dashboard = (): JSX.Element => {
     postings: undefined,
     applications: undefined,
   })
+
+  const handleFollowLinkPath =
+    (path: string) =>
+    (event: React.MouseEvent<HTMLElement>): void => {
+      event.preventDefault()
+      history.push(path)
+    }
 
   useEffect(() => {
     async function getProfile(): Promise<void> {
@@ -131,7 +140,7 @@ const Dashboard = (): JSX.Element => {
                         variant="text"
                         component="a"
                         style={{ display: 'block' }}
-                        href={`/postings/${post.id}`}
+                        onClick={handleFollowLinkPath(`/postings/${post.id}`)}
                       >
                         [{post.status}] {post.title}
                       </Button>
@@ -159,7 +168,9 @@ const Dashboard = (): JSX.Element => {
                         variant="text"
                         component="a"
                         style={{ display: 'block' }}
-                        href={`/applications/${app.id}`}
+                        onClick={handleFollowLinkPath(
+                          `/applications/${app.id}`
+                        )}
                       >
                         [{app.status}] {app.title}
                       </Button>

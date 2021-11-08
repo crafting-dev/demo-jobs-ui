@@ -39,6 +39,13 @@ const ViewPosting = (): JSX.Element => {
     history.push(`/postings/${id}/apply`)
   }
 
+  const handleFollowLinkPath =
+    (path: string) =>
+    (event: React.MouseEvent<HTMLElement>): void => {
+      event.preventDefault()
+      history.push(path)
+    }
+
   useEffect(() => {
     async function getPosting(): Promise<void> {
       await Fetch(`/postings/${id}`, 'GET', auth.token).then((response) => {
@@ -171,7 +178,7 @@ const ViewPosting = (): JSX.Element => {
                     variant="text"
                     component="a"
                     style={{ display: 'block' }}
-                    href={`/applications/${app.id}`}
+                    onClick={handleFollowLinkPath(`/applications/${app.id}`)}
                   >
                     [{app.status}] {app.name}
                   </Button>

@@ -77,9 +77,10 @@ const Header = (): JSX.Element => {
       sx={{
         textTransform: 'uppercase',
         textDecoration: 'none',
-        fontSize: '16px',
+        fontSize: '15px',
         letterSpacing: -0.5,
         cursor: 'pointer',
+        fontWeight: 'bold',
       }}
     >
       <code>Crafting Jobs</code>

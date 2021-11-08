@@ -87,6 +87,13 @@ const Apply = (): JSX.Element => {
       })
   }
 
+  const handleFollowLinkPath =
+    (path: string) =>
+    (event: React.MouseEvent<HTMLElement>): void => {
+      event.preventDefault()
+      history.push(path)
+    }
+
   return (
     <Box
       sx={{
@@ -117,7 +124,7 @@ const Apply = (): JSX.Element => {
           <Button
             sx={{ display: 'block', left: 0 }}
             component="a"
-            href={`/postings/${application.posting}`}
+            onClick={handleFollowLinkPath(`/postings/${application.posting}`)}
           >
             Original job post
           </Button>
