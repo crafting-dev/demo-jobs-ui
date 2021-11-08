@@ -61,7 +61,7 @@ const Applications = (): JSX.Element => {
       {loading ? (
         <Stack spacing={2}>
           <Card
-            elevation={1}
+            elevation={0}
             sx={{
               background: '#FFFFFF',
               border: '1px solid #EEEEEE',
@@ -133,10 +133,10 @@ const Applications = (): JSX.Element => {
           </Card>
         </Stack>
       ) : (
-        <Stack spacing={2}>
+        <Stack spacing={0}>
           {applications.map((obj: any) => (
             <Card
-              elevation={1}
+              elevation={0}
               key={obj.id}
               sx={{
                 background: '#FFFFFF',

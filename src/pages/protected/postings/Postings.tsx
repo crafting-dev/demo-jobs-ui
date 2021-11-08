@@ -96,7 +96,7 @@ const Postings = (): JSX.Element => {
       {loading ? (
         <Stack spacing={2}>
           <Card
-            elevation={1}
+            elevation={0}
             sx={{
               background: '#FFFFFF',
               border: '1px solid #EEEEEE',
@@ -168,10 +168,10 @@ const Postings = (): JSX.Element => {
           </Card>
         </Stack>
       ) : (
-        <Stack spacing={2}>
+        <Stack spacing={0}>
           {postings.map((obj: any) => (
             <Card
-              elevation={1}
+              elevation={0}
               key={obj.id}
               sx={{
                 background: '#FFFFFF',
