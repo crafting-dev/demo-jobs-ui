@@ -1,0 +1,9 @@
+{
+  "remote.SSH.defaultForwardedPorts": [
+    {
+      "localPort": 3000,
+      "name": "web",
+      "remotePort": 3000
+    }
+  ]
+}
