@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react'
+import { useHistory } from 'react-router-dom'
 import Box from '@mui/material/Box'
 import Stack from '@mui/material/Stack'
 import Card from '@mui/material/Card'
@@ -10,16 +11,17 @@ import Chip from '@mui/material/Chip'
 import { styled } from '@mui/material/styles'
 import Paper from '@mui/material/Paper'
 import Button from '@mui/material/Button'
-import Fetch from '../adapters/Fetch'
-import Profile from '../models/Profile'
-import { useAuth } from '../contexts/authContext'
+import { Fetch } from '../../adapters/fetch'
+import { Profile } from '../../models/types'
+import { useAuth } from '../../contexts/auth'
 
 const ListItem = styled('li')(({ theme }) => ({
   margin: theme.spacing(0.5),
 }))
 
-function Dashboard() {
+const Dashboard = (): JSX.Element => {
   const auth = useAuth()[0]
+  const history = useHistory()
 
   const [profile, setProfile] = useState<Profile>({
     id: 0,
@@ -34,8 +36,15 @@ function Dashboard() {
     applications: undefined,
   })
 
+  const handleFollowLinkPath =
+    (path: string) =>
+    (event: React.MouseEvent<HTMLElement>): void => {
+      event.preventDefault()
+      history.push(path)
+    }
+
   useEffect(() => {
-    async function getProfile() {
+    async function getProfile(): Promise<void> {
       await Fetch(
         `/${auth.type?.toLocaleLowerCase()}s/${auth.bearerId}`,
         'GET',
@@ -65,7 +74,7 @@ function Dashboard() {
       sx={{
         maxWidth: '600px',
         margin: '0 auto',
-        paddingTop: '100px',
+        padding: '50px 20px',
       }}
     >
       <Stack spacing={2}>
@@ -79,7 +88,7 @@ function Dashboard() {
           <CardMedia
             component="img"
             height="300"
-            image={`${profile?.avatar}?s=1080`}
+            image={`${profile?.avatar}&s=1080`}
             alt={profile?.name}
           />
           <CardContent>
@@ -98,18 +107,20 @@ function Dashboard() {
                 }}
                 component="ul"
               >
-                {profile?.tags?.split(', ').map((tag: string) => {
-                  return (
-                    <ListItem key={tag}>
-                      <Chip
-                        label={tag}
-                        size="small"
-                        variant="outlined"
-                        color="primary"
-                      />
-                    </ListItem>
-                  )
-                })}
+                {React.Children.toArray(
+                  profile?.tags?.split(', ').map((tag: string) => {
+                    return (
+                      <ListItem>
+                        <Chip
+                          label={tag}
+                          size="small"
+                          variant="outlined"
+                          color="primary"
+                        />
+                      </ListItem>
+                    )
+                  })
+                )}
               </Paper>
 
               {profile?.postings && (
@@ -124,19 +135,20 @@ function Dashboard() {
                     </Typography>
                   )}
 
-                  {profile.postings.map((post: any) => {
-                    return (
-                      <Button
-                        key={post.id}
-                        variant="text"
-                        component="a"
-                        style={{ display: 'block' }}
-                        href={`/postings/${post.id}`}
-                      >
-                        [{post.status}] {post.title}
-                      </Button>
-                    )
-                  })}
+                  {React.Children.toArray(
+                    profile.postings.map((post: any) => {
+                      return (
+                        <Button
+                          variant="text"
+                          component="a"
+                          style={{ display: 'block' }}
+                          onClick={handleFollowLinkPath(`/postings/${post.id}`)}
+                        >
+                          [{post.status}] {post.title}
+                        </Button>
+                      )
+                    })
+                  )}
                 </div>
               )}
 
@@ -152,19 +164,23 @@ function Dashboard() {
                     </Typography>
                   )}
 
-                  {profile.applications.map((app: any) => {
-                    return (
-                      <Button
-                        key={app.id}
-                        variant="text"
-                        component="a"
-                        style={{ display: 'block' }}
-                        href={`/applications/${app.id}`}
-                      >
-                        [{app.status}] {app.title}
-                      </Button>
-                    )
-                  })}
+                  {React.Children.toArray(
+                    profile.applications.map((app: any) => {
+                      return (
+                        <Button
+                          key={app.id}
+                          variant="text"
+                          component="a"
+                          style={{ display: 'block' }}
+                          onClick={handleFollowLinkPath(
+                            `/applications/${app.id}`
+                          )}
+                        >
+                          [{app.status}] {app.title}
+                        </Button>
+                      )
+                    })
+                  )}
                 </div>
               )}
 

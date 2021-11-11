@@ -1,18 +1,14 @@
 import React, { useEffect } from 'react'
-import { Redirect, Route, RouteProps, useLocation } from 'react-router-dom'
+import { Redirect, Route, useLocation } from 'react-router-dom'
 
-type ProtectedRouteProps = {
-  isAuthenticated: boolean
-  redirectPath: string
-  setRedirectPath: (path: string) => void
-} & RouteProps
+import { ProtectedRouteProps } from '../models/types'
 
-function ProtectedRoute({
+const ProtectedRoute = ({
   isAuthenticated,
   redirectPath,
   setRedirectPath,
   ...routeProps
-}: ProtectedRouteProps) {
+}: ProtectedRouteProps): JSX.Element => {
   const currentLocation = useLocation()
 
   useEffect(() => {
@@ -24,8 +20,7 @@ function ProtectedRoute({
   if (isAuthenticated) {
     return <Route {...routeProps} />
   }
-  return <Redirect to={{ pathname: '/login' }} />
+  return <Redirect to={{ pathname: redirectPath }} />
 }
 
 export default ProtectedRoute
-export type { ProtectedRouteProps }

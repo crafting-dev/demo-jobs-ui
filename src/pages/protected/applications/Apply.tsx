@@ -10,14 +10,14 @@ import AlertTitle from '@mui/material/AlertTitle'
 import Paper from '@mui/material/Paper'
 import Chip from '@mui/material/Chip'
 import { styled } from '@mui/material/styles'
-import { Update } from '../adapters/Fetch'
-import { useAuth } from '../contexts/authContext'
+import { Update } from '../../../adapters/fetch'
+import { useAuth } from '../../../contexts/auth'
 
 const ListItem = styled('li')(({ theme }) => ({
   margin: theme.spacing(0.5),
 }))
 
-function Apply() {
+const Apply = (): JSX.Element => {
   const auth = useAuth()[0]
   const history = useHistory()
   const { id }: any = useParams()
@@ -45,7 +45,7 @@ function Apply() {
     setApplication({ ...application, [prop]: e.target.value })
   }
 
-  const handleTagsChange = (e: any) => {
+  const handleTagsChange = (e: any): void => {
     if (e.key === ' ') {
       e.preventDefault()
       tags.list.push(tags.new)
@@ -64,7 +64,7 @@ function Apply() {
     })
   }
 
-  const handleSubmit = async (e: FormEvent) => {
+  const handleSubmit = async (e: FormEvent): Promise<void> => {
     e.preventDefault()
 
     await Update(`/applications`, 'POST', auth.token, {
@@ -87,11 +87,18 @@ function Apply() {
       })
   }
 
+  const handleFollowLinkPath =
+    (path: string) =>
+    (event: React.MouseEvent<HTMLElement>): void => {
+      event.preventDefault()
+      history.push(path)
+    }
+
   return (
     <Box
       sx={{
         maxWidth: '500px',
-        paddingTop: '100px',
+        padding: '50px 20px',
         margin: '0 auto',
       }}
     >
@@ -117,7 +124,7 @@ function Apply() {
           <Button
             sx={{ display: 'block', left: 0 }}
             component="a"
-            href={`/postings/${application.posting}`}
+            onClick={handleFollowLinkPath(`/postings/${application.posting}`)}
           >
             Original job post
           </Button>
@@ -148,18 +155,20 @@ function Apply() {
               }}
               component="ul"
             >
-              {tags.list.map((tag: string) => {
-                return (
-                  <ListItem key={tag}>
-                    <Chip
-                      label={tag}
-                      variant="outlined"
-                      color="primary"
-                      onDelete={handleTagDelete(tag)}
-                    />
-                  </ListItem>
-                )
-              })}
+              {React.Children.toArray(
+                tags.list.map((tag: string) => {
+                  return (
+                    <ListItem>
+                      <Chip
+                        label={tag}
+                        variant="outlined"
+                        color="primary"
+                        onDelete={handleTagDelete(tag)}
+                      />
+                    </ListItem>
+                  )
+                })
+              )}
             </Paper>
           )}
 

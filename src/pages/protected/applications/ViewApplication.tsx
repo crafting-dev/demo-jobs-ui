@@ -17,15 +17,15 @@ import FormControl from '@mui/material/FormControl'
 import FormLabel from '@mui/material/FormLabel'
 import Alert from '@mui/material/Alert'
 import AlertTitle from '@mui/material/AlertTitle'
-import Fetch, { Update } from '../adapters/Fetch'
-import Application from '../models/Application'
-import { useAuth } from '../contexts/authContext'
+import { Fetch, Update } from '../../../adapters/fetch'
+import { Application } from '../../../models/types'
+import { useAuth } from '../../../contexts/auth'
 
 const ListItem = styled('li')(({ theme }) => ({
   margin: theme.spacing(0.5),
 }))
 
-function ViewApplication() {
+const ViewApplication = (): JSX.Element => {
   const auth = useAuth()[0]
   const history = useHistory()
 
@@ -43,7 +43,7 @@ function ViewApplication() {
 
   const [expanded, setExpanded] = React.useState(false)
 
-  const handleExpandClick = () => {
+  const handleExpandClick = (): void => {
     setExpanded(!expanded)
   }
 
@@ -56,11 +56,13 @@ function ViewApplication() {
     errors: false,
   })
 
-  const handleChangeStatus = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const handleChangeStatus = (
+    event: React.ChangeEvent<HTMLInputElement>
+  ): void => {
     setStatus((event.target as HTMLInputElement).value)
   }
 
-  const handleSubmitChangeStatus = async () => {
+  const handleSubmitChangeStatus = async (): Promise<void> => {
     if (status === 'applied') {
       setSubmit({
         ...submit,
@@ -79,7 +81,7 @@ function ViewApplication() {
   }
 
   useEffect(() => {
-    async function getApplication() {
+    async function getApplication(): Promise<void> {
       await Fetch(`/applications/${id}`, 'GET', auth.token).then((response) => {
         const newApplication: Application = {
           id: response.data.id,
@@ -102,7 +104,7 @@ function ViewApplication() {
       sx={{
         maxWidth: '600px',
         margin: '0 auto',
-        paddingTop: '100px',
+        padding: '50px 20px',
       }}
     >
       <Typography
@@ -172,18 +174,20 @@ function ViewApplication() {
                 }}
                 component="ul"
               >
-                {application?.tags?.split(', ').map((tag: string) => {
-                  return (
-                    <ListItem key={tag}>
-                      <Chip
-                        label={tag}
-                        size="small"
-                        variant="outlined"
-                        color="primary"
-                      />
-                    </ListItem>
-                  )
-                })}
+                {React.Children.toArray(
+                  application?.tags?.split(', ').map((tag: string) => {
+                    return (
+                      <ListItem>
+                        <Chip
+                          label={tag}
+                          size="small"
+                          variant="outlined"
+                          color="primary"
+                        />
+                      </ListItem>
+                    )
+                  })
+                )}
               </Paper>
 
               <Typography

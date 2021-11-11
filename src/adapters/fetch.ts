@@ -1,13 +1,11 @@
-import { baseUrl } from '../models/Auth'
+import { baseUrl } from '../models/auth'
 
-// Fetch a resource by type from path.
-// Authentication token needed.
-const Fetch = async (
+export const Fetch = async (
   path: string,
   method: string,
   token: string | undefined
-) => {
-  const response = await fetch(`${baseUrl}${path}`, {
+): Promise<any> => {
+  const response = await fetch(`${baseUrl}/api/v1${path}`, {
     method,
     headers: {
       Authorization: `Bearer ${token}`,
@@ -24,9 +22,7 @@ const Fetch = async (
   return data
 }
 
-// Create either Employer or Worker resources.
-// Authentication not needed.
-const Create = async (
+export const Create = async (
   path: string,
   name: string,
   email: string,
@@ -36,8 +32,8 @@ const Create = async (
   otherValue: string,
   objType: string,
   tags: string | false
-) => {
-  const response = await fetch(`${baseUrl}${path}`, {
+): Promise<any> => {
+  const response = await fetch(`${baseUrl}/api/v1${path}`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
@@ -49,7 +45,7 @@ const Create = async (
         password,
         password_confirmation: passwordConfirmation,
         [otherKey]: otherValue,
-        ...(tags && { tag_attributes: tags }),
+        ...(tags && { tag_attributes: { content: tags } }),
       },
     }),
   })
@@ -63,15 +59,13 @@ const Create = async (
   return data
 }
 
-// Update some resource type with body parameter.
-// Authentication token needed.
-const Update = async (
+export const Update = async (
   path: string,
   method: string,
   token: string | undefined,
   body: any
-) => {
-  const response = await fetch(`${baseUrl}${path}`, {
+): Promise<Response> => {
+  const response = await fetch(`${baseUrl}/api/v1${path}`, {
     method,
     headers: {
       Authorization: `Bearer ${token}`,
@@ -86,6 +80,3 @@ const Update = async (
 
   return response
 }
-
-export default Fetch
-export { Create, Update }

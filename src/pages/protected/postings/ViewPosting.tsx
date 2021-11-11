@@ -9,15 +9,15 @@ import Chip from '@mui/material/Chip'
 import { styled } from '@mui/material/styles'
 import Paper from '@mui/material/Paper'
 import Button from '@mui/material/Button'
-import Posting from '../models/Posting'
-import Fetch from '../adapters/Fetch'
-import { useAuth } from '../contexts/authContext'
+import { Posting } from '../../../models/types'
+import { Fetch } from '../../../adapters/fetch'
+import { useAuth } from '../../../contexts/auth'
 
 const ListItem = styled('li')(({ theme }) => ({
   margin: theme.spacing(0.5),
 }))
 
-function ViewPosting() {
+const ViewPosting = (): JSX.Element => {
   const auth = useAuth()[0]
   const history = useHistory()
 
@@ -35,12 +35,19 @@ function ViewPosting() {
     applications: undefined,
   })
 
-  const handleSubmit = () => {
+  const handleSubmit = (): void => {
     history.push(`/postings/${id}/apply`)
   }
 
+  const handleFollowLinkPath =
+    (path: string) =>
+    (event: React.MouseEvent<HTMLElement>): void => {
+      event.preventDefault()
+      history.push(path)
+    }
+
   useEffect(() => {
-    async function getPosting() {
+    async function getPosting(): Promise<void> {
       await Fetch(`/postings/${id}`, 'GET', auth.token).then((response) => {
         const newPosting: Posting = {
           id: response.data.id,
@@ -65,7 +72,7 @@ function ViewPosting() {
       sx={{
         maxWidth: '600px',
         margin: '0 auto',
-        paddingTop: '100px',
+        padding: '50px 20px',
       }}
     >
       <Typography
@@ -129,18 +136,20 @@ function ViewPosting() {
                 }}
                 component="ul"
               >
-                {posting?.tags?.split(', ').map((tag: string) => {
-                  return (
-                    <ListItem key={tag}>
-                      <Chip
-                        label={tag}
-                        size="small"
-                        variant="outlined"
-                        color="primary"
-                      />
-                    </ListItem>
-                  )
-                })}
+                {React.Children.toArray(
+                  posting?.tags?.split(', ').map((tag: string) => {
+                    return (
+                      <ListItem>
+                        <Chip
+                          label={tag}
+                          size="small"
+                          variant="outlined"
+                          color="primary"
+                        />
+                      </ListItem>
+                    )
+                  })
+                )}
               </Paper>
 
               <Typography
@@ -165,17 +174,18 @@ function ViewPosting() {
                 <Typography gutterBottom variant="h6" component="div">
                   Applications
                 </Typography>
-                {posting.applications.map((app) => (
-                  <Button
-                    key={app.id}
-                    variant="text"
-                    component="a"
-                    style={{ display: 'block' }}
-                    href={`/applications/${app.id}`}
-                  >
-                    [{app.status}] {app.name}
-                  </Button>
-                ))}
+                {React.Children.toArray(
+                  posting.applications.map((app) => (
+                    <Button
+                      variant="text"
+                      component="a"
+                      style={{ display: 'block' }}
+                      onClick={handleFollowLinkPath(`/applications/${app.id}`)}
+                    >
+                      [{app.status}] {app.name}
+                    </Button>
+                  ))
+                )}
               </Stack>
             )}
 

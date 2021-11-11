@@ -10,14 +10,14 @@ import AlertTitle from '@mui/material/AlertTitle'
 import Paper from '@mui/material/Paper'
 import Chip from '@mui/material/Chip'
 import { styled } from '@mui/material/styles'
-import { Update } from '../adapters/Fetch'
-import { useAuth } from '../contexts/authContext'
+import { Update } from '../../../adapters/fetch'
+import { useAuth } from '../../../contexts/auth'
 
 const ListItem = styled('li')(({ theme }) => ({
   margin: theme.spacing(0.5),
 }))
 
-function Create() {
+const Create = (): JSX.Element => {
   const auth = useAuth()[0]
   const history = useHistory()
 
@@ -44,7 +44,7 @@ function Create() {
     setPosting({ ...posting, [prop]: e.target.value })
   }
 
-  const handleTagsChange = (e: any) => {
+  const handleTagsChange = (e: any): void => {
     if (e.key === ' ') {
       e.preventDefault()
       tags.list.push(tags.new)
@@ -63,7 +63,7 @@ function Create() {
     })
   }
 
-  const handleSubmit = async (e: FormEvent) => {
+  const handleSubmit = async (e: FormEvent): Promise<void> => {
     e.preventDefault()
 
     await Update(`/postings`, 'POST', auth.token, {
@@ -91,7 +91,7 @@ function Create() {
     <Box
       sx={{
         maxWidth: '500px',
-        paddingTop: '100px',
+        padding: '50px 20px',
         margin: '0 auto',
       }}
     >
@@ -161,18 +161,20 @@ function Create() {
               }}
               component="ul"
             >
-              {tags.list.map((tag: string) => {
-                return (
-                  <ListItem key={tag}>
-                    <Chip
-                      label={tag}
-                      variant="outlined"
-                      color="primary"
-                      onDelete={handleTagDelete(tag)}
-                    />
-                  </ListItem>
-                )
-              })}
+              {React.Children.toArray(
+                tags.list.map((tag: string) => {
+                  return (
+                    <ListItem>
+                      <Chip
+                        label={tag}
+                        variant="outlined"
+                        color="primary"
+                        onDelete={handleTagDelete(tag)}
+                      />
+                    </ListItem>
+                  )
+                })
+              )}
             </Paper>
           )}
 

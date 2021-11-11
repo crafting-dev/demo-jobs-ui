@@ -24,13 +24,13 @@ import OutlinedInput from '@mui/material/OutlinedInput'
 import InputLabel from '@mui/material/InputLabel'
 import Alert from '@mui/material/Alert'
 import AlertTitle from '@mui/material/AlertTitle'
-import { Create } from '../adapters/Fetch'
+import { Create } from '../adapters/fetch'
 
 const ListItem = styled('li')(({ theme }) => ({
   margin: theme.spacing(0.5),
 }))
 
-function Signup() {
+const Signup = (): JSX.Element => {
   const [credentials, setCredentials] = useState<{
     name: string
     email: string
@@ -60,25 +60,25 @@ function Signup() {
     new: '',
   })
 
-  const clearErrors = () => {
+  const clearErrors = (): void => {
     setCredentials({ ...credentials, errors: false })
   }
 
-  const handleNext = () => {
+  const handleNext = (): void => {
     setActiveStep((prevActiveStep) => prevActiveStep + 1)
   }
 
-  const handleBack = () => {
+  const handleBack = (): void => {
     setActiveStep((prevActiveStep) => prevActiveStep - 1)
     clearErrors()
   }
 
-  const handleReset = () => {
+  const handleReset = (): void => {
     setActiveStep(0)
     clearErrors()
   }
 
-  const handleObjType = (obj: string) => () => {
+  const handleObjType = (obj: string) => (): void => {
     setObjType(obj)
 
     if (obj === 'employer') {
@@ -96,7 +96,7 @@ function Signup() {
     }
   }
 
-  const handleTagsChange = (e: any) => {
+  const handleTagsChange = (e: any): void => {
     if (e.key === ' ') {
       tags.list.push(tags.new)
       setTags({ ...tags, new: '' })
@@ -106,38 +106,42 @@ function Signup() {
     }
   }
 
-  const handleTagDelete = (tagToDelete: string) => (e: any) => {
-    e.preventDefault()
+  const handleTagDelete =
+    (tagToDelete: string) =>
+    (e: any): void => {
+      e.preventDefault()
 
-    setTags({
-      ...tags,
-      list: tags.list.filter((tag: string) => tag !== tagToDelete),
-    })
-  }
+      setTags({
+        ...tags,
+        list: tags.list.filter((tag: string) => tag !== tagToDelete),
+      })
+    }
 
-  const handleOtherValueChange = (e: any) => {
+  const handleOtherValueChange = (e: any): void => {
     setCredentials({
       ...credentials,
       other: { ...credentials.other, value: e.target.value },
     })
   }
 
-  const handleChange = (prop: any) => (e: { target: { value: any } }) => {
-    setCredentials({ ...credentials, [prop]: e.target.value })
-  }
+  const handleChange =
+    (prop: any) =>
+    (e: { target: { value: any } }): void => {
+      setCredentials({ ...credentials, [prop]: e.target.value })
+    }
 
-  const handleClickShowPassword = () => {
+  const handleClickShowPassword = (): void => {
     setCredentials({ ...credentials, showPassword: !credentials.showPassword })
   }
 
-  const handleClickShowPasswordConfirmation = () => {
+  const handleClickShowPasswordConfirmation = (): void => {
     setCredentials({
       ...credentials,
       showPasswordConfirmation: !credentials.showPasswordConfirmation,
     })
   }
 
-  const handleSubmit = async (e: FormEvent) => {
+  const handleSubmit = async (e: FormEvent): Promise<void> => {
     e.preventDefault()
 
     await Create(
@@ -412,18 +416,20 @@ function Signup() {
                   }}
                   component="ul"
                 >
-                  {tags.list.map((tag: string) => {
-                    return (
-                      <ListItem key={tag}>
-                        <Chip
-                          label={tag}
-                          variant="outlined"
-                          color="primary"
-                          onDelete={handleTagDelete(tag)}
-                        />
-                      </ListItem>
-                    )
-                  })}
+                  {React.Children.toArray(
+                    tags.list.map((tag: string) => {
+                      return (
+                        <ListItem>
+                          <Chip
+                            label={tag}
+                            variant="outlined"
+                            color="primary"
+                            onDelete={handleTagDelete(tag)}
+                          />
+                        </ListItem>
+                      )
+                    })
+                  )}
                 </Paper>
 
                 <TextField

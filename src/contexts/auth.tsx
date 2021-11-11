@@ -1,15 +1,17 @@
-import React, { createContext, FC, useContext, useState } from 'react'
-import getUser from '../adapters/Store'
-import Auth, { unauthenticated } from '../models/Auth'
+import React, { createContext, useContext, useState } from 'react'
+import { getUser } from '../adapters/store'
+import { unauthenticated } from '../models/auth'
+import { Auth } from '../models/types'
 
 const authContext = createContext<[Auth, (auth: Auth) => void]>([
   unauthenticated,
   () => undefined,
 ])
 
-const useAuth = () => useContext(authContext)
+export const useAuth = (): [Auth, (auth: Auth) => void] =>
+  useContext(authContext)
 
-const ProvideAuth: FC = (props) => {
+export const ProvideAuth: React.FunctionComponent = (props) => {
   const [authState, setAuthState] = useState(() => {
     const loggedInUser = getUser()
     return loggedInUser || unauthenticated
@@ -27,6 +29,3 @@ const ProvideAuth: FC = (props) => {
     </authContext.Provider>
   )
 }
-
-export default ProvideAuth
-export { useAuth }
