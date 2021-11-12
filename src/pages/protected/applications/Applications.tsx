@@ -180,8 +180,10 @@ const Applications = (): JSX.Element => {
                           sx={{ marginBottom: '10px' }}
                         >
                           Applied{' '}
-                          {new Date().getDate() -
-                            new Date(obj.attributes.createdAt).getDate()}{' '}
+                          {Math.abs(
+                            new Date().getDate() -
+                              new Date(obj.attributes.createdAt).getDate()
+                          )}{' '}
                           days ago
                         </Typography>
 

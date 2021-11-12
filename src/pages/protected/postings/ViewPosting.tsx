@@ -109,7 +109,9 @@ const ViewPosting = (): JSX.Element => {
                   sx={{ marginBottom: '10px' }}
                 >
                   Posted{' '}
-                  {new Date(posting.createdAt).getDate() - new Date().getDate()}{' '}
+                  {Math.abs(
+                    new Date(posting.createdAt).getDate() - new Date().getDate()
+                  )}{' '}
                   days ago by {posting?.employer?.name}
                 </Typography>
 
