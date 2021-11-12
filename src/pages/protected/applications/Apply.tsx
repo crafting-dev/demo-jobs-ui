@@ -112,7 +112,7 @@ const Apply = (): JSX.Element => {
           <Typography
             variant="h2"
             component="h2"
-            color="inherit"
+            color="primary"
             sx={{
               width: '100%',
               marginBottom: '30px',

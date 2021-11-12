@@ -112,6 +112,7 @@ const ViewApplication = (): JSX.Element => {
         gutterBottom
         variant="h2"
         component="div"
+        color="primary"
       >
         Application
       </Typography>

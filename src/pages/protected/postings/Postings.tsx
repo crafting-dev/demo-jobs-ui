@@ -26,12 +26,10 @@ const ListItem = styled('li')(({ theme }) => ({
 const Postings = (): JSX.Element => {
   const auth = useAuth()[0]
   const history = useHistory()
-
   const [postings, setPostings] = useState<any[]>([])
-
   const [loading, setLoading] = useState(true)
 
-  const handleFollowPathLink = (id: number) => () => {
+  const handleFollowLinkPath = (id: number) => () => {
     history.push(`/postings/${id}`)
   }
 
@@ -94,78 +92,105 @@ const Postings = (): JSX.Element => {
       </Paper>
 
       {loading ? (
-        <Stack spacing={2}>
-          <Card
-            elevation={0}
-            sx={{
-              background: '#FFFFFF',
-              border: '1px solid #EEEEEE',
-            }}
-          >
-            <CardActionArea>
-              <CardContent>
-                <Stack spacing={0}>
-                  <Typography gutterBottom variant="h5" component="div">
-                    <Skeleton />
-                  </Typography>
+        <Stack spacing={0}>
+          {['one', 'two', 'three', 'four', 'five'].map((key) => {
+            return (
+              <Card
+                key={key}
+                elevation={0}
+                sx={{
+                  background: '#FFFFFF',
+                  border: '1px solid #EEEEEE',
+                }}
+              >
+                <CardActionArea>
+                  <CardContent>
+                    <Stack spacing={0}>
+                      <Typography gutterBottom variant="h5" component="div">
+                        <Skeleton />
+                      </Typography>
 
-                  <Stack
-                    direction="row"
-                    justifyContent="space-between"
-                    alignItems="flex-start"
-                    spacing={2}
-                  >
-                    <Typography
-                      variant="body2"
-                      color="text.secondary"
-                      sx={{ marginBottom: '10px' }}
-                    >
-                      <Skeleton />
-                    </Typography>
+                      <Stack
+                        direction="row"
+                        justifyContent="space-between"
+                        alignItems="flex-start"
+                        spacing={2}
+                      >
+                        <Typography
+                          variant="body2"
+                          color="text.secondary"
+                          sx={{ marginBottom: '10px', width: '300px' }}
+                        >
+                          <Skeleton />
+                        </Typography>
 
-                    <Chip
-                      label={<Skeleton />}
-                      size="small"
-                      variant="outlined"
-                    />
-                  </Stack>
+                        <Skeleton
+                          variant="rectangular"
+                          width={50}
+                          height={20}
+                          sx={{ borderRadius: '30px' }}
+                        />
+                      </Stack>
 
-                  <Paper
-                    elevation={0}
-                    sx={{
-                      display: 'flex',
-                      justifyContent: 'left',
-                      flexWrap: 'wrap',
-                      listStyle: 'none',
-                      paddingLeft: 0,
-                      p: 0.5,
-                      m: 0,
-                      backgroundColor: 'transparent',
-                    }}
-                    component="ul"
-                  >
-                    <Skeleton />
-                  </Paper>
+                      <Paper
+                        elevation={0}
+                        sx={{
+                          display: 'flex',
+                          justifyContent: 'left',
+                          flexWrap: 'wrap',
+                          listStyle: 'none',
+                          paddingLeft: 0,
+                          p: 0.5,
+                          m: 0,
+                          backgroundColor: 'transparent',
+                        }}
+                        component="ul"
+                      >
+                        {['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j'].map(
+                          (chipKey) => {
+                            return (
+                              <ListItem key={chipKey}>
+                                <Skeleton
+                                  variant="rectangular"
+                                  width={70}
+                                  height={20}
+                                  sx={{ borderRadius: '30px' }}
+                                />
+                              </ListItem>
+                            )
+                          }
+                        )}
+                      </Paper>
 
-                  <Typography
-                    variant="body2"
-                    color="text.primary"
-                    sx={{ margin: '20px 0' }}
-                  >
-                    <Skeleton />
-                  </Typography>
+                      <Typography
+                        variant="body2"
+                        color="text.primary"
+                        sx={{ margin: '20px 0' }}
+                      >
+                        <Skeleton />
+                      </Typography>
 
-                  <Typography variant="body2" color="text.secondary">
-                    <Skeleton />
-                  </Typography>
+                      <Typography
+                        variant="body2"
+                        color="text.secondary"
+                        sx={{ maxWidth: '50px' }}
+                      >
+                        <Skeleton />
+                      </Typography>
 
-                  <Typography variant="body2" color="text.secondary">
-                    <Skeleton />
-                  </Typography>
-                </Stack>
-              </CardContent>
-            </CardActionArea>
-          </Card>
+                      <Typography
+                        variant="body2"
+                        color="text.secondary"
+                        sx={{ maxWidth: '300px' }}
+                      >
+                        <Skeleton />
+                      </Typography>
+                    </Stack>
+                  </CardContent>
+                </CardActionArea>
+              </Card>
+            )
+          })}
         </Stack>
       ) : (
         <Stack spacing={0}>
@@ -178,7 +203,7 @@ const Postings = (): JSX.Element => {
                   border: '1px solid #EEEEEE',
                 }}
               >
-                <CardActionArea onClick={handleFollowPathLink(obj.id)}>
+                <CardActionArea onClick={handleFollowLinkPath(obj.id)}>
                   <CardContent>
                     <Stack spacing={0}>
                       <Typography gutterBottom variant="h5" component="div">
@@ -271,6 +296,16 @@ const Postings = (): JSX.Element => {
             ))
           )}
         </Stack>
+      )}
+
+      {!postings.length && (
+        <Typography
+          color="secondary"
+          variant="h2"
+          sx={{ fontStyle: 'italic', marginLeft: '10px' }}
+        >
+          Nothing to see here!
+        </Typography>
       )}
     </Box>
   )

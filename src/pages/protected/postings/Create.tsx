@@ -20,7 +20,6 @@ const ListItem = styled('li')(({ theme }) => ({
 const Create = (): JSX.Element => {
   const auth = useAuth()[0]
   const history = useHistory()
-
   const [posting, setPosting] = useState<{
     title: string
     description: string
@@ -105,7 +104,7 @@ const Create = (): JSX.Element => {
           <Typography
             variant="h2"
             component="h2"
-            color="inherit"
+            color="primary"
             sx={{
               width: '100%',
               marginBottom: '30px',

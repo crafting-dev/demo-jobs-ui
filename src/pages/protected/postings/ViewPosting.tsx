@@ -20,9 +20,7 @@ const ListItem = styled('li')(({ theme }) => ({
 const ViewPosting = (): JSX.Element => {
   const auth = useAuth()[0]
   const history = useHistory()
-
   const { id }: any = useParams()
-
   const [posting, setPosting] = useState<Posting>({
     id: 0,
     title: '',
@@ -80,6 +78,7 @@ const ViewPosting = (): JSX.Element => {
         gutterBottom
         variant="h2"
         component="div"
+        color="primary"
       >
         Posting
       </Typography>
