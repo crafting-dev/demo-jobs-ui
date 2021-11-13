@@ -112,6 +112,7 @@ const ViewApplication = (): JSX.Element => {
         gutterBottom
         variant="h2"
         component="div"
+        color="primary"
       >
         Application
       </Typography>
@@ -142,8 +143,10 @@ const ViewApplication = (): JSX.Element => {
                   sx={{ marginBottom: '10px' }}
                 >
                   Applied{' '}
-                  {new Date(application?.createdAt).getDate() -
-                    new Date().getDate()}{' '}
+                  {Math.abs(
+                    new Date(application?.createdAt).getDate() -
+                      new Date().getDate()
+                  )}{' '}
                   days ago by {application?.worker?.name}
                 </Typography>
 

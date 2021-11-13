@@ -251,13 +251,13 @@ const Header = (): JSX.Element => {
                     </ListItemIcon>
                     Profile
                   </MenuItem>
-                  <Divider />
                   <MenuItem disabled>
                     <ListItemIcon>
                       <Settings fontSize="small" />
                     </ListItemIcon>
                     Settings
                   </MenuItem>
+                  <Divider />
                   <MenuItem onClick={handleLogout}>
                     <ListItemIcon>
                       <Logout fontSize="small" />

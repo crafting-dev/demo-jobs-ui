@@ -54,83 +54,101 @@ const Applications = (): JSX.Element => {
         gutterBottom
         variant="h2"
         component="div"
+        color="primary"
       >
         Applications
       </Typography>
 
       {loading ? (
-        <Stack spacing={2}>
-          <Card
-            elevation={0}
-            sx={{
-              background: '#FFFFFF',
-              border: '1px solid #EEEEEE',
-            }}
-          >
-            <CardActionArea>
-              <CardContent>
-                <Stack spacing={0}>
-                  <Typography gutterBottom variant="h5" component="div">
-                    <Skeleton />
-                  </Typography>
+        <Stack spacing={0}>
+          {['one', 'two', 'three', 'four', 'five'].map((key) => {
+            return (
+              <Card
+                elevation={0}
+                key={key}
+                sx={{
+                  background: '#FFFFFF',
+                  border: '1px solid #EEEEEE',
+                }}
+              >
+                <CardActionArea>
+                  <CardContent>
+                    <Stack spacing={0}>
+                      <Typography gutterBottom variant="h5" component="div">
+                        <Skeleton />
+                      </Typography>
 
-                  <Stack
-                    direction="row"
-                    justifyContent="space-between"
-                    alignItems="flex-start"
-                    spacing={2}
-                  >
-                    <Typography
-                      variant="body2"
-                      color="text.secondary"
-                      sx={{ marginBottom: '10px' }}
-                    >
-                      <Skeleton />
-                    </Typography>
+                      <Stack
+                        direction="row"
+                        justifyContent="space-between"
+                        alignItems="flex-start"
+                        spacing={2}
+                      >
+                        <Typography
+                          variant="body2"
+                          color="text.secondary"
+                          sx={{ marginBottom: '10px', width: '200px' }}
+                        >
+                          <Skeleton />
+                        </Typography>
 
-                    <Chip
-                      label={<Skeleton />}
-                      size="small"
-                      variant="outlined"
-                    />
-                  </Stack>
+                        <Skeleton
+                          variant="rectangular"
+                          width={50}
+                          height={20}
+                          sx={{ borderRadius: '30px' }}
+                        />
+                      </Stack>
 
-                  <Paper
-                    elevation={0}
-                    sx={{
-                      display: 'flex',
-                      justifyContent: 'left',
-                      flexWrap: 'wrap',
-                      listStyle: 'none',
-                      paddingLeft: 0,
-                      p: 0.5,
-                      m: 0,
-                      backgroundColor: 'transparent',
-                    }}
-                    component="ul"
-                  >
-                    <Skeleton />
-                  </Paper>
+                      <Paper
+                        elevation={0}
+                        sx={{
+                          display: 'flex',
+                          justifyContent: 'left',
+                          flexWrap: 'wrap',
+                          listStyle: 'none',
+                          paddingLeft: 0,
+                          p: 0.5,
+                          m: 0,
+                          backgroundColor: 'transparent',
+                        }}
+                        component="ul"
+                      >
+                        {['a', 'b', 'c', 'd'].map((chipKey) => {
+                          return (
+                            <ListItem key={chipKey}>
+                              <Skeleton
+                                variant="rectangular"
+                                width={70}
+                                height={20}
+                                sx={{ borderRadius: '30px' }}
+                              />
+                            </ListItem>
+                          )
+                        })}
+                      </Paper>
 
-                  <Typography
-                    variant="body2"
-                    color="text.primary"
-                    sx={{ margin: '20px 0' }}
-                  >
-                    <Skeleton />
-                  </Typography>
+                      <Typography
+                        variant="body2"
+                        color="text.primary"
+                        sx={{ margin: '20px 0' }}
+                      >
+                        <Skeleton />
+                      </Typography>
 
-                  <Typography variant="body2" color="text.secondary">
-                    <Skeleton />
-                  </Typography>
+                      <Typography variant="body2" color="text.secondary">
+                        <Skeleton />
+                      </Typography>
 
-                  <Typography variant="body2" color="text.secondary">
-                    <Skeleton />
-                  </Typography>
-                </Stack>
-              </CardContent>
-            </CardActionArea>
-          </Card>
+                      <Typography variant="body2" color="text.secondary">
+                        <Skeleton />
+                      </Typography>
+                    </Stack>
+                  </CardContent>
+                </CardActionArea>
+              </Card>
+            )
+          })}
         </Stack>
       ) : (
         <Stack spacing={0}>
@@ -162,8 +180,10 @@ const Applications = (): JSX.Element => {
                           sx={{ marginBottom: '10px' }}
                         >
                           Applied{' '}
-                          {new Date().getDate() -
-                            new Date(obj.attributes.createdAt).getDate()}{' '}
+                          {Math.abs(
+                            new Date().getDate() -
+                              new Date(obj.attributes.createdAt).getDate()
+                          )}{' '}
                           days ago
                         </Typography>
 
@@ -241,6 +261,16 @@ const Applications = (): JSX.Element => {
             ))
           )}
         </Stack>
+      )}
+
+      {!applications.length && (
+        <Typography
+          color="secondary"
+          variant="h2"
+          sx={{ fontStyle: 'italic', marginLeft: '10px' }}
+        >
+          Nothing to see here!
+        </Typography>
       )}
     </Box>
   )
