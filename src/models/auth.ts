@@ -14,6 +14,11 @@ import { Auth } from './types'
 // Otherwise, if setup is a single endpoint with path_prefix routing all
 // /api/... requests to backend, then this method will use the endpoint URL.
 const createBaseUrl = (): string => {
+  // Custom backend URL can be provided from environment variables
+  if (process.env.REACT_APP_BACKEND_API_URL) {
+    return process.env.REACT_APP_BACKEND_API_URL
+  }
+
   const locationToMatchRegex = new RegExp('^http://localhost:[0-9]*')
 
   if (locationToMatchRegex.test(window.location.origin)) {

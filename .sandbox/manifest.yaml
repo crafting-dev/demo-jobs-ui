@@ -1,3 +1,6 @@
+env:
+  - REACT_APP_BACKEND_API_URL=http://$BACKEND_SERVICE_HOST:$BACKEND_SERVICE_PORT
+
 hooks:
   post-checkout:
     cmd: npm install
