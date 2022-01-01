@@ -107,13 +107,9 @@ const Postings = (): JSX.Element => {
 
   useEffect(() => {
     async function populatePostings(): Promise<void> {
-      await Fetch('/postings', 'GET', auth.token)
-        .then((response) => {
-          setPostings(response.data)
-        })
-        .catch((error) => {
-          console.log(error)
-        })
+      await Fetch('/postings', 'GET', auth.token).then((response) => {
+        setPostings(response.data)
+      })
     }
 
     populatePostings().then(() => {
@@ -199,7 +195,7 @@ const Postings = (): JSX.Element => {
                         {React.Children.toArray(
                           result.obj.attributes.tags
                             ?.split(', ')
-                            .map((tag: string, i: number) => {
+                            .map((tag: string) => {
                               return (
                                 <ListItem>
                                   <Chip
@@ -410,7 +406,7 @@ const Postings = (): JSX.Element => {
                         {React.Children.toArray(
                           obj.attributes.tags
                             ?.split(', ')
-                            .map((tag: string, i: number) => {
+                            .map((tag: string) => {
                               return (
                                 <ListItem>
                                   <Chip
