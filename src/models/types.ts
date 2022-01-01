@@ -34,40 +34,40 @@ export interface Profile {
   tags?: string
   avatar?: string
   type?: string
-  postings?: Posting[] | undefined
-  applications?: Application[] | undefined
+  postings?: Posting[]
+  applications?: Application[]
 }
 
 export interface Employer {
   id: number
-  name?: string | undefined
-  location?: string | undefined
+  name?: string
+  location?: string
 }
 
 export interface Worker {
   id: number
-  name?: string | undefined
+  name?: string
 }
 
 export interface Posting {
   id: number
-  title?: string | undefined
-  status?: string | undefined
-  description?: string | undefined
+  title?: string
+  status?: string
+  description?: string
   createdAt: string | number
-  hours?: number | undefined
-  tags?: string | undefined
-  employer?: Employer | undefined
-  applications?: Application[] | undefined
+  hours?: number
+  tags?: string
+  employer?: Employer
+  applications?: Application[]
 }
 
 export interface Application {
   id: number
-  name?: string | undefined // Worker name
-  status?: string | undefined
-  tags?: string | undefined
-  content?: string | undefined
-  posting?: Posting | undefined
+  name?: string // Worker name
+  status?: string
+  tags?: string
+  content?: string
+  posting?: Posting
   createdAt: string | number
-  worker?: Worker | undefined
+  worker?: Worker
 }
