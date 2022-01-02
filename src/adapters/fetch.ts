@@ -1,4 +1,7 @@
+/* eslint-disable @typescript-eslint/explicit-module-boundary-types */
+
 import { baseUrl } from '../models/auth'
+import { parseErrorDetailsFromResponse } from '../utils/error'
 
 export const Fetch = async (
   path: string,
@@ -75,7 +78,8 @@ export const Update = async (
   })
 
   if (!response.ok) {
-    return Promise.reject(response)
+    const err = await parseErrorDetailsFromResponse(response)
+    throw new Error(err.error)
   }
 
   return response

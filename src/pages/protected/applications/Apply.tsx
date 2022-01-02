@@ -83,7 +83,7 @@ const Apply = (): JSX.Element => {
         history.push(`/applications/${response.data.id}`)
       })
       .catch((error) => {
-        setApplication({ ...application, errors: error.toString() })
+        setApplication({ ...application, errors: error.message })
       })
   }
 

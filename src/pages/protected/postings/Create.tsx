@@ -82,7 +82,7 @@ const Create = (): JSX.Element => {
         history.push(`/postings/${response.data.id}`)
       })
       .catch((error) => {
-        setPosting({ ...posting, errors: error.toString() })
+        setPosting({ ...posting, errors: error.message })
       })
   }
 

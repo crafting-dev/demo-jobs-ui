@@ -46,9 +46,9 @@ const Home = (): JSX.Element => {
               If you are an employer, you can find your next{' '}
               <Link href="/postings">best candidates</Link> from among our
               thousands of quality applicants. If you are a worker, you will
-              undoubtedly find your next <Link href="/postings">big role</Link>{' '}
-              from our comprehensive list of private postings with amazing
-              companies.
+              undoubtedly find your next
+              <Link href="/postings">big role</Link> from our comprehensive list
+              of private postings with amazing companies.
             </code>
           </Typography>
 
