@@ -11,3 +11,4 @@ daemons:
       env:
         - HOST=0.0.0.0
         - PORT=3000
+        - REACT_APP_BACKEND_API_URL=https://api$SANDBOX_ENDPOINT_DNS_SUFFIX
