@@ -1,6 +1,3 @@
-env:
-  - REACT_APP_BACKEND_API_URL=http://$BACKEND_SERVICE_HOST:$BACKEND_SERVICE_PORT
-
 hooks:
   post-checkout:
     cmd: npm install
@@ -14,3 +11,4 @@ daemons:
       env:
         - HOST=0.0.0.0
         - PORT=3000
+        - REACT_APP_BACKEND_API_URL=https://api$SANDBOX_ENDPOINT_DNS_SUFFIX
