@@ -11,7 +11,7 @@ import {
   NoResult,
 } from 'pages/Applications/components';
 
-export function Applications() {
+export function ActiveApplications() {
   const auth = useAuth()[0];
 
   const [applications, setApplications] = useState<Application[]>();
@@ -22,7 +22,9 @@ export function Applications() {
       const client = new Client(auth);
       const resp = await client.getApplications();
       if (!resp.error) {
-        setApplications(resp.data as Application[]);
+        const apps = resp.data as Application[];
+        const active = apps.filter((a) => a.status === 'applied');
+        setApplications(active);
       }
     }
 

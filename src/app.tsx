@@ -52,7 +52,13 @@ export function App() {
     <Box>
       <CssBaseline />
       <Header />
-      <Box sx={{ minHeight: 'calc(100vh - 100px)' }}>
+      <Box
+        sx={{
+          minHeight: 'calc(100vh - 100px)',
+          position: 'relative',
+          overflow: 'hidden',
+        }}
+      >
         <Page />
       </Box>
       <Footer />

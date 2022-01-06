@@ -19,7 +19,7 @@ export function PostingCardsList({ postings }: Postings) {
     };
 
   return (
-    <Stack spacing={2}>
+    <Stack spacing={3}>
       {/* eslint-disable-next-line react/destructuring-assignment */}
       {postings.map((posting) => (
         <Card

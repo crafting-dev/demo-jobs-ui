@@ -37,6 +37,7 @@ export function ViewApplication() {
   const [loading, setLoading] = useState(true);
   const [submitSuccess, setSubmitSuccess] = useState(false);
   const [errors, setErrors] = useState<string>();
+  const [redirect, setRedirect] = useState(false);
 
   const handleExpandClick = () => {
     setExpanded(!expanded);
@@ -72,11 +73,19 @@ export function ViewApplication() {
       const resp = await client.getApplication(id);
       if (!resp.error) {
         setApplication(resp.data as Application);
+      } else {
+        setRedirect(true);
       }
     }
 
     getApplication().then(() => setLoading(false));
   }, [id, auth.token]);
+
+  useEffect(() => {
+    if (redirect) {
+      history.push('/applications');
+    }
+  }, [redirect]);
 
   return (
     <Box

@@ -5,7 +5,7 @@ import { colors } from 'styles/palette';
 
 export function LoadingCardsList() {
   return (
-    <Stack spacing={2}>
+    <Stack spacing={3}>
       {['one', 'two', 'three', 'four', 'five'].map((key) => (
         <Card key={key} elevation={1} sx={{ background: colors.white[100] }}>
           <LoadingCardContent />

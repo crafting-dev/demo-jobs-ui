@@ -74,6 +74,18 @@ export function Home() {
           and get started today!
         </Typography>
       </Stack>
+
+      <Box
+        sx={{
+          position: 'absolute',
+          zIndex: -100,
+          height: '100%',
+          width: '100px',
+          right: '200px',
+          transform: 'rotateY(0deg) rotate(45deg)',
+          backgroundColor: colors.grey[100],
+        }}
+      />
     </Box>
   );
 }

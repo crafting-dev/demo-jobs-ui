@@ -10,16 +10,16 @@ import {
   FormControlLabel,
   IconButton,
   InputAdornment,
-  Link,
   Stack,
   TextField,
   Typography,
 } from '@mui/material';
-import { useHistory, Link as NavLink } from 'react-router-dom';
+import { useHistory, Link } from 'react-router-dom';
 
 import { Client } from 'common/backend-client';
 import { useAuth } from 'common/hooks';
 import { Auth } from 'common/types';
+import { colors } from 'styles/palette';
 
 export function Login() {
   const history = useHistory();
@@ -133,7 +133,12 @@ export function Login() {
             spacing={26}
           >
             <FormControlLabel control={<Checkbox />} label="Remember me" />
-            <Link href="/login">Forgot password?</Link>
+            <Link
+              to="/login"
+              style={{ textDecoration: 'none', color: colors.black[200] }}
+            >
+              Forgot password?
+            </Link>
           </Stack>
 
           <Button
@@ -156,9 +161,9 @@ export function Login() {
             }}
           >
             Don&apos;t have an account?{' '}
-            <NavLink to="/signup">
-              <Link href="/signup">Sign up now!</Link>
-            </NavLink>
+            <Link to="/signup" style={{ color: colors.black[200] }}>
+              Sign up now!
+            </Link>
           </Typography>
 
           {credentials.error && (

@@ -20,7 +20,7 @@ export function ApplicationCardsList({ applications, authType }: Applications) {
     };
 
   return (
-    <Stack spacing={2}>
+    <Stack spacing={3}>
       {/* eslint-disable-next-line react/destructuring-assignment */}
       {applications.map((application) => (
         <Card

@@ -49,8 +49,9 @@ function PublicLinks() {
           key={link.path}
           sx={{
             textTransform: 'uppercase',
-            letterSpacing: -0.5,
             fontWeight: 'bold',
+            fontSize: '14px',
+            fontFamily: 'Source Sans Pro',
           }}
         >
           {link.text}
@@ -178,13 +179,15 @@ export function Header() {
                   </MenuItem>
                   {auth.type === 'Employer' && (
                     <Grid>
-                      <MenuItem disabled>
+                      <MenuItem onClick={handleClickLink('/postings/personal')}>
                         <ListItemIcon>
                           <ChevronRightIcon fontSize="small" />
                         </ListItemIcon>
                         My Postings
                       </MenuItem>
-                      <MenuItem disabled>
+                      <MenuItem
+                        onClick={handleClickLink('/postings/personal/active')}
+                      >
                         <ListItemIcon>
                           <ChevronRightIcon fontSize="small" />
                         </ListItemIcon>
@@ -224,14 +227,12 @@ export function Header() {
                     </ListItemIcon>
                     My Applications
                   </MenuItem>
-                  {auth.type === 'Worker' && (
-                    <MenuItem disabled>
-                      <ListItemIcon>
-                        <ChevronRightIcon fontSize="small" />
-                      </ListItemIcon>
-                      My Active Applications
-                    </MenuItem>
-                  )}
+                  <MenuItem onClick={handleClickLink('/applications/active')}>
+                    <ListItemIcon>
+                      <ChevronRightIcon fontSize="small" />
+                    </ListItemIcon>
+                    My Active Applications
+                  </MenuItem>
                 </StyledMenu>
 
                 <IconButton onClick={handleClickAccount} size="small">

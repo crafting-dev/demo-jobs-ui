@@ -14,7 +14,7 @@ import {
 } from 'pages/Postings/components';
 import { colors } from 'styles/palette';
 
-export function Postings() {
+export function MyPostings() {
   const auth = useAuth()[0];
   const [postings, setPostings] = useState<Posting[]>([]);
   const [searchResults, setSearchResults] =
@@ -88,7 +88,11 @@ export function Postings() {
       const client = new Client(auth);
       const resp = await client.getPostings();
       if (!resp.error) {
-        setPostings(resp.data! as Posting[]);
+        const posts = resp.data! as Posting[];
+        const myPosts = posts.filter(
+          (p) => `${p.employer?.id}` === `${auth.bearerId}`
+        );
+        setPostings(myPosts);
       }
     }
 

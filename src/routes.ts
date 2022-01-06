@@ -2,11 +2,18 @@ import {
   Applications,
   CreateApplication,
   ViewApplication,
+  ActiveApplications,
 } from 'pages/Applications';
 import { Dashboard } from 'pages/Dashboard';
 import { Home } from 'pages/Home';
 import { Login } from 'pages/Login';
-import { CreatePosting, Postings, ViewPosting } from 'pages/Postings';
+import {
+  CreatePosting,
+  MyActivePostings,
+  MyPostings,
+  Postings,
+  ViewPosting,
+} from 'pages/Postings';
 import { Signup } from 'pages/Signup';
 
 export interface Route {
@@ -37,6 +44,16 @@ export const routes: Route[] = [
     protected: true,
   },
   {
+    path: '/postings/personal/active',
+    page: MyActivePostings,
+    protected: true,
+  },
+  {
+    path: '/postings/personal',
+    page: MyPostings,
+    protected: true,
+  },
+  {
     path: '/postings/:id/apply',
     page: CreateApplication,
     protected: true,
@@ -49,6 +66,11 @@ export const routes: Route[] = [
   {
     path: '/postings',
     page: Postings,
+    protected: true,
+  },
+  {
+    path: '/applications/active',
+    page: ActiveApplications,
     protected: true,
   },
   {

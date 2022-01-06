@@ -16,6 +16,13 @@ export const theme = createTheme({
     },
   },
   components: {
+    MuiCssBaseline: {
+      styleOverrides: {
+        body: {
+          fontFamily: 'Source Sans Pro',
+        },
+      },
+    },
     MuiCard: {
       styleOverrides: {
         root: {
