@@ -15,12 +15,11 @@ import {
   MenuItem,
   Stack,
   Toolbar,
-  Typography,
   IconButton,
   Avatar,
   Divider,
 } from '@mui/material';
-import { useHistory } from 'react-router-dom';
+import { useHistory, Link } from 'react-router-dom';
 
 import { Client } from 'common/backend-client';
 import { useAuth } from 'common/hooks';
@@ -120,29 +119,26 @@ export function Header() {
         }}
       >
         <Toolbar
-          sx={{
+          style={{
             minHeight: 50,
             width: '100%',
             maxWidth: '1000px',
             margin: '0 auto',
           }}
         >
-          <Typography
-            variant="h6"
-            component="a"
-            onClick={handleClickLink('/')}
-            color="primary"
-            sx={{
+          <Link
+            to="/"
+            style={{
+              fontSize: '16px',
+              fontWeight: 'bold',
               textTransform: 'uppercase',
               textDecoration: 'none',
-              fontSize: '15px',
-              letterSpacing: -0.5,
-              cursor: 'pointer',
-              fontWeight: 'bold',
+              color: colors.black[200],
+              fontFamily: 'Source Sans Pro',
             }}
           >
             Crafting Jobs
-          </Typography>
+          </Link>
 
           <div style={{ flexGrow: 1 }} />
 
@@ -160,7 +156,11 @@ export function Header() {
                   variant="text"
                   onClick={handleClickPostings}
                   size="small"
-                  sx={{ fontWeight: 'bold', letterSpacing: -0.5 }}
+                  sx={{
+                    fontFamily: 'Source Sans Pro',
+                    fontWeight: 'bold',
+                    fontSize: '14px',
+                  }}
                 >
                   Postings
                 </Button>
@@ -204,7 +204,11 @@ export function Header() {
                   variant="text"
                   onClick={handleClickApplications}
                   size="small"
-                  sx={{ fontWeight: 'bold', letterSpacing: -0.5 }}
+                  sx={{
+                    fontWeight: 'bold',
+                    fontFamily: 'Source Sans Pro',
+                    fontSize: '14px',
+                  }}
                 >
                   Applications
                 </Button>

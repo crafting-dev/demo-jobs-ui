@@ -43,21 +43,20 @@ export class Client {
     const token = btoa(`${email}:${password}`);
 
     const resp = await Client.request(url, token, 'post', 'Basic');
-
     if (!resp.ok) {
       return {
         error: 'Incorrect Email/Password combination',
       };
     }
 
-    const authInfo = (await resp.json()) as AuthSpec | null;
-    if (!authInfo) {
+    const authSpec = (await resp.json()) as AuthSpec | null;
+    if (!authSpec) {
       return {
         error: 'User info unavailable',
       };
     }
 
-    const auth = convertAuthSpecToAuth(authInfo, this.auth);
+    const auth = convertAuthSpecToAuth(authSpec, this.auth);
 
     this.setUserSession(auth);
 
@@ -167,10 +166,9 @@ export class Client {
         content: tags.join(', '),
       },
     });
-
     if (!resp.ok) {
       return {
-        error: await resp.text(),
+        error: JSON.parse(await resp.text()).message,
       };
     }
 
@@ -254,10 +252,9 @@ export class Client {
       worker_id: workerId,
       tag_attributes: { content: tags.join(', ') },
     });
-
     if (!resp.ok) {
       return {
-        error: await resp.text(),
+        error: JSON.parse(await resp.text()).message,
       };
     }
 

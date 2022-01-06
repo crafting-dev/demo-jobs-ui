@@ -19,7 +19,10 @@ import { statusColorHex } from 'common/helpers';
 import { useAuth } from 'common/hooks';
 import { Application, Posting } from 'common/types';
 import { StyledTableRow } from 'components/common';
-import { LoadingCard, PostingCard } from 'pages/Postings/components';
+import {
+  LoadingCardContent,
+  PostingCardContent,
+} from 'pages/Postings/components';
 import { colors } from 'styles';
 
 export function ViewPosting() {
@@ -86,9 +89,17 @@ export function ViewPosting() {
       }}
     >
       <Stack spacing={2}>
-        {loading && <LoadingCard />}
+        {loading && (
+          <Card elevation={1} sx={{ background: colors.white[100] }}>
+            <LoadingCardContent />
+          </Card>
+        )}
 
-        {!loading && posting && <PostingCard posting={posting} />}
+        {!loading && posting && (
+          <Card elevation={1} sx={{ backgroundColor: colors.white[100] }}>
+            <PostingCardContent posting={posting} />
+          </Card>
+        )}
 
         {auth.type === 'Employer' &&
           !loading &&

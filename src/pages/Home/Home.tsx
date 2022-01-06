@@ -1,4 +1,7 @@
-import { Box, Link, Stack, Typography } from '@mui/material';
+import { Box, Stack, Typography } from '@mui/material';
+import { Link } from 'react-router-dom';
+
+import { colors } from 'styles/palette';
 
 export function Home() {
   return (
@@ -17,7 +20,15 @@ export function Home() {
         spacing={6}
         sx={{ maxWidth: '800px' }}
       >
-        <Typography variant="h4" color="primary" component="div" gutterBottom>
+        <Typography
+          variant="h4"
+          color="primary"
+          component="div"
+          gutterBottom
+          sx={{
+            fontFamily: 'Source Sans Pro',
+          }}
+        >
           Crafting Jobs.
         </Typography>
 
@@ -26,7 +37,7 @@ export function Home() {
           color="primary"
           component="div"
           gutterBottom
-          sx={{ fontSize: '18px' }}
+          sx={{ fontSize: '18px', fontFamily: 'Source Sans Pro' }}
         >
           Welcome to the best job market in the market!
         </Typography>
@@ -36,22 +47,31 @@ export function Home() {
           color="primary"
           component="div"
           gutterBottom
-          sx={{ fontSize: '18px' }}
+          sx={{ fontSize: '18px', fontFamily: 'Source Sans Pro' }}
         >
           If you are an employer, you can find your next{' '}
-          <Link href="/postings">best candidates</Link> from among our thousands
-          of quality applicants. If you are a worker, you will undoubtedly find
-          your next <Link href="/postings">big role</Link> from our
-          comprehensive list of private postings with amazing companies.
+          <Link style={{ color: colors.black[200] }} to="/postings">
+            best candidates
+          </Link>{' '}
+          from among our thousands of quality applicants. If you are a worker,
+          you will undoubtedly find your next{' '}
+          <Link style={{ color: colors.black[200] }} to="/postings">
+            big role
+          </Link>{' '}
+          from our comprehensive list of private postings with amazing
+          companies.
         </Typography>
         <Typography
           variant="body1"
           color="primary"
           component="div"
           gutterBottom
-          sx={{ fontSize: '18px' }}
+          sx={{ fontSize: '18px', fontFamily: 'Source Sans Pro' }}
         >
-          <Link href="/signup">Create an account</Link> and get started today!
+          <Link style={{ color: colors.black[200] }} to="/signup">
+            Create an account
+          </Link>{' '}
+          and get started today!
         </Typography>
       </Stack>
     </Box>

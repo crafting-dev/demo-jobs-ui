@@ -56,6 +56,8 @@ export function Postings() {
           alignItems: 'center',
           width: '100%',
           marginBottom: '50px',
+          boxShadow: '0px 1px 20px 0px rgba(238,238,238,1)',
+          border: `1px solid ${colors.grey[100]}`,
         }}
       >
         <InputBase

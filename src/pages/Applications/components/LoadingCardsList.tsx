@@ -1,12 +1,15 @@
-import { Stack } from '@mui/material';
+import { Card, Stack } from '@mui/material';
 
-import { LoadingCard } from 'pages/Applications/components/LoadingCard';
+import { LoadingCardContent } from 'pages/Applications/components/LoadingCardContent';
+import { colors } from 'styles/palette';
 
 export function LoadingCardsList() {
   return (
     <Stack spacing={2}>
       {['one', 'two', 'three', 'four', 'five'].map((key) => (
-        <LoadingCard key={key} />
+        <Card key={key} elevation={1} sx={{ background: colors.white[100] }}>
+          <LoadingCardContent />
+        </Card>
       ))}
     </Stack>
   );

@@ -15,7 +15,7 @@ import {
   TextField,
   Typography,
 } from '@mui/material';
-import { useHistory } from 'react-router-dom';
+import { useHistory, Link as NavLink } from 'react-router-dom';
 
 import { Client } from 'common/backend-client';
 import { useAuth } from 'common/hooks';
@@ -155,7 +155,10 @@ export function Login() {
               width: '100%',
             }}
           >
-            Don&apos;t have an account? <Link href="/signup">Sign up now!</Link>
+            Don&apos;t have an account?{' '}
+            <NavLink to="/signup">
+              <Link href="/signup">Sign up now!</Link>
+            </NavLink>
           </Typography>
 
           {credentials.error && (

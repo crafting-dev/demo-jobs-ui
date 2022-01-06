@@ -12,6 +12,8 @@ export function Footer() {
         sx={{
           letterSpacing: -0.5,
           lineHeight: '50px',
+          fontFamily: 'Source Sans Pro',
+          fontWeight: 'bold',
         }}
       >
         Copyright &copy; {new Date().getFullYear()}.&nbsp;

@@ -5,6 +5,7 @@ import {
   AlertTitle,
   Box,
   Button,
+  Card,
   CardContent,
   Collapse,
   FormControl,
@@ -19,7 +20,11 @@ import { useHistory, useParams } from 'react-router-dom';
 import { Client } from 'common/backend-client';
 import { useAuth } from 'common/hooks';
 import { Application } from 'common/types';
-import { LoadingCard, ApplicationCard } from 'pages/Applications/components';
+import {
+  LoadingCardContent,
+  ApplicationCardContent,
+} from 'pages/Applications/components';
+import { colors } from 'styles/palette';
 
 export function ViewApplication() {
   const auth = useAuth()[0];
@@ -81,10 +86,19 @@ export function ViewApplication() {
         padding: '50px 20px',
       }}
     >
-      {loading && <LoadingCard />}
+      {loading && (
+        <Card elevation={1} sx={{ background: colors.white[100] }}>
+          <LoadingCardContent />
+        </Card>
+      )}
 
       {!loading && (
-        <ApplicationCard application={application!} authType={auth.type!} />
+        <Card elevation={1} sx={{ backgroundColor: colors.white[100] }}>
+          <ApplicationCardContent
+            application={application!}
+            authType={auth.type!}
+          />
+        </Card>
       )}
 
       {!loading &&

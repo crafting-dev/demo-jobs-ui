@@ -1,4 +1,4 @@
 export * from './LoadingCardsList';
 export * from './PostingCardsList';
-export * from './LoadingCard';
-export * from './PostingCard';
+export * from './LoadingCardContent';
+export * from './PostingCardContent';
