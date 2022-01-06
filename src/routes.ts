@@ -1,16 +1,28 @@
-import { Route } from './models/types'
-import Login from './pages/Login'
-import Signup from './pages/Signup'
-import Create from './pages/protected/postings/Create'
-import Postings from './pages/protected/postings/Postings'
-import Dashboard from './pages/protected/Dashboard'
-import ViewPosting from './pages/protected/postings/ViewPosting'
-import Apply from './pages/protected/applications/Apply'
-import Applications from './pages/protected/applications/Applications'
-import ViewApplication from './pages/protected/applications/ViewApplication'
-import Home from './pages/Home'
+import {
+  Applications,
+  CreateApplication,
+  ViewApplication,
+  ActiveApplications,
+} from 'pages/Applications';
+import { Dashboard } from 'pages/Dashboard';
+import { Home } from 'pages/Home';
+import { Login } from 'pages/Login';
+import {
+  CreatePosting,
+  MyActivePostings,
+  MyPostings,
+  Postings,
+  ViewPosting,
+} from 'pages/Postings';
+import { Signup } from 'pages/Signup';
 
-const Routes: Route[] = [
+export interface Route {
+  path: string;
+  page: () => JSX.Element;
+  protected: boolean;
+}
+
+export const routes: Route[] = [
   {
     path: '/login',
     page: Login,
@@ -27,13 +39,23 @@ const Routes: Route[] = [
     protected: true,
   },
   {
-    path: '/create/posting',
-    page: Create,
+    path: '/postings/create',
+    page: CreatePosting,
+    protected: true,
+  },
+  {
+    path: '/postings/personal/active',
+    page: MyActivePostings,
+    protected: true,
+  },
+  {
+    path: '/postings/personal',
+    page: MyPostings,
     protected: true,
   },
   {
     path: '/postings/:id/apply',
-    page: Apply,
+    page: CreateApplication,
     protected: true,
   },
   {
@@ -44,6 +66,11 @@ const Routes: Route[] = [
   {
     path: '/postings',
     page: Postings,
+    protected: true,
+  },
+  {
+    path: '/applications/active',
+    page: ActiveApplications,
     protected: true,
   },
   {
@@ -61,6 +88,4 @@ const Routes: Route[] = [
     page: Home,
     protected: false,
   },
-]
-
-export { Routes }
+];

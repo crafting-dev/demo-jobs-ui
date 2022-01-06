@@ -61,9 +61,10 @@ services:
 
 ## Notes and Caveats
 
-Sandbox external URL `https://XXX.sandboxes.run` is readily available for development. But if you are using local Visual Studio Code and want some remote ports locally available, you can define [workspace settings](https://code.visualstudio.com/docs/getstarted/settings) to [forward](https://code.visualstudio.com/docs/remote/ssh#_forwarding-a-port-creating-ssh-tunnel) the desired remote ports to your local machine. 
+Sandbox external URL `https://XXX.sandboxes.run` is readily available for development. But if you are using local Visual Studio Code and want some remote ports locally available, you can define [workspace settings](https://code.visualstudio.com/docs/getstarted/settings) to [forward](https://code.visualstudio.com/docs/remote/ssh#_forwarding-a-port-creating-ssh-tunnel) the desired remote ports to your local machine.
 
 For example, to forward port `3000` locally, you can create the file `.vscode/settings.json` and add:
+
 ```json
 {
   "remote.SSH.defaultForwardedPorts": [
