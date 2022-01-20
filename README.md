@@ -35,20 +35,20 @@ The following [App Definition](https://docs.sandboxes.cloud/docs/app-definition)
 
 ```yaml
 endpoints:
-- name: web
+- name: app
   http:
     routes:
     - pathPrefix: "/"
       backend:
         target: frontend
-        port: web
+        port: app
     authProxy:
       disabled: true
 workspaces:
 - name: frontend
   description: Demo App frontend using React Typescript
   ports:
-  - name: web
+  - name: app
     port: 3000
     protocol: HTTP/TCP
   checkouts:
