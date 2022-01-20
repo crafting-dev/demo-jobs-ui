@@ -31,32 +31,33 @@ To get started in your local sandbox, first have the [backend API](https://githu
 2. Install packages: `npm install`
 3. Start server: `npm start`
 
-The following `App configuration` was used to create this app:
+The following [App Definition](https://docs.sandboxes.cloud/docs/app-definition) was used to create this app:
 
-```
+```yaml
 endpoints:
-- http:
+- name: web
+  http:
     routes:
-    - backend:
-        port: web
+    - pathPrefix: "/"
+      backend:
         target: frontend
-      path_prefix: /
-  name: web
-services:
-- description: React frontend
-  name: frontend
-  workspace:
-    checkouts:
-    - path: src/frontend
-      repo:
-        git: https://github.com/crafting-dev/demo-jobs-ui.git
-    packages:
-    - name: nodejs
-      version: ~16
-    ports:
-    - name: web
-      port: 3000
-      protocol: HTTP/TCP
+        port: web
+    authProxy:
+      disabled: true
+workspaces:
+- name: frontend
+  description: Demo App frontend using React Typescript
+  ports:
+  - name: web
+    port: 3000
+    protocol: HTTP/TCP
+  checkouts:
+  - path: frontend
+    repo:
+      git: https://github.com/crafting-dev/demo-jobs-ui
+  packages:
+  - name: nodejs
+    version: 16.12.0
 ```
 
 ## Notes and Caveats
